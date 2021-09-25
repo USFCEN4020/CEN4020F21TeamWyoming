@@ -3,6 +3,8 @@ import random
 def border():
      print("\n******************************************\n")
 
+# printout the menu list with sequence numbers
+# strList is the string list of all options
 def menu(strList):
     border()    
     i = 1
@@ -10,7 +12,8 @@ def menu(strList):
         print(i, ". " + str + '\n')
         i += 1    
     border()
-    
+
+# randomly chose a story from the string list to print
 def story(strList):
     border()
     
@@ -21,6 +24,7 @@ def story(strList):
     border()
 
 
+# "play a video"
 def video():
      border()
      print("Video is now playing")

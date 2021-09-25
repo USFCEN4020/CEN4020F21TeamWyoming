@@ -7,6 +7,8 @@ import dataQuery
 
 
 class UI:
+    # loggedIn is used to remember if the user is logged in
+    # name is to record the name of who posts a job
     def __init__(self):
         self.loggedIn = False
         self.name = ""
@@ -135,7 +137,8 @@ class UI:
 
 
     def jobSearchUI(self):
-        display.menu(["Internship", "Go back"])
+        display.menu(["Internship",
+                      "Go back"])
 
         inpt = input("Go to: ")
         
@@ -151,7 +154,9 @@ class UI:
 
 
     def internshipUI(self):
-        display.menu(["Post a job", "Go back"])
+        display.menu(["Post a job",
+                      "Go back"])
+        
         inpt = input("Go to: ")
         
         if inpt == "1":
@@ -179,7 +184,10 @@ class UI:
     
 
     def welcomeUI(self):
-        display.menu(["Connect to friends", "Skip", "Quit"])
+        display.menu(["Connect to friends",
+                      "Skip",
+                      "Quit"])
+        
         inpt = input("Go to: ")
         
         if inpt == "1":

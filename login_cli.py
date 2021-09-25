@@ -50,7 +50,8 @@ def login(username, password):
 
 
 
-
+# sign up to create a new account if it's valid
+# then write the data into the database
 def signup(username, password, firstname, lastname):
     users = dataQuery.getDataList("accounts.txt")
 
