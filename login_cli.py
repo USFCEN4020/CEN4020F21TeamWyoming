@@ -2,24 +2,10 @@ import fire
 import welcome
 import string
 import display
-#from history import loginRecordAppend
-#from history import loginRecordQuery
-#from history import makeDict
+import dataQuery
 
-# Test if the username is valid.
-# Added by Wenchao 9/19/2021 23:00
-def ifNameValid(username):
-    users = getUsers()
-    # First, we will check if the username is unique
-    for user in users:
-        _username = user[0]
-        if _username == username:
-            print("User name existed!\n")
-            return False
-    return True
 
 # Test if the Password is valid.
-# Added by Wenchao 9/19/2021 23:00
 def ifPasswordValid(Password):
     charList = list(Password)
     capNum = 0
@@ -50,52 +36,45 @@ def ifPasswordValid(Password):
 
 # We want to get all of the current users and then see if the given username and password match
 def login(username, password):
-    users = getUsers()
-    for user in users:
-        _username = user[0]
-        _password = user[1]
-        if _username == username and _password == password:
+    users = dataQuery.getDataList("accounts.txt")
+    result = dataQuery.ifCredentialsCorrect(username, password, users)
+    if result == True:
+        print('You are logged in!')
+        return True
+    else:
+        print("Invalid credentials")
+        return False
 
-            print('You are logged in!')
-            return True
-    print("Invalid credentials")
-    return False
 
-def getUsers():
-    users = []
-    file = open('accounts.txt', 'r')
-    # Get each line from the file and extract the user data
-    lines = file.readlines()
-    for line in lines:
-        user = line.replace('\n', '').split(' ')
-        # We are appending an array with the user data i.e. ['johndoe123', 'mypassword123']
-        users.append(user)
-        
-    file.close()
-    return users
+# def getUsers() has been Moved to dataQuery.py
 
-# Appends the user to the accounts.txt as a new line
-# If there are more than 5 users, then no account may be created
+
+
+# sign up to create a new account if it's valid
+# then write the data into the database
 def signup(username, password, firstname, lastname):
-    users = getUsers()
-    # First, we will check if the username is unique
-    for user in users:
-        _username = user[0]
-        if _username == username:
-            print("Username already exists")
-            return False
+    users = dataQuery.getDataList("accounts.txt")
 
-    # Next, check if there are too many accounts
+    if dataQuery.ifUsernameExist(username, users) == True:
+        print("Username already exists")
+        return False
+
+    if ifPasswordValid(password) == False:
+        return False
+
     if len(users) >= 5:
         print("Too many users")
         return False
-    else:
-        file = open('accounts.txt', 'a')
-        file.write(username + ' ' + password + ' ' + firstname + ' ' + lastname + '\n' )
-        file.close()
+    
+    file = open('accounts.txt', 'a')
+    file.write(username + ' ' + password + ' ' + firstname + ' ' + lastname + '\n' )
+    file.close()
 
-        print ("Account created!")
-        return True
+    print ("Account created!")
+    return True
+    
+
+
 
 if __name__ == '__main__':
     # Generic welcome message for the cli
