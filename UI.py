@@ -1,11 +1,9 @@
 from re import search
 from login_cli import login
-from login_cli import getUsers
 from login_cli import signup
-from login_cli import ifPasswordValid
-from login_cli import ifNameValid
 import display
 import textDepot
+import dataQuery
 
 
 class UI:
@@ -18,17 +16,19 @@ class UI:
             display.story(textDepot.storyList)
             display.menu(["Sign in",
                        "Sign up",
-                       "Quit",
+                       "Go back",
                        "Watch the video"])
         else:
             display.menu(["Sign in",
                        "Sign up",
-                       "Quit"])
+                       "Go back"])
 
         inpt = input("Go to: ")
+        
         if inpt == "1":
             if self.loggedIn == True:
                 return self.mainUI()
+            
             username_inpt = input("username: ")
             password_inpt = input("password: ")
 
@@ -39,25 +39,23 @@ class UI:
                 return self.loginUI()
                          
         elif inpt == "2":
+            
             username_inpt = input("username: ")
             password_inpt = input("password: ")
             firstname_inpt = input("firstname: ")
             lastname_inpt = input("lastname: ")
-            
-            if ifNameValid(username_inpt) == False:
-                return self.loginUI()
-            if ifPasswordValid(password_inpt) == False:
-                return self.loginUI()
-            loginRes = signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt)
-            if loginRes == True:
+
+            if signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
                 return self.mainUI()
             else:
                 return self.loginUI()
-                    
+                             
         elif inpt == "3":
-            return
+            return self.welcomeUI()
+        
         elif inpt == "4" and self.loggedIn == False:
             return self.videoUI()
+        
         else:
             print("Invalid entry, please try again.\n")
             return self.loginUI()
@@ -73,15 +71,30 @@ class UI:
 
 
         inpt = input("Go to: ")
+        
         if inpt == "1":
             return self.jobSearchUI()
+        
         elif inpt == "2":
-            print("Under construction\n")
-            return self.mainUI()
+            print("Please enter the first and last name of your friend below\n")
+            firstname = input("first name: ")
+            lastname = input("last name: ")
+            users = dataQuery.getDataList("accounts.txt")
+            
+            if dataQuery.ifNameExist(firstname, lastname, users) == True:
+                print("He/she is a part of the InCollege system!\n")
+                return self.mainUI()
+            
+            else:
+                print("He/she is not yet a part of the InCollege system yet")
+                return self.mainUI()
+                   
         elif inpt == "3":
             return self.skillUI()
+        
         elif inpt == "4":
-            return self.loginUI()
+            return self.welcomeUI()
+        
         else:
             print("Invalid entry, please try again.\n")
             return self.mainUI()
@@ -101,8 +114,10 @@ class UI:
         if x != None:
             print("Under construction\n")
             return self.skillUI()
+        
         elif inpt == "6":
             return self.mainUI()
+        
         else:
             print("Invalid entry, please try again.\n")
             return self.skillUI()
@@ -120,34 +135,116 @@ class UI:
 
 
     def jobSearchUI(self):
-        display.menu(["Post a job", "Go back"])
+        display.menu(["Internship", "Go back"])
 
         inpt = input("Go to: ")
         
         if inpt == "1":
+            return self.internshipUI()
+        
+        elif inpt == "2":
+            return self.mainUI()
+        
+        else:
+            print("invalid option")
+            return self.jobSearchUI()
+
+
+    def internshipUI(self):
+        display.menu(["Post a job", "Go back"])
+        inpt = input("Go to: ")
+        
+        if inpt == "1":
             f = open('jobDepot.txt', 'a')
-
-            poster = self.name
-            
+            poster = self.name           
             title = input("title: ")
-
             description = input("description: ")
-
             employer = input("employer: ")
-
             location = input("location: ")
-
             salary = input("salary: ")
 
             f.write(poster + " " + title + " " + description
                     + " " + employer + " " + location
                     + " " + salary + "\n")
             f.close()
-            return self.mainUI()
+            return self.jobSearchUI()
         
         elif inpt == "2":
-            return self.mainUI()
+            return self.jobSearchUI()
+        
         else:
             print("invalid option")
-            return self.jobSearchUI()
+            return self.internshipUI()
+        
     
+
+    def welcomeUI(self):
+        display.menu(["Connect to friends", "Skip", "Quit"])
+        inpt = input("Go to: ")
+        
+        if inpt == "1":
+            print("Please enter the first and last name of your friend below\n")
+            firstname = input("first name: ")
+            lastname = input("last name: ")
+            users = dataQuery.getDataList("accounts.txt")
+            
+            if dataQuery.ifNameExist(firstname, lastname, users) == True:
+                print("He/she is a part of the InCollege system!\n")
+                return self.connectUI()
+            
+            else:
+                print("He/she is not yet a part of the InCollege system yet")
+                return self.welcomeUI()
+
+        elif inpt == "2":
+            return self.loginUI()
+
+        elif inpt == "3":
+            return
+        
+        else:
+            print("invalid option")
+            return self.welcomeUI()
+
+
+
+    def connectUI(self):
+        display.menu(["Log in",
+                      "Sign up to join friends",
+                      "Go back"])
+
+        inpt = input("Go to: ")
+        
+        if inpt == "1":
+            
+            if self.loggedIn == True:
+                return self.mainUI()
+            
+            username_inpt = input("username: ")
+            password_inpt = input("password: ")
+
+            if login(username_inpt, password_inpt) == True:
+                self.name = username_inpt
+                return self.mainUI()
+            
+            else:
+                return self.connectUI()
+                         
+        elif inpt == "2":
+            username_inpt = input("username: ")
+            password_inpt = input("password: ")
+            firstname_inpt = input("firstname: ")
+            lastname_inpt = input("lastname: ")
+
+            if signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
+                return self.mainUI()
+            
+            else:
+                return self.connectUI()
+                    
+        elif inpt == "3":
+            return self.welcomeUI()
+
+        else:
+            print("Invalid entry, please try again.\n")
+            return self.connectUI()
