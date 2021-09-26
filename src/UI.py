@@ -1,9 +1,6 @@
 import re 
-import login_cli
 import display
-import textDepot
-import dataQuery
-
+import utils
 
 class UI:
     # loggedIn is used to remember if the user is logged in
@@ -11,10 +8,12 @@ class UI:
     def __init__(self):
         self.loggedIn = False
         self.name = ""
+        # Initialize config used for text, content, and user management.
+        self.config = utils.InCollegeConfig()
 
     def loginUI(self):
         if self.loggedIn == False:
-            display.story(textDepot.storyList)
+            display.story(self.config.config['stories'])
             display.menu(["Sign in",
                        "Sign up",
                        "Go back",
@@ -33,7 +32,7 @@ class UI:
             username_inpt = input("username: ")
             password_inpt = input("password: ")
 
-            if login_cli.login(username_inpt, password_inpt) == True:
+            if self.config.login_valid(username_inpt, password_inpt):
                 self.name = username_inpt
                 return self.mainUI()
             else:
@@ -46,7 +45,12 @@ class UI:
             firstname_inpt = input("firstname: ")
             lastname_inpt = input("lastname: ")
 
-            if login_cli.signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
+            if self.config.create_user(
+                username_inpt, 
+                password_inpt, 
+                firstname_inpt, 
+                lastname_inpt
+            ):
                 return self.mainUI()
             else:
                 return self.loginUI()
@@ -80,12 +84,10 @@ class UI:
             print("Please enter the first and last name of your friend below\n")
             firstname = input("first name: ")
             lastname = input("last name: ")
-            users = dataQuery.getDataList("accounts.txt")
             
-            if dataQuery.ifNameExist(firstname, lastname, users) == True:
+            if self.config.full_name_exists(firstname, lastname):
                 print("He/she is a part of the InCollege system!\n")
                 return self.mainUI()
-            
             else:
                 print("He/she is not yet a part of the InCollege system yet")
                 return self.mainUI()
@@ -159,18 +161,14 @@ class UI:
         inpt = input("Go to: ")
         
         if inpt == "1":
-            f = open('jobDepot.txt', 'a')
             poster = self.name           
             title = input("title: ")
             description = input("description: ")
             employer = input("employer: ")
             location = input("location: ")
             salary = input("salary: ")
-
-            f.write(poster + " " + title + " " + description
-                    + " " + employer + " " + location
-                    + " " + salary + "\n")
-            f.close()
+            self.config.create_posting(
+                poster, title, description, employer, location, salary)
             return self.jobSearchUI()
         
         elif inpt == "2":
@@ -193,9 +191,8 @@ class UI:
             print("Please enter the first and last name of your friend below\n")
             firstname = input("first name: ")
             lastname = input("last name: ")
-            users = dataQuery.getDataList("accounts.txt")
             
-            if dataQuery.ifNameExist(firstname, lastname, users) == True:
+            if self.config.full_name_exists(firstname, lastname):
                 print("He/she is a part of the InCollege system!\n")
                 return self.connectUI()
             
@@ -230,7 +227,8 @@ class UI:
             username_inpt = input("username: ")
             password_inpt = input("password: ")
 
-            if login_cli.login(username_inpt, password_inpt) == True:
+            if self.config.login_valid(username_inpt, password_inpt):
+                self.config.save_login(username_inpt)
                 self.name = username_inpt
                 return self.mainUI()
             
@@ -243,7 +241,12 @@ class UI:
             firstname_inpt = input("firstname: ")
             lastname_inpt = input("lastname: ")
 
-            if login_cli.signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
+            if self.config.create_user(
+                username_inpt, 
+                password_inpt, 
+                firstname_inpt, 
+                lastname_inpt
+            ):
                 return self.mainUI()
             
             else:

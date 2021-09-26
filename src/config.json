@@ -1,0 +1,80 @@
+{
+  "messages": {
+    "welcome": "---------------------------------------\n- THANKS FOR USING THE IN COLLEGE CLI -\n---------------------------------------"
+  },
+  "jobs": [
+    {
+      "author": "Admin Admin",
+      "title": "Test Title",
+      "description": "Test Job Description",
+      "employer": "Some Company",
+      "location": "San Jose, CA",
+      "salary": "$7000 a month"
+    },
+    {
+      "author": "Second Admin",
+      "title": "Admin title",
+      "description": "this is the job you don't want to take",
+      "employer": "company everyone hates",
+      "location": "virtual",
+      "salary": "unpaid"
+    },
+    {
+      "author": "admin",
+      "title": "sample title",
+      "description": "sample description",
+      "employer": "sample employer",
+      "location": "sample location",
+      "salary": "sample salary"
+    },
+    {
+      "author": "admin",
+      "title": "sample2",
+      "description": "sample2",
+      "employer": "sample2",
+      "location": "sample2",
+      "salary": "sample2"
+    },
+    {
+      "author": "admin",
+      "title": "sample3",
+      "description": "sample3",
+      "employer": "sample3",
+      "location": "sample2",
+      "salary": "sample2"
+    }
+  ],
+  "stories": [
+    "My name is Rajeesh, and I am successful because of InCollege. I worked very hard for my GPA, and I ended up meeting a person here that gave me the job that I always wanted.",
+    "My name is Alex Chen, and I met someone from my favorite robotics starup here on InCollege. I messaged them, and they gave me an offer for $300K a year just like that. Isn't that amazing?",
+    "Hello, my name is Josh, and I did not get a job from InCollege. This was the worst possible app that I have ever seen. Don't use it."
+  ],
+  "accounts": {
+    "admin": {
+      "password": "admin",
+      "firstname": "admin",
+      "lastname": "admin"
+    },
+    "test": {
+      "password": "tesT123!",
+      "firstname": "first",
+      "lastname": "LaSt"
+    },
+    "user!": {
+      "password": "passsroD123!",
+      "firstname": "first1",
+      "lastname": "last1"
+    },
+    "user2": {
+      "password": "user2UsE4!",
+      "firstname": "First2",
+      "lastname": "Last2"
+    },
+    "new": {
+      "password": "new2New!new",
+      "firstname": "New",
+      "lastname": "New"
+    }
+  },
+  "current_login": "admin"
+}
