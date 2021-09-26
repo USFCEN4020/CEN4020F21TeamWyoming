@@ -1,6 +1,5 @@
-from re import search
-from login_cli import login
-from login_cli import signup
+import re 
+import login_cli
 import display
 import textDepot
 import dataQuery
@@ -34,7 +33,7 @@ class UI:
             username_inpt = input("username: ")
             password_inpt = input("password: ")
 
-            if login(username_inpt, password_inpt) == True:
+            if login_cli.login(username_inpt, password_inpt) == True:
                 self.name = username_inpt
                 return self.mainUI()
             else:
@@ -47,7 +46,7 @@ class UI:
             firstname_inpt = input("firstname: ")
             lastname_inpt = input("lastname: ")
 
-            if signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
+            if login_cli.signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
                 return self.mainUI()
             else:
                 return self.loginUI()
@@ -111,7 +110,7 @@ class UI:
                       "I'm perfect enough",])
         
         inpt = input("\nGo to: ")
-        x = search("^[1-5]$", inpt)
+        x = re.search("^[1-5]$", inpt)
 
         if x != None:
             print("Under construction\n")
@@ -231,7 +230,7 @@ class UI:
             username_inpt = input("username: ")
             password_inpt = input("password: ")
 
-            if login(username_inpt, password_inpt) == True:
+            if login_cli.login(username_inpt, password_inpt) == True:
                 self.name = username_inpt
                 return self.mainUI()
             
@@ -244,7 +243,7 @@ class UI:
             firstname_inpt = input("firstname: ")
             lastname_inpt = input("lastname: ")
 
-            if signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
+            if login_cli.signup(username_inpt, password_inpt, firstname_inpt, lastname_inpt) == True:
                 return self.mainUI()
             
             else:
