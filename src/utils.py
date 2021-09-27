@@ -74,6 +74,7 @@ class InCollegeConfig:
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
                 json.dump(self.config, f, ensure_ascii=False, indent=2)
+            return True
 
     def create_posting(
         self, 

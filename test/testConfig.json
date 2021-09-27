@@ -1,0 +1,19 @@
+{
+  "accounts": {
+    "admin": {
+      "password": "admin",
+      "firstname": "admin",
+      "lastname": "admin"
+    }
+  },
+  "jobs": [
+    {
+      "author": "sample",
+      "title": "sample",
+      "description": "sample",
+      "employer": "sample",
+      "location": "sample",
+      "salary": "unpaid"
+    }
+  ]
+}
