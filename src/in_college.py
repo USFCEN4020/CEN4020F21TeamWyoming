@@ -155,8 +155,8 @@ def user_loop() -> None:
             if inputs['internship_target'] == 'Post a job':
                 info = ask_job_posting().values(); print()
                 config.create_posting(logged_in_user, *info)
-                print('✅ New posting for {} has been created!'.format(info[1]))
-                if info[-1].lower() == 'updaid': # Easter egg.
+                print('✅ New posting for {} has been created!'.format(list(info)[1]))
+                if list(info)[-1].lower() == 'updaid': # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
             inputs = print_job_screen()
         if 'job_target' in inputs:
