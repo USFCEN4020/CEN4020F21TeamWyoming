@@ -69,11 +69,13 @@ class InCollegeConfig:
             self.config['accounts'][username] = {
                 'password': password,
                 'firstname': firstname,
-                'lastname': lastname
+                'lastname': lastname,
+                'language': 'English'
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
                 json.dump(self.config, f, ensure_ascii=False, indent=2)
+            return True
 
     def create_posting(
         self, 
@@ -101,10 +103,33 @@ class InCollegeConfig:
             with open(self.filename, 'w', encoding='utf-8') as f:
                 json.dump(self.config, f, ensure_ascii=False, indent=2)
             return True
-            
 
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
         self.config['current_login'] = username
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def save_guest_control(self, username: str, control_setting_list: dict) -> None:
+        """Update current guest control setting in user's privacy setting and write changes to json file."""
+        self.config['guest_control'].update({username: control_setting_list})
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def show_guest_control(self, username: str) -> None:
+        guest_control_list = ['InCollege Email', 'SMS', 'Targeted Advertising features']
+        print('Your current guest control setting: ')
+        status = lambda x: 'ON' if x in self.config['guest_control'][username] else 'OFF'
+        for key in guest_control_list:
+            print(key + ': ' + status(key))
+
+    def save_lang(self, username: str, lang: str) -> None:
+        """Update current lang setting in user and write changes to json file."""
+        self.config['accounts'][username]['language'] = lang
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def show_lang(self, username: str) -> None:
+        print('Your current language setting: ')
+        print(self.config['accounts'][username]['language'])
+

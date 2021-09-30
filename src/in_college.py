@@ -30,6 +30,8 @@ def print_main_screen() -> dict:
             'Search for a job',
             'Find someone',
             'Learn a new skill',
+            'Useful Links',
+            'InCollege Important Links',
             'Log out'
         ]
     )])
@@ -54,9 +56,9 @@ def print_login_screen() -> dict:
         ]
     )])
 
-def print_uLinks_screen() -> dict:
+def print_ulinks_screen() -> dict:
     return menu.prompt([menu.List(
-        'uLinks_target',
+        'ulinks_target',
         message='[LINKS] Which useful link would you like to browse?',
         choices=[
             'General',
@@ -67,9 +69,25 @@ def print_uLinks_screen() -> dict:
         ]
     )])
 
-def print_iLinks_screen() -> dict:
+def print_general_screen() -> dict:
     return menu.prompt([menu.List(
-        'iLinks_target',
+        'general_target',
+        message='[LINKS] Which general link would you like to choose?',
+        choices=[
+            'Sign up',
+            'Help Center',
+            'About',
+            'Press',
+            'Blog',
+            'Careers',
+            'Developers',
+            'Go back'
+        ]
+    )])
+
+def print_ilinks_screen() -> dict:
+    return menu.prompt([menu.List(
+        'ilinks_target',
         message='[LINKS] Which InCollege  link would you like to browse?',
         choices=[
             'Copyright Notice',
@@ -83,6 +101,37 @@ def print_iLinks_screen() -> dict:
             'Guest Controls',
             'Languages',
             'Go back'
+        ]
+    )])
+
+def print_privacy_screen() -> dict:
+    return menu.prompt([menu.List(
+        'privacy_target',
+        message='[PRIVACY] Which privacy option would you like to choose?',
+        choices=[
+            'Guest Control',
+            'Go back'
+        ]
+    )])
+
+def print_guest_screen() -> dict:
+    return menu.prompt([menu.Checkbox(
+        'guest_target',
+        message='[PRIVACY] Which guest control would you like to toggle?',
+        choices=[
+            'InCollege Email',
+            'SMS',
+            'Targeted Advertising features'
+        ]
+    )])
+
+def print_language_screen() -> dict:
+    return menu.prompt([menu.List(
+        'language_target',
+        message='[LANG] Which language would you like to choose?',
+        choices=[
+            'English',
+            'Spanish'
         ]
     )])
 
@@ -147,7 +196,7 @@ def ask_job_posting() -> dict:
 def user_loop() -> None:
     """Main driver for the user interaction."""
     print('-#- 🎓 WELCOME TO THE IN COLLEGE CLI! 🎓 -#-\n')
-    inputs, logged_in_user = None, config.config['currentLogin']
+    inputs, logged_in_user = None, config.config['current_login']
     while True: # endless user loop.
         # If inputs are empty, it's the welcome screen.
         if inputs is None:
@@ -170,7 +219,7 @@ def user_loop() -> None:
                 break
         if 'connect_target' in inputs:
             if inputs['connect_target'] == 'Log in':
-                if config.config['currentLogin'] != '':
+                if config.config['current_login'] != '':
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
@@ -221,12 +270,17 @@ def user_loop() -> None:
                 inputs = print_main_screen()
             elif inputs['main_target'] == 'Learn a new skill':
                 inputs = print_skill_screen()
-            else:
+            elif inputs['main_target'] == 'Useful Links':
+                inputs = print_ulinks_screen()
+            elif inputs['main_target'] == 'InCollege Important Links':
+                inputs = print_ilinks_screen()
+            elif inputs['main_target'] == 'Log out':
+                config.save_login('')  # reset login "cookie".
                 inputs = print_login_screen()
-                config.save_login('') # reset login "cookie".
+
         if 'login_target' in inputs:
             if inputs['login_target'] == 'Sign in':
-                if config.config['currentLogin'] != '':
+                if config.config['current_login'] != '':
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
@@ -252,45 +306,131 @@ def user_loop() -> None:
                 print('⚠️🚨 Playing video 🎥. Under construction. 🚨⚠️')
                 inputs = print_login_screen()
             elif inputs['login_target'] == 'Useful Links':
-                inputs = print_uLinks_screen()
+                inputs = print_ulinks_screen()
             elif inputs['login_target'] == 'InCollege Important Links':
-                inputs = print_iLinks_screen()
-        if 'uLinks_target' in inputs:
-            if inputs['uLinks_target'] == 'General':
-                inputs = print_uLinks_screen()
-            elif inputs['uLinks_target'] == 'Browse InCollege':
-                inputs = print_uLinks_screen()
-            elif inputs['uLinks_target'] == 'Business Solutions':
-                inputs = print_uLinks_screen()
-            elif inputs['uLinks_target'] == 'Directories':
-                inputs = print_uLinks_screen()
-            elif inputs['uLinks_target'] == 'Go back':
-                inputs = print_login_screen()
+                inputs = print_ilinks_screen()
+        if 'ulinks_target' in inputs:
+            if inputs['ulinks_target'] == 'General':
+                inputs = print_general_screen()
+            elif inputs['ulinks_target'] == 'Browse InCollege':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_ulinks_screen()
+            elif inputs['ulinks_target'] == 'Business Solutions':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_ulinks_screen()
+            elif inputs['ulinks_target'] == 'Directories':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_ulinks_screen()
+            elif inputs['ulinks_target'] == 'Go back':
+                if config.config['current_login'] != '':
+                    inputs = print_main_screen()
+                else:
+                    inputs = print_login_screen()
 
-        if 'iLinks_target' in inputs:
-            if inputs['iLinks_target'] == 'Copyright Notice':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'About':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Accessibility':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'User Agreement':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Privacy Policy':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Cookie Policy':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Copyright Policy':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Brand Policy':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Guest Controls':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Languages':
-                inputs = print_iLinks_screen()
-            elif inputs['iLinks_target'] == 'Go back':
+        if 'general_target' in inputs:
+            if inputs['general_target'] == 'Sign up':
                 inputs = print_login_screen()
+                # if config.config['current_login'] != '':
+                #     print('🔑 You were already logged in.')
+                #     inputs = print_main_screen()
+                # else:
+                #     login, password = ask_for_login().values();
+                #     print()
+                #     if config.login_valid(login, password):
+                #         print('🔑 You are logged in. Welcome {}'.format(login))
+                #         config.save_login(login)
+                #         inputs = print_main_screen()
+                #     else:
+                #         print('❌ Invalid credentials. Try again later.')
+                #         inputs = print_general_screen()
+            elif inputs['general_target'] == 'Help Center':
+                print('🎓 We\'re here to help')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'About':
+                print('🎓 In College: Welcome to In College, '
+                      'the world\'s largest college student '
+                      'network with many users in many countries '
+                      'and territories worldwide')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'Press':
+                print('🎓 In College Pressroom: '
+                      'Stay on top of the latest news, updates, and reports')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'Blog':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'Careers':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'Developers':
+                print('⚠️🚨 Under construction. 🚨⚠️')
+                inputs = print_general_screen()
+            elif inputs['general_target'] == 'Go back':
+                inputs = print_ulinks_screen()
 
+        if 'ilinks_target' in inputs:
+            if inputs['ilinks_target'] == 'Copyright Notice':
+                print('Copyright @ 1980-2021, InCollege Inc. None Rights Reserved.')
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'About':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Accessibility':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'User Agreement':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Privacy Policy':
+                print()
+                inputs = print_privacy_screen()
+            elif inputs['ilinks_target'] == 'Cookie Policy':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Copyright Policy':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Brand Policy':
+                print()
+                inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Guest Controls':
+                if config.config['current_login'] != '':
+                    inputs = print_guest_screen()
+                else:
+                    print('Please sign in to see the hidden content')
+                    inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Languages':
+                if config.config['current_login'] != '':
+                    inputs = print_language_screen()
+                else:
+                    print('Please sign in to see the hidden content')
+                    inputs = print_ilinks_screen()
+            elif inputs['ilinks_target'] == 'Go back':
+                if config.config['current_login'] != '':
+                    inputs = print_main_screen()
+                else:
+                    inputs = print_login_screen()
+
+        if 'privacy_target' in inputs:
+            if inputs['privacy_target'] == 'Guest Control':
+                if config.config['current_login'] != '':
+                    inputs = print_guest_screen()
+                else:
+                    print('Please sign in to see the hidden content')
+                    inputs = print_privacy_screen()
+            elif inputs['privacy_target'] == 'Go back':
+                inputs = print_ilinks_screen()
+
+        if 'guest_target' in inputs:
+            config.save_guest_control(config.config['current_login'], inputs['guest_target'])
+            print()
+            config.show_guest_control(config.config['current_login'])
+            inputs = print_ilinks_screen()
+
+        if 'language_target' in inputs:
+            config.save_lang(config.config['current_login'], inputs['language_target'])
+            config.show_lang(config.config['current_login'])
+            inputs = print_ilinks_screen()
 
 
 if __name__ == '__main__':
