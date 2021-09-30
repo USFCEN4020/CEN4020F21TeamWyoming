@@ -34,22 +34,6 @@
       "employer": "sample2",
       "location": "sample2",
       "salary": "sample2"
-    },
-    {
-      "author": "admin",
-      "title": "sample3",
-      "description": "sample3",
-      "employer": "sample3",
-      "location": "sample2",
-      "salary": "sample2"
-    },
-    {
-      "author": "admin",
-      "title": "titadsf",
-      "description": "asdf",
-      "employer": "asdf",
-      "location": "adf",
-      "salary": "af"
     }
   ],
   "stories": [
@@ -77,12 +61,8 @@
       "password": "admin2DF$Ds",
       "firstname": "admin2",
       "lastname": "admin2"
-    },
-    "admin3": {
-      "password": "admin3r3Ds1!",
-      "firstname": "admin3",
-      "lastname": "admin3"
     }
   },
-  "currentLogin": ""
+  "currentLogin": "",
+  "current_login": ""
 }
