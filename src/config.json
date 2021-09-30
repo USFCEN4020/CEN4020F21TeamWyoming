@@ -34,14 +34,6 @@
       "employer": "sample2",
       "location": "sample2",
       "salary": "sample2"
-    },
-    {
-      "author": "admin",
-      "title": "sample3",
-      "description": "sample3",
-      "employer": "sample3",
-      "location": "sample2",
-      "salary": "sample2"
     }
   ],
   "stories": [
@@ -60,21 +52,17 @@
       "firstname": "first",
       "lastname": "LaSt"
     },
-    "user!": {
-      "password": "passsroD123!",
-      "firstname": "first1",
-      "lastname": "last1"
-    },
-    "user2": {
-      "password": "user2UsE4!",
-      "firstname": "First2",
-      "lastname": "Last2"
-    },
     "new": {
       "password": "new2New!new",
       "firstname": "New",
       "lastname": "New"
+    },
+    "admin2": {
+      "password": "admin2DF$Ds",
+      "firstname": "admin2",
+      "lastname": "admin2"
     }
   },
-  "current_login": "admin"
+  "currentLogin": "",
+  "current_login": ""
 }

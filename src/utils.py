@@ -75,7 +75,7 @@ class InCollegeConfig:
         employer: str, 
         location: str, 
         salary: str
-    ) -> None:
+    ) -> bool:
         """Create a job posting and update the json config file."""
         self.config['jobs'].append({
             'author': author,
@@ -85,8 +85,15 @@ class InCollegeConfig:
             'location': location,
             'salary': salary
         })
-        with open(self.filename, 'w', encoding='utf-8') as f:
-            json.dump(self.config, f, ensure_ascii=False, indent=2)
+        num_jobs_flag = len(self.config['jobs']) >= 5
+        if num_jobs_flag:
+            print('ERROR: Too many jobs in the system. Try again later.')
+            return False
+        else:
+            with open(self.filename, 'w', encoding='utf-8') as f:
+                json.dump(self.config, f, ensure_ascii=False, indent=2)
+            return True
+            
 
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
