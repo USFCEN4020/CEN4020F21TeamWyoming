@@ -423,7 +423,6 @@ def user_loop() -> None:
 
         if 'guest_target' in inputs:
             config.save_guest_control(config.config['current_login'], inputs['guest_target'])
-            print()
             config.show_guest_control(config.config['current_login'])
             inputs = print_ilinks_screen()
 

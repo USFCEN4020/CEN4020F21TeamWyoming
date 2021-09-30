@@ -117,11 +117,19 @@ class InCollegeConfig:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
     def show_guest_control(self, username: str) -> None:
+        """Display the current guest control setting of the current user."""
         guest_control_list = ['InCollege Email', 'SMS', 'Targeted Advertising features']
         print('Your current guest control setting: ')
-        status = lambda x: 'ON' if x in self.config['guest_control'][username] else 'OFF'
-        for key in guest_control_list:
-            print(key + ': ' + status(key))
+        # Equivalent to the commented section below
+        list(map((lambda x: print(x + ': ' + 'ON')
+                  if x in self.config['guest_control'][username]
+                  else print(x + ': ' + 'OFF')), guest_control_list))
+
+        # status = lambda x: print(x + ': ' + 'ON')\
+        #     if x in self.config['guest_control'][username]\
+        #     else print(x + ': ' + 'OFF')
+        # for key in guest_control_list:
+        #     status(key)
 
     def save_lang(self, username: str, lang: str) -> None:
         """Update current lang setting in user and write changes to json file."""
@@ -130,6 +138,7 @@ class InCollegeConfig:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
     def show_lang(self, username: str) -> None:
+        """Display the lang setting for the current user."""
         print('Your current language setting: ')
         print(self.config['accounts'][username]['language'])
 

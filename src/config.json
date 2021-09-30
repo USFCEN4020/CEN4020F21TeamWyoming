@@ -46,7 +46,7 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
-      "language": "English"
+      "language": "Spanish"
     },
     "test": {
       "password": "tesT123!",
@@ -71,8 +71,7 @@
   "guest_control": {
     "admin": [
       "InCollege Email",
-      "SMS",
-      "Targeted Advertising features"
+      "SMS"
     ]
   }
 }
