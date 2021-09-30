@@ -1,82 +1,78 @@
-import login_cli
+import os
+import json
+import pytest
+import utils
+import sys
+from sys import platform as _platform
 
-
-file = open('accounts.txt', 'w')
-
-
-#Week1
-def test_signup():
-    #Test Password - 8 <= length <= 12, 1 digit, 1 nonalpha character
-    assert login_cli.ifPasswordValid('Password1!') == True
-    assert login_cli.ifPasswordValid('sDk123!') == False
-    assert login_cli.ifPasswordValid('passcodE45123*') == False
-    assert login_cli.ifPasswordValid('Password123') == False
-    #Test Account Creation
-    assert login_cli.signup('username1', 'Password1!') == 'Account created!'
-    assert login_cli.signup('username2', 'Password1!') == 'Account created!'
-    #Test Unique Username
-    assert login_cli.ifNameValid('username1') == False
-    assert login_cli.ifNameValid('username2') == False
-    assert login_cli.signup('username1', 'Password1!') == 'Username already exists'
-    #Max Users
-    login_cli.signup('username3', 'Password1!')
-    login_cli.signup('username4', 'Password1!')
-    login_cli.signup('username5', 'Password1!')
-    assert login_cli.signup('username6', 'Password1!') == 'Too many users'
-    assert login_cli.signup('username7', 'Password1!') == 'Too many users'
-
-#Week1
-def test_login():
-    file = open('accounts.txt', 'w')
-    login_cli.signup('username2', 'password')
-    assert login_cli.login('username2', 'password') == 'You are logged in!'
-    assert login_cli.login('username2', 'password123') == 'Invalid credentials'
-#Week1
-def test_ifNameValid():
-    login_cli.signup('username2', 'password')
-    assert login_cli.ifNameValid("username2") == False
-    assert login_cli.ifNameValid("Bill") == True
-#Week1
-def test_ifPasswordValid():
-    
-    assert login_cli.ifPasswordValid("CCcccc123!") == True
-    assert login_cli.ifPasswordValid("cc") == False
-    assert login_cli.ifPasswordValid("Cccccccc") == False
-    assert login_cli.ifPasswordValid("2cccccccc") == False
-    assert login_cli.ifPasswordValid("c!ccccccc") == False
-    assert login_cli.ifPasswordValid("2Cccccccc") == False
-    assert login_cli.ifPasswordValid("2!ccccccc") == False
-    assert login_cli.ifPasswordValid("@Cccccccc") == False
-    assert login_cli.ifPasswordValid("2ccccccccdsfsdfdsf") == False
+if _platform.startswith('linux'):
+    sys.path.append('../src')
+    os.chdir('../src')
+elif _platform == 'darwin':
+    sys.path.append('../src')
+    os.chdir('../src')
+elif _platform.startswith('win'):
+    sys.path.append('..\\src')
+    os.chdir('..\\src')
+else:
+    sys.path.append('../src')
+    os.chdir('../src')
 
 
 
+    def init_testing():
+        """Initialize dummy config json for testing purposes."""
+        test_path = '../test/testConfig.json'
+        if _platform.startswith('win'):
+            test_path = '..\\test\\testConfig.json'
+        with open(test_path, 'w', encoding='utf-8') as f:
+            init_data = {
+                "accounts": {
+                    "admin": {
+                        "password": "admin",
+                        "firstname": "admin",
+                        "lastname": "admin"
+                    }
+                },
+                "jobs": list()
+            }
+            json.dump(init_data, f, ensure_ascii=False, indent=2)
+        return utils.InCollegeConfig('../test/testConfig.json')
 
 
+    def test_utils_login_week1():
+        config = init_testing()
+        username, password = 'admin', 'admin'
+        assert config.login_valid(username, password) == True
 
 
-#Week1
-## history.py is removed from this project for now.
-##def test_makeDict():
-##    assert history.makeDict("admin", "1234567") == {"username":"admin", "password":"1234567"}
-##    assert history.makeDict("admin12", "123fdr") == {"username":"admin12", "password":"123fdr"}
-##
-##def test_loginRecordQuery():
-##    login_cli.signup("admin", "password")
-##    assert history.loginRecordQuery("admin", "password") == True
-##    assert history.loginRecordQuery("fsdf", "312fre") == False
-##    assert history.loginRecordQuery("", "") == False
-##
-##
-##def test_loginRecordAppend():
-##    user1 = history.makeDict("admin1", "1234567")
-##    user2 = history.makeDict("admin2", "312fre")
-##    assert history.loginRecordAppend(user1) == "Login History updated.\n"
-##    assert history.loginRecordAppend(user2) == "Login History updated.\n"
-##    assert history.loginRecordAppend(user1) == None
-##    assert history.loginRecordAppend(user2) == None
+    def test_full_name_exists_week1():
+        config = init_testing()
+        first, last = 'admin', 'admin'
+        assert config.full_name_exists(first, last) == True
 
 
-file.close()
+    def test_password_valid_week1():
+        config = init_testing()
+        assert config.password_valid('ab') == False
+        assert config.password_valid('ab3') == False
+        assert config.password_valid('ab3!') == False
+        assert config.password_valid('ab3!A') == False
+        assert config.password_valid('validPasS4!') == True
 
 
+    def test_create_user_week1():
+        config = init_testing()
+        username, firstname, lastname = 'sample', 'sample', 'sample'
+        password1, password2 = 'invalidpassword', 'validpa5S$!'
+        assert config.create_user(username, password2, firstname, lastname) == True
+        assert config.create_user(username, password1, firstname, lastname) == False
+
+
+    def test_create_posting_week2():
+        config = init_testing()
+        author, title, desc = 'sample', 'sample', 'sample'
+        employer, location, salary = 'sample', 'sample', 'unpaid'
+        config.create_posting(author, title, desc, employer, location, salary)
+        assert len(config.config['jobs']) == 1
+        assert config.config['jobs'][0]['salary'] == 'unpaid'

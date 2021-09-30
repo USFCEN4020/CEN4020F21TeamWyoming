@@ -18,7 +18,7 @@ def print_connect_screen() -> dict:
     return menu.prompt([menu.List(
         'connect_target',
         message='[CONNECT] Where would you like to go from here?',
-        choices=['Log in', 'Sign up to join friends', 'Go back'],
+        choices=['Log in', 'Sign up to join friends', 'Go back']
     )])
 
 def print_main_screen() -> dict:
@@ -44,7 +44,46 @@ def print_login_screen() -> dict:
     return menu.prompt([menu.List(
         'login_target',
         message='[LOGIN] What would you like to do?',
-        choices=['Sign in', 'Sign up', 'Go back', 'Watch a video']
+        choices=[
+            'Sign in',
+            'Sign up',
+            'Go back',
+            'Watch a video',
+            'Useful Links',
+            'InCollege Important Links'
+        ]
+    )])
+
+def print_uLinks_screen() -> dict:
+    return menu.prompt([menu.List(
+        'uLinks_target',
+        message='[LINKS] Which useful link would you like to browse?',
+        choices=[
+            'General',
+            'Browse InCollege',
+            'Business Solutions',
+            'Directories',
+            'Go back'
+        ]
+    )])
+
+def print_iLinks_screen() -> dict:
+    return menu.prompt([menu.List(
+        'iLinks_target',
+        message='[LINKS] Which InCollege  link would you like to browse?',
+        choices=[
+            'Copyright Notice',
+            'About',
+            'Accessibility',
+            'User Agreement',
+            'Privacy Policy',
+            'Cookie Policy',
+            'Copyright Policy',
+            'Brand Policy',
+            'Guest Controls',
+            'Languages',
+            'Go back'
+        ]
     )])
 
 def print_skill_screen() -> dict:
@@ -209,9 +248,50 @@ def user_loop() -> None:
                     inputs = print_login_screen()
             elif inputs['login_target'] == 'Go back': # Reuse code.
                 inputs = print_welcome_screen()
-            else:
+            elif inputs['login_target'] == 'Watch a video':
                 print('⚠️🚨 Playing video 🎥. Under construction. 🚨⚠️')
                 inputs = print_login_screen()
+            elif inputs['login_target'] == 'Useful Links':
+                inputs = print_uLinks_screen()
+            elif inputs['login_target'] == 'InCollege Important Links':
+                inputs = print_iLinks_screen()
+        if 'uLinks_target' in inputs:
+            if inputs['uLinks_target'] == 'General':
+                inputs = print_uLinks_screen()
+            elif inputs['uLinks_target'] == 'Browse InCollege':
+                inputs = print_uLinks_screen()
+            elif inputs['uLinks_target'] == 'Business Solutions':
+                inputs = print_uLinks_screen()
+            elif inputs['uLinks_target'] == 'Directories':
+                inputs = print_uLinks_screen()
+            elif inputs['uLinks_target'] == 'Go back':
+                inputs = print_login_screen()
+
+        if 'iLinks_target' in inputs:
+            if inputs['iLinks_target'] == 'Copyright Notice':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'About':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Accessibility':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'User Agreement':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Privacy Policy':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Cookie Policy':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Copyright Policy':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Brand Policy':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Guest Controls':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Languages':
+                inputs = print_iLinks_screen()
+            elif inputs['iLinks_target'] == 'Go back':
+                inputs = print_login_screen()
+
+
 
 if __name__ == '__main__':
     user_loop()
