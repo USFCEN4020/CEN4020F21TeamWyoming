@@ -11,9 +11,6 @@ sys.path.append(path)
 os.chdir(path)
 import utils
 
-
-
-
 def init_testing():
     """Initialize dummy config json for testing purposes."""
     test_path = '../test/testConfig.json'

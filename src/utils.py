@@ -14,21 +14,14 @@ class InCollegeConfig:
     
     def full_name_exists(self, first: str, last: str) -> bool:
         """Check whether given first and last names exist."""
-        for account in self.config['accounts']:
-            if self.config['accounts'][account]['firstname'] == first and \
-                self.config['accounts'][account]['lastname'] == last:
-                return True
-        return False
+        return any([self.config['accounts'][account]['firstname'] == first and \
+                self.config['accounts'][account]['lastname'] == last for \
+                account in self.config['accounts']])
     
     def login_valid(self, username: str, password: str) -> bool:
         """Check whether login/password combination is valid."""
-        if username in self.config['accounts'] and \
-            self.config['accounts'][username]['password'] == password:
-            print('SUCCESS, {}. You are logged in.'.format(username))
-            return True
-        else:
-            print('ERROR. Invalid credentials. Please try again')
-            return False
+        return username in self.config['accounts'] and \
+                self.config['accounts'][username]['password'] == password
 
     def username_exists(self, username: str) -> bool:
         """Check whether given username exists."""
@@ -41,13 +34,13 @@ class InCollegeConfig:
         special_flag = any([char in string.punctuation for char in password])
         len_flag = 8 <= len(password) <= 12
         if not cap_flag:
-            print('ERROR. Password needs to contain at least 1 capital letter.')
+            print('❌ Password needs to contain at least 1 capital letter.')
         if not digit_flag:
-            print('ERROR. Password needs to contain at least 1 digit.')
+            print('❌ Password needs to contain at least 1 digit.')
         if not special_flag:
-            print('ERROR. Password needs to contain at least 1 special character')
+            print('❌ Password needs to contain at least 1 special character')
         if not len_flag:
-            print('ERROR. Password needs to be between 8 and 12 characters long')
+            print('❌ Password needs to be between 8 and 12 characters long')
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
     def create_user(
@@ -58,14 +51,12 @@ class InCollegeConfig:
         password_flag = not self.password_valid(password)
         username_flag = self.username_exists(username)
         if num_users_flag: 
-            print('ERROR: Too many users in the system. Try again later.')
+            print('❌ Too many users in the system. Try again later.')
         if username_flag:
-            print('ERROR. Current username already has an account.')
+            print('❌ Current username already has an account.')
         if any([num_users_flag, password_flag, username_flag]):
             return False
         else:
-            print('SUCCESS, {}. New account has been created'.format(username))
-            # Add a new account to config.
             self.config['accounts'][username] = {
                 'password': password,
                 'firstname': firstname,
@@ -106,7 +97,7 @@ class InCollegeConfig:
 
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
-        self.config['current_login'] = username
+        self.config['currentLogin'] = username
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
