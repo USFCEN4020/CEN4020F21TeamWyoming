@@ -45,33 +45,24 @@
     "admin": {
       "password": "admin",
       "firstname": "admin",
-      "lastname": "admin",
-      "language": "Spanish"
+      "lastname": "admin"
     },
     "test": {
       "password": "tesT123!",
       "firstname": "first",
-      "lastname": "LaSt",
-      "language": "English"
+      "lastname": "LaSt"
     },
     "new": {
       "password": "new2New!new",
       "firstname": "New",
-      "lastname": "New",
-      "language": "English"
+      "lastname": "New"
     },
     "admin2": {
       "password": "admin2DF$Ds",
       "firstname": "admin2",
-      "lastname": "admin2",
-      "language": "English"
+      "lastname": "admin2"
     }
   },
-  "current_login": "",
-  "guest_control": {
-    "admin": [
-      "InCollege Email",
-      "SMS"
-    ]
-  }
+  "currentLogin": "",
+  "current_login": ""
 }
