@@ -97,7 +97,7 @@ class InCollegeConfig:
 
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
-        self.config['currentLogin'] = username
+        self.config['current_login'] = username
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
