@@ -3,17 +3,14 @@
     "admin": {
       "password": "admin",
       "firstname": "admin",
-      "lastname": "admin"
+      "lastname": "admin",
+      "language": "English"
     }
   },
-  "jobs": [
-    {
-      "author": "sample",
-      "title": "sample",
-      "description": "sample",
-      "employer": "sample",
-      "location": "sample",
-      "salary": "unpaid"
-    }
-  ]
+  "jobs": [],
+  "guest_control": {
+    "admin": [
+      "InCollege Email"
+    ]
+  }
 }

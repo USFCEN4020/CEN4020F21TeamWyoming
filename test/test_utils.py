@@ -22,10 +22,14 @@ def init_testing():
                 "admin": {
                     "password": "admin",
                     "firstname": "admin",
-                    "lastname": "admin"
+                    "lastname": "admin",
+                    "language": "English"
                 }
             },
-            "jobs": list()
+            "jobs": list(),
+            "guest_control": {
+                "admin": ["InCollege Email"]
+            }
         }
         json.dump(init_data, f, ensure_ascii=False, indent=2)
     return utils.InCollegeConfig('../test/testConfig.json')
@@ -62,3 +66,34 @@ def test_create_posting_week2():
     config.create_posting(author, title, desc, employer, location, salary)
     assert len(config.config['jobs']) == 1
     assert config.config['jobs'][0]['salary'] == 'unpaid'
+
+def test_save_lang_week3():
+    config = init_testing()
+    username1, lang1 = 'admin', 'Spanish'
+    config.save_lang(username1, lang1)
+    # Check whether the structure was saved into json.
+    assert config.config['accounts'][username1]['language'] == lang1
+
+def test_show_lang_week3(capsys):
+    config = init_testing()
+    username = 'admin'
+    config.show_lang(username)
+    captured = capsys.readouterr()
+    # Checking correctly outputted languages.
+    assert captured.out.split()[-1] == 'English'
+
+def test_save_guest_control_week3():
+    config = init_testing()
+    username, control_setting_list = 'admin', ['InCollege Email', 'SMS']
+    config.save_guest_control(username, control_setting_list)
+    # Checking update in the json file.
+    assert config.config['guest_control'][username] == control_setting_list
+
+def test_show_guest_control_week3(capsys):
+    config = init_testing()
+    username = 'admin'
+    config.show_guest_control(username)
+    captured = capsys.readouterr()
+    # Checking proper output.
+    assert 'InCollege Email: ON' in captured.out 
+    
