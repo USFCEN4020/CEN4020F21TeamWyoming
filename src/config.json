@@ -46,28 +46,83 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
-      "language": "Spanish"
+      "language": "Spanish",
+      "profile": {
+        "title": "Admin profile",
+        "major": "Administration",
+        "university": "University of Admins",
+        "about": "Hello I am an admin.",
+        "experience": [
+          {
+            "title": "Experience Title",
+            "employer": "Nasa",
+            "date_started": "15-sep-2019",
+            "date_ended": "15-sep-2020",
+            "location": "Somewhere",
+            "description": "I worked for NASA"
+          },
+          {
+            "title": "Experience 2 Title",
+            "employer": "NSA",
+            "date_started": "1\b15-sep-2017",
+            "date_ended": "15-sep-2018",
+            "location": "Virginia",
+            "description": "I worked for NSA"
+          }
+        ],
+        "education": [
+          {
+            "name": "University of Souther Florida",
+            "degree": "Administration",
+            "years": "4"
+          }
+        ]
+      }
     },
     "test": {
       "password": "tesT123!",
       "firstname": "first",
       "lastname": "LaSt",
-      "language": "English"
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      }
     },
     "new": {
       "password": "new2New!new",
       "firstname": "New",
       "lastname": "New",
-      "language": "English"
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      }
     },
     "admin2": {
       "password": "admin2DF$Ds",
       "firstname": "admin2",
       "lastname": "admin2",
-      "language": "English"
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      }
     }
   },
-  "current_login": "",
+  "current_login": "admin",
   "guest_control": {
     "admin": [
       "InCollege Email",

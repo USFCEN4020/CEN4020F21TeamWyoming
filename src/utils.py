@@ -61,7 +61,15 @@ class InCollegeConfig:
                 'password': password,
                 'firstname': firstname,
                 'lastname': lastname,
-                'language': 'English'
+                'language': 'English',
+                'profile': {
+                    'title': '',
+                    'major': '', 
+                    'university': '', 
+                    'about': '', 
+                    'experience': [], 
+                    'education': []
+                }  
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -133,3 +141,28 @@ class InCollegeConfig:
         print('Your current language setting: ')
         print(self.config['accounts'][username]['language'])
 
+    def save_profile(self, username: str , profile: dict) -> None:
+        """Update profile of user and write changes to json file."""
+        self.config['accounts'][username]['profile'] = profile
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def display_profile(self, username: str):
+        user = self.config['accounts'][username]
+        profile = self.config['accounts'][self.config['current_login']]['profile']
+        firstname = user['firstname']
+        lastname = user['lastname']
+
+        print(f'{firstname} {lastname}')
+        for key in profile:
+            if key != 'experience' and key != 'education':
+                print(f'{key}: {profile[key]}')
+            else:
+                print(f'{key}:')
+                for dict in profile[key]:
+                    for key in dict:
+                        if key == 'title':
+                            print(dict[key])
+                        else:
+                            print(f'   {key}: {dict[key]}')
+                    print('')
