@@ -181,32 +181,6 @@ def print_profile_screen() -> dict:
         ]
     )])
 
-#function to edit experience and education
-'''
-def print_experience_scree() -> dict:
-    return menu.prompt([menu.List(
-        'experience_target',
-        message='experience screen',
-        choices=[
-            'View experiences',
-            'Add an experience',
-            'Edit an experience',
-            'Delete an experience'
-        ]
-    )])
-
-def print_education_screen() -> dict:
-    return menu.prompt([menu.List(
-        'experience_target',
-        message='experience screen',
-        choices=[
-            'View your education s',
-            'Add education',
-            'Edit a education',
-            'Delete a education'
-        ]
-    )])
-'''
 
 def ask_for_login() -> dict:
     return menu.prompt([
@@ -241,7 +215,7 @@ def edit_profile(target) -> None:
     profile = config.config['accounts'][config.config['current_login']]['profile']
     if target != 'education' and target != 'experience':
         input = menu.prompt([
-            menu.Text('edit', f'Enter a new {target}: ')
+            menu.Text('edit', 'Enter a new {}: '.format(target))
         ])
         profile[target] = input['edit']
         config.save_profile(config.config['current_login'], profile)
@@ -267,10 +241,6 @@ def edit_profile(target) -> None:
         ])
         profile[target].append(input)
         config.save_profile(config.config['current_login'], profile)
-
-#def edit_experience
-
-#def edit_education(target) -> None
 
 def user_loop() -> None:
     """Main driver for the user interaction."""
@@ -515,9 +485,6 @@ def user_loop() -> None:
 
         if 'profile_target' in inputs:
             if inputs['profile_target'] == 'View profile':
-                #data = config.config['accounts'][config.config['current_login']]['profile']
-                #for key in data:
-                #    print(f'{key}: {data[key]}')
                 config.display_profile(config.config['current_login'])
                 inputs = print_profile_screen()
             elif inputs['profile_target'] == 'Edit profile title':
@@ -541,10 +508,5 @@ def user_loop() -> None:
             elif inputs['profile_target'] == 'Go Back':
                 inputs = print_main_screen()
 
-        '''
-        if 'experience_target' in inputs:
-            if 
-        if 'education_target' in inputs:
-        '''    
 if __name__ == '__main__':
     user_loop()

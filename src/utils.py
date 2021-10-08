@@ -153,16 +153,16 @@ class InCollegeConfig:
         firstname = user['firstname']
         lastname = user['lastname']
 
-        print(f'{firstname} {lastname}')
+        print('{} {}'.format(firstname, lastname))
         for key in profile:
             if key != 'experience' and key != 'education':
-                print(f'{key}: {profile[key]}')
+                print('{}: {}'.format(key, profile[key]))
             else:
-                print(f'{key}:')
+                print('{}:'.format(key))
                 for dict in profile[key]:
                     for key in dict:
                         if key == 'title':
                             print(dict[key])
                         else:
-                            print(f'   {key}: {dict[key]}')
+                            print('   {}: {}'.format(key, dict[key]))
                     print('')
