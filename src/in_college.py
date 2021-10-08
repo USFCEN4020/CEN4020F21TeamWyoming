@@ -212,9 +212,7 @@ def ask_job_posting() -> dict:
     ])
 
 def edit_profile(editSelection) -> None:
-    '''
-    Edit selection is the part of the profile to be edited that was selected in print_profile_screen() 
-    '''
+    ''' Edit selection is the part of the profile to be edited that was selected in print_profile_screen() '''
     profile = config.config['accounts'][config.config['current_login']]['profile']
     if editSelection != 'education' and editSelection != 'experience':
         input = menu.prompt([

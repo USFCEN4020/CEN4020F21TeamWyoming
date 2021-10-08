@@ -148,21 +148,25 @@ class InCollegeConfig:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
     def display_profile(self, username: str) -> None:
-        user = self.config['accounts'][username]
-        profile = self.config['accounts'][self.config['current_login']]['profile']
-        firstname = user['firstname']
-        lastname = user['lastname']
+        '''Displays a user profile'''
+        if self.username_exists(username):
+            user = self.config['accounts'][username]
+            profile = self.config['accounts'][self.config['current_login']]['profile']
+            firstname = user['firstname']
+            lastname = user['lastname']
 
-        print('{} {}'.format(firstname, lastname))
-        for key in profile:
-            if key != 'experience' and key != 'education':
-                print('{}: {}'.format(key, profile[key]))
-            else:
-                print('{}:'.format(key))
-                for dict in profile[key]:
-                    for key in dict:
-                        if key == 'title':
-                            print(dict[key])
-                        else:
-                            print('   {}: {}'.format(key, dict[key]))
-                    print('')
+            print('{} {}'.format(firstname, lastname))
+            for key in profile:
+                if key != 'experience' and key != 'education':
+                    print('{}: {}'.format(key, profile[key]))
+                else:
+                    print('{}:'.format(key))
+                    for dict in profile[key]:
+                        for key in dict:
+                            if key == 'title':
+                                print(dict[key])
+                            else:
+                                print('   {}: {}'.format(key, dict[key]))
+                        print('')
+        else:
+            print('User {} does not exist.'.format(username))
