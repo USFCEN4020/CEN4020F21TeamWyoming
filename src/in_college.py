@@ -211,16 +211,19 @@ def ask_job_posting() -> dict:
         menu.Text('job_salary', 'Enter salary (format: $/month)')
     ])
 
-def edit_profile(target) -> None:
+def edit_profile(editSelection) -> None:
+    '''
+    Edit selection is the part of the profile to be edited that was selected in print_profile_screen() 
+    '''
     profile = config.config['accounts'][config.config['current_login']]['profile']
-    if target != 'education' and target != 'experience':
+    if editSelection != 'education' and editSelection != 'experience':
         input = menu.prompt([
-            menu.Text('edit', 'Enter a new {}: '.format(target))
+            menu.Text('edit', 'Enter a new {}: '.format(editSelection))
         ])
-        profile[target] = input['edit']
+        profile[editSelection] = input['edit']
         config.save_profile(config.config['current_login'], profile)
-    elif target == 'experience':
-        if len(profile[target]) < 3:
+    elif editSelection == 'experience':
+        if len(profile[editSelection]) < 3:
             input = menu.prompt([
                 menu.Text('title', 'Enter title for experience'),
                 menu.Text('employer', 'Enter employer'),
@@ -229,17 +232,17 @@ def edit_profile(target) -> None:
                 menu.Text('location', 'Enter the location'),
                 menu.Text('description', 'Enter a description')
             ])
-            profile[target].append(input)
+            profile[editSelection].append(input)
             config.save_profile(config.config['current_login'], profile)
         else:
             print('Maximum Experiences')
-    elif target == 'education':
+    elif editSelection == 'education':
         input = menu.prompt([
             menu.Text('name', 'Enter the school name'),
             menu.Text('degree', 'Enter your degree'),
             menu.Text('years', 'Enter your years attended')
         ])
-        profile[target].append(input)
+        profile[editSelection].append(input)
         config.save_profile(config.config['current_login'], profile)
 
 def user_loop() -> None:
