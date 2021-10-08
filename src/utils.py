@@ -156,17 +156,17 @@ class InCollegeConfig:
             lastname = user['lastname']
 
             print('{} {}'.format(firstname, lastname))
-            for key in profile: #loops through all keys in profile
-                if key != 'experience' and key != 'education':
-                    print('{}: {}'.format(key, profile[key]))
+            for k, v in profile.items(): #loops through all keys in profile
+                if k != 'experience' and k != 'education':
+                    print('{}: {}'.format(k, v))
                 else:
-                    print('{}:'.format(key))
-                    for dict in profile[key]: #loops elements in the experience and education arrays
-                        for key in dict: #loops through all keys in a dict, which are an experience or education entry
-                            if key == 'title':
-                                print(dict[key])
+                    print('{}:'.format(k))
+                    for entry in v: #loops elements in the experience and education arrays
+                        for entry_k, entry_v in entry.items(): #loops through all kes in a entry, which are an experience or education entry
+                            if k == 'title':
+                                print(v)
                             else:
-                                print('   {}: {}'.format(key, dict[key]))
+                                print('   {}: {}'.format(entry_k, entry_v))
                         print('')
         else:
             print('User {} does not exist.'.format(username))
