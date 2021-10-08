@@ -156,13 +156,13 @@ class InCollegeConfig:
             lastname = user['lastname']
 
             print('{} {}'.format(firstname, lastname))
-            for key in profile:
+            for key in profile: #loops through all keys in profile
                 if key != 'experience' and key != 'education':
                     print('{}: {}'.format(key, profile[key]))
                 else:
                     print('{}:'.format(key))
-                    for dict in profile[key]:
-                        for key in dict:
+                    for dict in profile[key]: #loops elements in the experience and education arrays
+                        for key in dict: #loops through all keys in a dict, which are an experience or education entry
                             if key == 'title':
                                 print(dict[key])
                             else:
