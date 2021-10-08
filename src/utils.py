@@ -147,7 +147,7 @@ class InCollegeConfig:
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
-    def display_profile(self, username: str):
+    def display_profile(self, username: str) -> None:
         user = self.config['accounts'][username]
         profile = self.config['accounts'][self.config['current_login']]['profile']
         firstname = user['firstname']
