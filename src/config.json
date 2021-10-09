@@ -48,7 +48,7 @@
       "lastname": "admin",
       "language": "Spanish",
       "profile": {
-        "title": "",
+        "title": "Admin profile title",
         "major": "Administration",
         "university": "University of Admins",
         "about": "Hello I am an admin.",

@@ -163,10 +163,8 @@ class InCollegeConfig:
                     print('{}:'.format(k))
                     for entry in v: #loops elements in the experience and education arrays
                         for entry_k, entry_v in entry.items(): #loops through all kes in a entry, which are an experience or education entry
-                            if k == 'title':
-                                print(v)
-                            else:
-                                print('   {}: {}'.format(entry_k, entry_v))
+                            print('   {}: {}'.format(entry_k, entry_v))
                         print('')
+                        
         else:
             print('User {} does not exist.'.format(username))

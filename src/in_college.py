@@ -216,7 +216,7 @@ def edit_profile(editSelection) -> None:
     profile = config.config['accounts'][config.config['current_login']]['profile']
     if editSelection != 'education' and editSelection != 'experience':
         input = menu.prompt([
-            menu.Text('edit', 'Enter a new {}: '.format(editSelection))
+            menu.Text('edit', 'Enter a new {}'.format(editSelection))
         ])
         profile[editSelection] = input['edit']
         config.save_profile(config.config['current_login'], profile)
