@@ -218,7 +218,10 @@ def edit_profile(editSelection) -> None:
         input = menu.prompt([
             menu.Text('edit', 'Enter a new {}'.format(editSelection))
         ])
-        profile[editSelection] = input['edit']
+        edit = input['edit']
+        if editSelection == 'major'or editSelection == 'university':
+            edit = edit.title()
+        profile[editSelection] = edit
         config.save_profile(config.config['current_login'], profile)
     elif editSelection == 'experience':
         if len(profile[editSelection]) < 3:

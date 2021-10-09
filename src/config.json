@@ -49,8 +49,8 @@
       "language": "Spanish",
       "profile": {
         "title": "Admin profile title",
-        "major": "Administration",
-        "university": "University of Admins",
+        "major": "S\bScience F\bOf \b Administration",
+        "university": "University Of Admins",
         "about": "Hello I am an admin.",
         "experience": [
           {
