@@ -23,10 +23,19 @@ def init_testing():
                     "password": "admin",
                     "firstname": "admin",
                     "lastname": "admin",
-                    "language": "English"
+                    "language": "English",
+                    'profile': {
+                        'title': '',
+                        'major': '',
+                        'university': '',
+                        'about': '',
+                        'experience': [],
+                        'education': []
+                    }
                 }
             },
             "jobs": list(),
+            "current_login": "admin",
             "guest_control": {
                 "admin": ["InCollege Email"]
             }
@@ -97,3 +106,41 @@ def test_show_guest_control_week3(capsys):
     # Checking proper output.
     assert 'InCollege Email: ON' in captured.out 
     
+def test_save_profile_week4():
+    config = init_testing()
+    username = 'admin'
+    profile = {
+                'title': 'admin',
+                'major': 'CS',
+                'university': 'USF',
+                'about': 'It\'s me',
+                'experience': [{'e1': '1111'},
+                               {'e2': '2222'},
+                               {'e3': '3333'}
+                               ],
+                'education': [{'GED': 'home1'},
+                              {'Bachelor Degree': 'home2'},
+                              {'Master Degree': 'home3'}
+                              ]
+                }
+    config.save_profile(username, profile)
+    assert config.config['accounts'][username]['profile'] == profile
+
+def test_edit_profile_week4(capsys):
+    config = init_testing()
+    username = 'admin'
+    config.display_profile(username)
+    captured = capsys.readouterr()
+    assert 'admin admin'
+    'title: admin'
+    'major: CS'
+    'university: USF'
+    'about: It\'s me'
+    'experience:'
+    'e1: 1111'
+    'e2: 2222'
+    'e3: 3333'
+    'education:'
+    'GED: home1'
+    'Bachelor Degree: home2'
+    'Master Degree: home3' in captured.out

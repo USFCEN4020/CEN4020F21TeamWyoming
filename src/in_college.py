@@ -1,5 +1,5 @@
 from random import randrange as rand
-import inquirer as menu 
+import inquirer as menu
 import utils
 
 logged_in_user = "" # global variable for current login.
@@ -30,6 +30,7 @@ def print_main_screen() -> dict:
             'Search for a job',
             'Find someone',
             'Learn a new skill',
+            'Profile',
             'Useful Links',
             'InCollege Important Links',
             'Log out'
@@ -164,6 +165,23 @@ def print_internship_screen() -> dict:
         choices=['Post a job', 'Go back']
     )])
 
+def print_profile_screen() -> dict:
+    return menu.prompt([menu.List(
+        'profile_target',
+        message='profile screen',
+        choices=[
+            'View profile',
+            'Edit profile title',
+            'Edit profile major',
+            'Edit profile university',
+            'Edit profile about',
+            'Edit profile experience',
+            'Edit profile education',
+            'Go Back'
+        ]
+    )])
+
+
 def ask_for_login() -> dict:
     return menu.prompt([
         menu.Text('login_username', 'Enter your username'),
@@ -192,6 +210,41 @@ def ask_job_posting() -> dict:
         menu.Text('job_location', 'Enter location (city, state)'),
         menu.Text('job_salary', 'Enter salary (format: $/month)')
     ])
+
+def edit_profile(editSelection) -> None:
+    ''' Edit selection is the part of the profile to be edited that was selected in print_profile_screen() '''
+    profile = config.config['accounts'][config.config['current_login']]['profile']
+    if editSelection != 'education' and editSelection != 'experience':
+        input = menu.prompt([
+            menu.Text('edit', 'Enter a new {}'.format(editSelection))
+        ])
+        edit = input['edit']
+        if editSelection == 'major' or editSelection == 'university':
+            edit = edit.title()
+        profile[editSelection] = edit
+        config.save_profile(config.config['current_login'], profile)
+    elif editSelection == 'experience':
+        if len(profile[editSelection]) < 3:
+            input = menu.prompt([
+                menu.Text('title', 'Enter title for experience'),
+                menu.Text('employer', 'Enter employer'),
+                menu.Text('date_started', 'Enter date started'),
+                menu.Text('date_ended', 'Enter date ended'),
+                menu.Text('location', 'Enter the location'),
+                menu.Text('description', 'Enter a description')
+            ])
+            profile[editSelection].append(input)
+            config.save_profile(config.config['current_login'], profile)
+        else:
+            print('Maximum Experiences')
+    elif editSelection == 'education':
+        input = menu.prompt([
+            menu.Text('name', 'Enter the school name'),
+            menu.Text('degree', 'Enter your degree'),
+            menu.Text('years', 'Enter your years attended')
+        ])
+        profile[editSelection].append(input)
+        config.save_profile(config.config['current_login'], profile)
 
 def user_loop() -> None:
     """Main driver for the user interaction."""
@@ -244,7 +297,7 @@ def user_loop() -> None:
                 info = ask_job_posting().values(); print()
                 if config.create_posting(logged_in_user, *info):
                     print('✅ New posting for {} has been created!'.format(list(info)[0]))
-                if list(info)[-1].lower() == 'updaid': # Easter egg.
+                if list(info)[-1].lower() == 'unpaid': # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
             inputs = print_job_screen()
         if 'job_target' in inputs:
@@ -270,6 +323,9 @@ def user_loop() -> None:
                 inputs = print_main_screen()
             elif inputs['main_target'] == 'Learn a new skill':
                 inputs = print_skill_screen()
+            elif inputs['main_target'] == 'Profile':
+                #todo a function to view and edit profile
+                inputs = print_profile_screen()
             elif inputs['main_target'] == 'Useful Links':
                 inputs = print_ulinks_screen()
             elif inputs['main_target'] == 'InCollege Important Links':
@@ -431,6 +487,30 @@ def user_loop() -> None:
             config.show_lang(config.config['current_login'])
             inputs = print_ilinks_screen()
 
+        if 'profile_target' in inputs:
+            if inputs['profile_target'] == 'View profile':
+                config.display_profile(config.config['current_login'])
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile title':
+                edit_profile('title')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile major':
+                edit_profile('major')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile university':
+                edit_profile('university')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile about':
+                edit_profile('about')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile experience':
+                edit_profile('experience')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Edit profile education':
+                edit_profile('education')
+                inputs = print_profile_screen()
+            elif inputs['profile_target'] == 'Go Back':
+                inputs = print_main_screen()
 
 if __name__ == '__main__':
     user_loop()

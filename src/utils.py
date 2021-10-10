@@ -61,7 +61,15 @@ class InCollegeConfig:
                 'password': password,
                 'firstname': firstname,
                 'lastname': lastname,
-                'language': 'English'
+                'language': 'English',
+                'profile': {
+                    'title': '',
+                    'major': '', 
+                    'university': '', 
+                    'about': '', 
+                    'experience': [], 
+                    'education': []
+                }  
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -133,3 +141,30 @@ class InCollegeConfig:
         print('Your current language setting: ')
         print(self.config['accounts'][username]['language'])
 
+    def save_profile(self, username: str , profile: dict) -> None:
+        """Update profile of user and write changes to json file."""
+        self.config['accounts'][username]['profile'] = profile
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def display_profile(self, username: str) -> None:
+        '''Displays a user profile'''
+        if self.username_exists(username):
+            user = self.config['accounts'][username]
+            profile = self.config['accounts'][self.config['current_login']]['profile']
+            firstname = user['firstname']
+            lastname = user['lastname']
+
+            print('{} {}'.format(firstname, lastname))
+            for k, v in profile.items(): #loops through all keys in profile
+                if k != 'experience' and k != 'education':
+                    print('{}: {}'.format(k, v))
+                else:
+                    print('{}:'.format(k))
+                    for entry in v: #loops elements in the experience and education arrays
+                        for entry_k, entry_v in entry.items(): #loops through all kes in a entry, which are an experience or education entry
+                            print('   {}: {}'.format(entry_k, entry_v))
+                        print('')
+                        
+        else:
+            print('User {} does not exist.'.format(username))
