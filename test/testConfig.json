@@ -4,10 +4,19 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
-      "language": "English"
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      }
     }
   },
   "jobs": [],
+  "current_login": "admin",
   "guest_control": {
     "admin": [
       "InCollege Email"

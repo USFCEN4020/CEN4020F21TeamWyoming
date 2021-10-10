@@ -122,7 +122,7 @@
       }
     }
   },
-  "current_login": "admin",
+  "current_login": "",
   "guest_control": {
     "admin": [
       "InCollege Email",

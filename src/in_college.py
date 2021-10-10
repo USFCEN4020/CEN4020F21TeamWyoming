@@ -1,5 +1,5 @@
 from random import randrange as rand
-import inquirer as menu 
+import inquirer as menu
 import utils
 
 logged_in_user = "" # global variable for current login.
@@ -219,7 +219,7 @@ def edit_profile(editSelection) -> None:
             menu.Text('edit', 'Enter a new {}'.format(editSelection))
         ])
         edit = input['edit']
-        if editSelection == 'major'or editSelection == 'university':
+        if editSelection == 'major' or editSelection == 'university':
             edit = edit.title()
         profile[editSelection] = edit
         config.save_profile(config.config['current_login'], profile)
@@ -297,7 +297,7 @@ def user_loop() -> None:
                 info = ask_job_posting().values(); print()
                 if config.create_posting(logged_in_user, *info):
                     print('✅ New posting for {} has been created!'.format(list(info)[0]))
-                if list(info)[-1].lower() == 'updaid': # Easter egg.
+                if list(info)[-1].lower() == 'unpaid': # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
             inputs = print_job_screen()
         if 'job_target' in inputs:
@@ -324,7 +324,7 @@ def user_loop() -> None:
             elif inputs['main_target'] == 'Learn a new skill':
                 inputs = print_skill_screen()
             elif inputs['main_target'] == 'Profile':
-                #todo a function to view and edit profile 
+                #todo a function to view and edit profile
                 inputs = print_profile_screen()
             elif inputs['main_target'] == 'Useful Links':
                 inputs = print_ulinks_screen()
