@@ -47,7 +47,7 @@ class InCollegeConfig:
         self, username: str, password: str, firstname: str, lastname: str
     ) -> bool:
         """Validate user information and create new entry in the config."""
-        num_users_flag = len(self.config['accounts']) >= 5
+        num_users_flag = len(self.config['accounts']) >= 10
         password_flag = not self.password_valid(password)
         username_flag = self.username_exists(username)
         if num_users_flag: 
@@ -168,3 +168,6 @@ class InCollegeConfig:
                         
         else:
             print('User {} does not exist.'.format(username))
+
+    
+    
