@@ -69,7 +69,8 @@ class InCollegeConfig:
                     'about': '', 
                     'experience': [], 
                     'education': []
-                }  
+                },
+                'friends': []
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -169,5 +170,15 @@ class InCollegeConfig:
         else:
             print('User {} does not exist.'.format(username))
 
-    
-    
+    def search_student(self, key: str, value: str):
+        '''Returns an array of all the accounts found based on a key and value.\n\nvalid keys = {"lastname", "major", "university"}\n\nreturns -1 if the key is invalid'''
+        valid_keys = ["lastname", "major", "university"]
+        accounts = self.config['accounts']
+        accountsFound = []
+        if key in valid_keys:
+            for account in accounts.values():
+                if account[key] == value:
+                    accountsFound.append(account)
+            return accountsFound
+        else:
+            return -1

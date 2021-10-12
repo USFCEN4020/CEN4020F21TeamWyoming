@@ -514,4 +514,4 @@ def user_loop() -> None:
 
 if __name__ == '__main__':
     # user_loop()
-    print('hello')
+    print(config.search_student('lastame', 'admin'))

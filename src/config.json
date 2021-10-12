@@ -77,7 +77,8 @@
             "years": "4"
           }
         ]
-      }
+      },
+      "friends": []
     },
     "test": {
       "password": "tesT123!",
@@ -91,7 +92,8 @@
         "about": "",
         "experience": [],
         "education": []
-      }
+      },
+      "friends": []
     },
     "new": {
       "password": "new2New!new",
@@ -105,7 +107,8 @@
         "about": "",
         "experience": [],
         "education": []
-      }
+      },
+      "friends": []
     },
     "admin2": {
       "password": "admin2DF$Ds",
@@ -119,7 +122,8 @@
         "about": "",
         "experience": [],
         "education": []
-      }
+      },
+      "friends": []
     }
   },
   "current_login": "",
