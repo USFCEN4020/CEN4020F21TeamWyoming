@@ -513,4 +513,5 @@ def user_loop() -> None:
                 inputs = print_main_screen()
 
 if __name__ == '__main__':
-    user_loop()
+    # user_loop()
+    print(config.search_student('university', 'University of Testing'))

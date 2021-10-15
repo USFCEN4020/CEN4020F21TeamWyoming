@@ -47,7 +47,7 @@ class InCollegeConfig:
         self, username: str, password: str, firstname: str, lastname: str
     ) -> bool:
         """Validate user information and create new entry in the config."""
-        num_users_flag = len(self.config['accounts']) >= 5
+        num_users_flag = len(self.config['accounts']) >= 10
         password_flag = not self.password_valid(password)
         username_flag = self.username_exists(username)
         if num_users_flag: 
@@ -69,7 +69,8 @@ class InCollegeConfig:
                     'about': '', 
                     'experience': [], 
                     'education': []
-                }  
+                },
+                'friends': []
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -168,3 +169,18 @@ class InCollegeConfig:
                         
         else:
             print('User {} does not exist.'.format(username))
+
+    def search_student(self, key: str, value: str):
+        '''Returns an array of all the accounts found based on a key and value.\n\nvalid keys = {"lastname", "major", "university"}\n\nreturns -1 if the key is invalid'''
+        valid_keys = ["lastname", "major", "university"]
+        accounts = self.config['accounts']
+        accountsFound = []
+        if key in valid_keys:
+            for account in accounts.values():
+                if key == 'lastname' and account[key] == value:
+                    accountsFound.append(account)
+                elif account['profile'][key] == value:
+                    accountsFound.append(account)
+            return accountsFound
+        else:
+            return -1
