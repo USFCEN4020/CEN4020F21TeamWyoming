@@ -195,6 +195,11 @@ class InCollegeConfig:
                 self.display_profile(friend_username)
                 print(' ')
 
+    def save_friends(self, username: str, friendList: list) -> None:
+        """Update friends list and write to json"""
+        self.config['accounts'][username]['friends'] = friendList
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
 #todo: Send friend request
     #def send_friend_request(self, target_user: str, sender: str)
 

@@ -96,7 +96,8 @@
         "education": []
       },
       "friends": [
-        "admin"
+        "admin",
+        "new"
       ],
       "friend_requests": []
     },
@@ -113,7 +114,7 @@
         "experience": [],
         "education": []
       },
-      "friends": [],
+      "friends": ["test"],
       "friend_requests": []
     },
     "admin2": {
