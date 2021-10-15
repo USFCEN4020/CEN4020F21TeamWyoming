@@ -177,7 +177,9 @@ class InCollegeConfig:
         accountsFound = []
         if key in valid_keys:
             for account in accounts.values():
-                if account[key] == value:
+                if key == 'lastname' and account[key] == value:
+                    accountsFound.append(account)
+                elif account['profile'][key] == value:
                     accountsFound.append(account)
             return accountsFound
         else:
