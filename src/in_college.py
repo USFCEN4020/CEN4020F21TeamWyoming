@@ -30,6 +30,7 @@ def print_main_screen() -> dict:
             'Search for a job',
             'Find someone',
             'Learn a new skill',
+            'Friends',
             'Profile',
             'Useful Links',
             'InCollege Important Links',
@@ -181,6 +182,16 @@ def print_profile_screen() -> dict:
         ]
     )])
 
+def print_friend_screen() -> dict:
+    return menu.prompt([menu.List(
+        'friend_target',
+        message='Friend screen',
+        choices = [
+            'Show my Network',
+            'Search for someone',
+            'Go Back',
+        ]
+    )])
 
 def ask_for_login() -> dict:
     return menu.prompt([
@@ -323,6 +334,8 @@ def user_loop() -> None:
                 inputs = print_main_screen()
             elif inputs['main_target'] == 'Learn a new skill':
                 inputs = print_skill_screen()
+            elif inputs['main_target'] == 'Friends':
+                inputs = print_friend_screen()
             elif inputs['main_target'] == 'Profile':
                 #todo a function to view and edit profile
                 inputs = print_profile_screen()
@@ -365,6 +378,7 @@ def user_loop() -> None:
                 inputs = print_ulinks_screen()
             elif inputs['login_target'] == 'InCollege Important Links':
                 inputs = print_ilinks_screen()
+        
         if 'ulinks_target' in inputs:
             if inputs['ulinks_target'] == 'General':
                 inputs = print_general_screen()
@@ -512,6 +526,17 @@ def user_loop() -> None:
             elif inputs['profile_target'] == 'Go Back':
                 inputs = print_main_screen()
 
+        if 'friend_target' in inputs:
+            if inputs ['friend_target'] == 'Show my Network':
+                print("Your Connections")
+                config.display_friends(config.config['current_login'])
+                inputs = print_friend_screen()
+            elif inputs ['friend_target'] == 'Add Friend':
+                print('Under construction')
+                inputs = print_friend_screen()
+            elif inputs['friend_target'] == 'Go Back':
+                inputs = print_main_screen()
+
 if __name__ == '__main__':
-    # user_loop()
-    print(config.search_student('university', 'University of Testing'))
+    user_loop()
+    #print(config.search_student('university', 'University of Testing'))

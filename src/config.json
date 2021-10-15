@@ -78,7 +78,9 @@
           }
         ]
       },
-      "friends": []
+      "friends": [
+        "test"
+      ]
     },
     "test": {
       "password": "tesT123!",
@@ -86,14 +88,17 @@
       "lastname": "LaSt",
       "language": "English",
       "profile": {
-        "title": "",
+        "title": "I a\b\b\bThis a test profile",
         "major": "Testing",
         "university": "University of Testing",
-        "about": "",
+        "about": "Hello I am a test profile",
         "experience": [],
         "education": []
       },
-      "friends": []
+      "friends": [
+        "admin"
+      ],
+      "friend_requests": []
     },
     "new": {
       "password": "new2New!new",
@@ -108,7 +113,8 @@
         "experience": [],
         "education": []
       },
-      "friends": []
+      "friends": [],
+      "friend_requests": []
     },
     "admin2": {
       "password": "admin2DF$Ds",
@@ -123,10 +129,11 @@
         "experience": [],
         "education": []
       },
-      "friends": []
+      "friends": [],
+      "friend_requests": []
     }
   },
-  "current_login": "",
+  "current_login": "test",
   "guest_control": {
     "admin": [
       "InCollege Email",

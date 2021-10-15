@@ -70,7 +70,8 @@ class InCollegeConfig:
                     'experience': [], 
                     'education': []
                 },
-                'friends': []
+                'friends': [],
+                'friend_requests': []
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -152,7 +153,7 @@ class InCollegeConfig:
         '''Displays a user profile'''
         if self.username_exists(username):
             user = self.config['accounts'][username]
-            profile = self.config['accounts'][self.config['current_login']]['profile']
+            profile = user['profile']
             firstname = user['firstname']
             lastname = user['lastname']
 
@@ -184,3 +185,19 @@ class InCollegeConfig:
             return accountsFound
         else:
             return -1
+
+    def display_friends(self, username: str):
+        user = self.config['accounts'][username]
+        if len(user['friends']) == 0:
+            print('None')
+        else:
+            for friend_username in user['friends']:
+                self.display_profile(friend_username)
+                print(' ')
+
+#todo: Send friend request
+    #def send_friend_request(self, target_user: str, sender: str)
+
+#todo: Save friend request
+    #def save_friend_request(sself, username: str):
+    
