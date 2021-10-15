@@ -190,21 +190,50 @@ def print_friend_screen() -> dict:
         choices = [
             'Show my Network',
             'Search for someone',
+            'View Friend Requests',
             'Go Back',
         ]
     )])
 
 def print_friend_list_screen(key) -> dict:
     user = config.config['accounts'][config.config['current_login']]
-    listOfAccounts = user[key]
     listOfChoices = []
-    if len(listOfAccounts) == 0:
-        listOfChoices.append('No Connections')
-    else:    
-        for account in listOfAccounts:
-            listOfChoices.append(f'View profile of {account}')
-            listOfChoices.append(f'Disconnect from {account}')
+    if key == 'friends':           #Handles friend list
+        listOfAccounts = user[key]
+        
+        if len(listOfAccounts) == 0:
+            listOfChoices.append('No Connections')
+        else:    
+            for account in listOfAccounts:
+                listOfChoices.append(f'View profile of {account}')
+                listOfChoices.append(f'Disconnect from {account}')
+    elif key == 'friend_requests':  #This secition handles pending friend requests
+        listOfRequests = user[key]
+        if len(listOfRequests) == 0:
+            listOfChoices.append('No Requests')
+        else:
+            for account in listOfRequests:
+                listOfChoices.append(f'Accept friend request of {account}')
+                listOfChoices.append(f'Decline friend request of {account}')
+
+    else:                            #Handles searching for someone to add to friend list
+        inputs = menu.prompt([
+            menu.Text('key', 'Search by: lastname, university, or major'),
+            menu.Text('value', 'Enter search parameter')
+        ])
+
+        key = inputs['key']
+        value = inputs['value']
+        print(f'{key}   {value}')
+
+        results = config.search_student(inputs['key'], inputs['value'])
+        if len(results) == 0:
+            listOfChoices.append('No results')
+        else:
+            for account in results:
+                listOfChoices.append(f'Request to connect with {account}')
     listOfChoices.append('Go Back')
+
     return menu.prompt([menu.List(
         'friend_list_target',
         message='to be changed',
@@ -553,32 +582,42 @@ def user_loop() -> None:
 
         if 'friend_target' in inputs:
             if inputs ['friend_target'] == 'Show my Network':
-                print("Your Connections")
                 inputs = print_friend_list_screen('friends')
-                #inputs = print_friend_screen()
             elif inputs ['friend_target'] == 'Search for someone':
                 
-                inputs = print_friend_screen()
+                inputs = print_friend_list_screen('search')
+            elif inputs['friend_target'] == 'View Friend Requests':
+                inputs = print_friend_list_screen('friend_requests')
             elif inputs['friend_target'] == 'Go Back':
                 inputs = print_main_screen()
 
         if 'friend_list_target' in inputs:
             if inputs['friend_list_target'][0] == 'N':
-                inputs = print_friend_list_screen('friends')
+                inputs = print_friend_screen()
             elif inputs['friend_list_target'][0] == 'V':
                 config.display_profile(inputs['friend_list_target'][16:])
                 inputs = print_friend_list_screen('friends')
-            elif inputs['friend_list_target'][0] == 'D': #Remove from friend list
+            elif inputs['friend_list_target'][0] == 'Di': #Remove from friend list
                 currentUser = config.config['current_login']
                 currentUserFriendList = config.config['accounts'][currentUser]['friends']
                 friendUsername = inputs['friend_list_target'][16:]
                 friendFriendList = config.config['accounts'][friendUsername]['friends']
-                
+
                 edit_friends_list(currentUser, currentUserFriendList, friendUsername, friendFriendList)
                 inputs = print_friend_list_screen('friends')
+            elif inputs['friend_list_target'][0] == 'A':
+                config.accept_friend_request(config.config['current_login'], inputs['friend_list_target'][25:])
+                inputs = print_friend_screen()
+            elif inputs['friend_list_target'][0] == 'De':
+                config.decline_friend_request(config.config['current_login'], inputs['friend_list_target'][26:])
+                inputs = print_friend_screen()
+            elif inputs['friend_list_target'][0] == 'R':
+                user = config.config['current_login']
+                config.send_friend_request(inputs['friend_list_target'][24:], user)
+                inputs = print_friend_screen()
             elif inputs['friend_list_target'] == 'Go Back':
                 inputs = print_friend_screen()
                 
 if __name__ == '__main__':
     user_loop()
-    #print(config.search_student('university', 'University of Testing'))
+    #print(config.search_student('university', 'University Of Admins'))

@@ -172,19 +172,20 @@ class InCollegeConfig:
             print('User {} does not exist.'.format(username))
 
     def search_student(self, key: str, value: str):
-        '''Returns an array of all the accounts found based on a key and value.\n\nvalid keys = {"lastname", "major", "university"}\n\nreturns -1 if the key is invalid'''
+        '''Returns an array of all the account usernames found based on a key and value.\n\nvalid keys = {"lastname", "major", "university"}\n\nreturns -1 if the key is invalid'''
         valid_keys = ["lastname", "major", "university"]
         accounts = self.config['accounts']
         accountsFound = []
+    
         if key in valid_keys:
-            for account in accounts.values():
-                if key == 'lastname' and account[key] == value:
-                    accountsFound.append(account)
-                elif account['profile'][key] == value:
-                    accountsFound.append(account)
-            return accountsFound
-        else:
-            return -1
+            for username, data in accounts.items():
+                if username == self.config['current_login']:
+                    continue
+                if key == 'lastname' and data[key] == value:
+                    accountsFound.append(username)
+                elif data['profile'][key] == value:
+                    accountsFound.append(username)
+        return accountsFound
 
     def display_friends(self, username: str):
         user = self.config['accounts'][username]
@@ -200,9 +201,24 @@ class InCollegeConfig:
         self.config['accounts'][username]['friends'] = friendList
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
-#todo: Send friend request
-    #def send_friend_request(self, target_user: str, sender: str)
 
-#todo: Save friend request
-    #def save_friend_request(sself, username: str):
+    def send_friend_request(self, target_user: str, sender: str) -> None:
+        """Update friend_requests list and write to json"""
+        self.config['accounts'][target_user]['friend_requests'].append(sender)
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def accept_friend_request(self, user: str, acceptedUsername: str) -> None:
+        self.config['accounts'][user]['friends'].append(acceptedUsername)
+        self.config['accounts'][user]['friend_requests'].remove(acceptedUsername)
+
+        self.config['accounts'][acceptedUsername]['friends'].append(user)
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def decline_friend_request(self, user: str, declinedUsername: str) -> None:
+        self.config['accounts'][user]['friend_requests'].remove(declinedUsername)
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
     

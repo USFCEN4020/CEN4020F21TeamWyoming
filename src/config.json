@@ -49,7 +49,7 @@
       "language": "Spanish",
       "profile": {
         "title": "Admin profile title",
-        "major": "S\bScience F\bOf \b Administration",
+        "major": "Administration",
         "university": "University Of Admins",
         "about": "Hello I am an admin.",
         "experience": [
@@ -80,7 +80,8 @@
       },
       "friends": [
         "test"
-      ]
+      ],
+      "friend_requests": []
     },
     "test": {
       "password": "tesT123!",
@@ -96,8 +97,8 @@
         "education": []
       },
       "friends": [
-        "admin",
-        "new"
+        "new",
+        "admin"
       ],
       "friend_requests": []
     },
@@ -114,7 +115,9 @@
         "experience": [],
         "education": []
       },
-      "friends": ["test"],
+      "friends": [
+        "test"
+      ],
       "friend_requests": []
     },
     "admin2": {
@@ -134,7 +137,7 @@
       "friend_requests": []
     }
   },
-  "current_login": "test",
+  "current_login": "admin",
   "guest_control": {
     "admin": [
       "InCollege Email",
