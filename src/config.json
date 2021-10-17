@@ -78,9 +78,7 @@
           }
         ]
       },
-      "friends": [
-        "test"
-      ],
+      "friends": [],
       "friend_requests": []
     },
     "test": {
@@ -97,8 +95,7 @@
         "education": []
       },
       "friends": [
-        "new",
-        "admin"
+        "new"
       ],
       "friend_requests": []
     },
@@ -137,7 +134,7 @@
       "friend_requests": []
     }
   },
-  "current_login": "admin",
+  "current_login": "test",
   "guest_control": {
     "admin": [
       "InCollege Email",

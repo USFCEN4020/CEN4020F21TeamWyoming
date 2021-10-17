@@ -179,7 +179,7 @@ class InCollegeConfig:
     
         if key in valid_keys:
             for username, data in accounts.items():
-                if username == self.config['current_login']:
+                if username == self.config['current_login'] or self.config['current_login'] in self.config['accounts'][username]['friends']:
                     continue
                 if key == 'lastname' and data[key] == value:
                     accountsFound.append(username)

@@ -596,7 +596,7 @@ def user_loop() -> None:
             elif inputs['friend_list_target'][0] == 'V':
                 config.display_profile(inputs['friend_list_target'][16:])
                 inputs = print_friend_list_screen('friends')
-            elif inputs['friend_list_target'][0] == 'Di': #Remove from friend list
+            elif inputs['friend_list_target'][0:2] == 'Di': #Remove from friend list
                 currentUser = config.config['current_login']
                 currentUserFriendList = config.config['accounts'][currentUser]['friends']
                 friendUsername = inputs['friend_list_target'][16:]
@@ -607,7 +607,7 @@ def user_loop() -> None:
             elif inputs['friend_list_target'][0] == 'A':
                 config.accept_friend_request(config.config['current_login'], inputs['friend_list_target'][25:])
                 inputs = print_friend_screen()
-            elif inputs['friend_list_target'][0] == 'De':
+            elif inputs['friend_list_target'][0:2] == 'De':
                 config.decline_friend_request(config.config['current_login'], inputs['friend_list_target'][26:])
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'][0] == 'R':
