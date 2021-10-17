@@ -183,7 +183,7 @@ class InCollegeConfig:
                     continue
                 if key == 'lastname' and data[key] == value:
                     accountsFound.append(username)
-                elif data['profile'][key] == value:
+                elif (key == 'major' or key == 'university') and data['profile'][key] == value:
                     accountsFound.append(username)
         return accountsFound
 

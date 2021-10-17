@@ -189,7 +189,7 @@ def print_friend_screen() -> dict:
         message='Friend screen',
         choices = [
             'Show my Network',
-            'Search for someone',
+            'Search for Someone',
             'View Friend Requests',
             'Go Back',
         ]
@@ -391,7 +391,6 @@ def user_loop() -> None:
             elif inputs['main_target'] == 'Friends':
                 inputs = print_friend_screen()
             elif inputs['main_target'] == 'Profile':
-                #todo a function to view and edit profile
                 inputs = print_profile_screen()
             elif inputs['main_target'] == 'Useful Links':
                 inputs = print_ulinks_screen()
@@ -583,7 +582,7 @@ def user_loop() -> None:
         if 'friend_target' in inputs:
             if inputs ['friend_target'] == 'Show my Network':
                 inputs = print_friend_list_screen('friends')
-            elif inputs ['friend_target'] == 'Search for someone':
+            elif inputs ['friend_target'] == 'Search for Someone':
                 
                 inputs = print_friend_list_screen('search')
             elif inputs['friend_target'] == 'View Friend Requests':
@@ -620,4 +619,3 @@ def user_loop() -> None:
                 
 if __name__ == '__main__':
     user_loop()
-    #print(config.search_student('university', 'University Of Admins'))
