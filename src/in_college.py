@@ -164,7 +164,14 @@ def print_internship_screen() -> dict:
     return menu.prompt([menu.List(
         'internship_target',
         message='[INTERNSHIPS] What would you like?',
-        choices=['Post a job', 'Go back']
+        choices=[
+            'Post a job', 
+            'Apply for a job',
+            'Show my applications',
+            'Show my postings',
+            'Show my saved jobs',
+            'Go back'
+        ]
     )])
 
 def print_profile_screen() -> dict:
@@ -191,8 +198,74 @@ def print_friend_screen() -> dict:
             'Show my Network',
             'Search for Someone',
             'View Friend Requests',
-            'Go Back',
+            'Go Back'
         ]
+    )])
+
+def print_job_list_screen():
+    # Get current login to not display already applied jobs.
+    user = config.config['accounts'][config.config['current_login']]
+    return menu.prompt([menu.List(
+        'posting_target',
+        message='Choose a job that you want to learn more about',
+        # Get list of proper jobs and make them menu choices.
+        choices=config.get_list_jobs(user) + ['Go Back']
+    )])
+
+def print_postings_list_screen():
+    user = config.config['accounts'][config.config['current_login']]
+    return menu.prompt([menu.List(
+        'my_posting_target',
+        message='Choose your posting for more information',
+        choices=config.get_list_jobs(user, my_posts=True) + ['Go Back']
+    )])
+    
+def print_application_list_screen():
+    user = config.config['accounts'][config.config['current_login']]
+    return menu.prompt([menu.List(
+        'my_application_target',
+        message='Choose your application',
+        choices=config.get_list_jobs(user, my_apps=True) + ['Go Back']
+    )])
+
+def print_saved_list_screen():
+    user = config.config['accounts'][config.config['current_login']]
+    return menu.prompt([menu.List(
+        'saved_list_target',
+        message='Choose from your saved posts',
+        choices=config.get_list_jobs(user, saved=True) + ['Go Back']
+    )])
+
+def print_unsave_posting_screen(job_id: str):
+    return menu.prompt([menu.List(
+        'unsave_posting_target',
+        message='What would you like to do with your posting',
+        choices=['Delete this saved posting: ' + job_id, 'Go Back']
+    )])
+
+def print_delete_posting_screen(job_id: str):
+    return menu.prompt([menu.List(
+        'delete_posting_target',
+        message='What would you like to do with your posting',
+        choices=['Delete this posting: ' + job_id, 'Go Back']
+    )])
+
+def print_application_screen(job_id: str):
+    return menu.prompt([menu.List(
+        'application_target',
+        message='What would you like to do',
+        choices=[
+            'Apply for this job: ' + job_id, 
+            'Save this job: ' + job_id, 
+            'Go Back'
+        ]
+    )])
+
+def print_withdrawal_screen(job_id: str):
+    return menu.prompt([menu.List(
+        'withdraw_target',
+        message='What would you like to do',
+        choices=['Withdraw from this job: ' + job_id, 'Go Back']
     )])
 
 def print_friend_list_screen(key) -> dict:
@@ -357,6 +430,64 @@ def user_loop() -> None:
                     inputs = print_connect_screen()
             else:
                 inputs = print_welcome_screen()
+        if 'my_application_target' in inputs:
+            if inputs['my_application_target'] == 'Go Back':
+                inputs = print_internship_screen()
+            else:
+                job_id = inputs['my_application_target'].split()[0]
+                config.display_job(job_id)
+                inputs = print_withdrawal_screen(job_id)
+        if 'withdraw_target' in inputs:
+            if inputs['withdraw_target'] != 'Go Back':
+                user = config.config['current_login']
+                job_id = inputs['withdraw_target'].split()[-1]
+                config.withdraw_application(user, job_id)
+            inputs = print_application_list_screen()
+        if 'application_target' in inputs:
+            if inputs['application_target'] != 'Go Back':
+                user = config.config['current_login']
+                # Grab the job id listed in the string from choices.
+                job_id = inputs['application_target'].split()[-1]
+                # Apply for a job by adding it to the list of user apps.
+                if inputs['application_target'].split()[0] == 'Apply':
+                    config.submit_application(user, job_id)
+                else:
+                    config.save_application(user, job_id)
+            # Go back in any case.
+            inputs = print_job_list_screen()
+        if 'posting_target' in inputs:
+            if inputs['posting_target'] == 'Go Back':
+                inputs = print_internship_screen()
+            else:
+                job_id = inputs['posting_target'].split()[0]
+                config.display_job(job_id)
+                inputs = print_application_screen(job_id)
+        if 'delete_posting_target' in inputs:
+            if inputs['delete_posting_target'] != 'Go Back':
+                user = config.config['current_login']
+                job_id = inputs['delete_posting_target'].split()[-1]
+                config.delete_posting(job_id)
+            inputs = print_postings_list_screen()
+        if 'my_posting_target' in inputs:
+            if inputs['my_posting_target'] == 'Go Back':
+                inputs = print_internship_screen()
+            else:
+                job_id = inputs['my_posting_target'].split()[0]
+                config.display_job(job_id)
+                inputs = print_delete_posting_screen(job_id)
+        if 'unsave_posting_target' in inputs:
+            if inputs['unsave_posting_target'] != 'Go Back':
+                user = config.config['current_login']
+                job_id = inputs['unsave_posting_target'].split()[-1]
+                config.unsave_posting(job_id)
+            inputs = print_saved_list_screen()
+        if 'saved_list_target' in inputs:
+            if inputs['saved_list_target'] == 'Go Back':
+                inputs = print_internship_screen()
+            else:
+                job_id = inputs['saved_list_target'].split()[0]
+                config.display_job(job_id)
+                inputs = print_unsave_posting_screen(job_id)
         if 'internship_target' in inputs:
             if inputs['internship_target'] == 'Post a job':
                 info = ask_job_posting().values(); print()
@@ -364,7 +495,17 @@ def user_loop() -> None:
                     print('✅ New posting for {} has been created!'.format(list(info)[0]))
                 if list(info)[-1].lower() == 'unpaid': # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
-            inputs = print_job_screen()
+                inputs = print_internship_screen()
+            elif inputs['internship_target'] == 'Apply for a job':
+                inputs = print_job_list_screen()
+            elif inputs['internship_target'] == 'Show my applications':
+                inputs = print_application_list_screen()
+            elif inputs['internship_target'] == 'Show my postings':
+                inputs = print_postings_list_screen()
+            elif inputs['internship_target'] == 'Show my saved jobs':
+                inputs = print_saved_list_screen()
+            else:
+                inputs = print_job_screen()
         if 'job_target' in inputs:
             if inputs['job_target'] == 'Internships':
                 inputs = print_internship_screen()
