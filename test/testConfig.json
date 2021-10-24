@@ -12,7 +12,28 @@
         "about": "",
         "experience": [],
         "education": []
-      }
+      },
+      "friends": [],
+      "friend_requests": []
+    },
+    "test": {
+      "password": "tesT123!",
+      "firstname": "first",
+      "lastname": "LaSt",
+      "language": "English",
+      "profile": {
+        "title": "I a\b\b\bThis a test profile",
+        "major": "Testing",
+        "university": "University of Testing",
+        "about": "Hello I am a test profile",
+        "experience": [],
+        "education": []
+      },
+      "friends": [
+        "new",
+        "admin"
+      ],
+      "friend_requests": []
     }
   },
   "jobs": [],
