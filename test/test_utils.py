@@ -31,7 +31,28 @@ def init_testing():
                         'about': '',
                         'experience': [],
                         'education': []
-                    }
+                    },
+                    "friends": [],
+                    "friend_requests": []
+                },
+                "test": {
+                    "password": "tesT123!",
+                    "firstname": "first",
+                    "lastname": "LaSt",
+                    "language": "English",
+                    "profile": {
+                        "title": "I a\b\b\bThis a test profile",
+                        "major": "Testing",
+                        "university": "University of Testing",
+                        "about": "Hello I am a test profile",
+                        "experience": [],
+                        "education": []
+                    },
+                    "friends": [
+                        "new",
+                        "admin"
+                    ],
+                    "friend_requests": []
                 }
             },
             "jobs": list(),
@@ -144,3 +165,36 @@ def test_edit_profile_week4(capsys):
     'GED: home1'
     'Bachelor Degree: home2'
     'Master Degree: home3' in captured.out
+
+def test_save_friends_week5():
+    config = init_testing()
+    username = 'admin'
+    friend_list = ['test']
+    config.save_friends(username, friend_list)
+    assert config.config['accounts'][username]['friends'] == friend_list
+
+def test_send_friend_request_week5():
+    config = init_testing()
+    target_user = 'admin'
+    sender = 'test'
+    config.send_friend_request(target_user, sender)
+    assert 'test' in config.config['accounts'][target_user]['friend_requests']
+
+def test_accept_friend_request_week5():
+    config = init_testing()
+    config.send_friend_request('admin', 'test')
+    user = 'admin'
+    accepted_username = 'test'
+    config.accept_friend_request(user, accepted_username)
+    assert accepted_username in config.config['accounts'][user]['friends']
+    assert accepted_username not in config.config['accounts'][user]['friend_requests']
+    assert user in config.config['accounts'][accepted_username]['friends']
+
+def test_decline_friend_request_week5():
+    config = init_testing()
+    config.send_friend_request('admin', 'test')
+    user = 'admin'
+    declined_username = 'test'
+    config.decline_friend_request(user, declined_username)
+    assert declined_username not in config.config['accounts'][user]['friend_requests']
+
