@@ -1,5 +1,6 @@
 import json
 import string
+from random import randint
 
 class InCollegeConfig:
     """
@@ -71,7 +72,9 @@ class InCollegeConfig:
                     'education': []
                 },
                 'friends': [],
-                'friend_requests': []
+                'friend_requests': [],
+                'applications': [],
+                'saved_jobs': []
             }
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
@@ -88,16 +91,27 @@ class InCollegeConfig:
         salary: str
     ) -> bool:
         """Create a job posting and update the json config file."""
+        # Inefficient, but creates a new id by storing all previous in a set.
+        ids = set()
+        for job in self.config['jobs']:
+            ids.add(job['id'])
+        # Generate new id while it clashes with existing ones.
+        new_id = randint(1, 100)
+        while new_id in ids:
+            new_id = randint(1, 100)
+        fullname = self.config['accounts'][author]['firstname'] + ' ' + \
+                self.config['accounts'][author]['firstname']
         self.config['jobs'].append({
-            'author': author,
+            'author': fullname,
             'title': title,
             'description': description,
             'employer': employer,
             'location': location,
-            'salary': salary
+            'salary': salary,
+            'id': str(new_id)
         })
-        num_jobs_flag = len(self.config['jobs']) >= 5
-        if num_jobs_flag:
+
+        if len(self.config['jobs']) >= 10:
             print('ERROR: Too many jobs in the system. Try again later.')
             return False
         else:
@@ -105,6 +119,26 @@ class InCollegeConfig:
                 json.dump(self.config, f, ensure_ascii=False, indent=2)
             return True
 
+    def delete_posting(self, job_id: str):
+        # Remove job from available postings.
+        for job in self.config['jobs']:
+            if job['id'] == job_id:
+                self.config['jobs'].remove(job)
+        # Remove job from user's application lists.
+        for user in self.config['accounts']:
+            if job_id in self.config['accounts'][user]['applications']:
+                self.config['accounts'][user]['applications'].remove(job_id)
+        # Save updated config.
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+        # Print success message.
+        print(f'✅ Success! Posting {job_id} and associated apps were removed.')
+
+    def unsave_posting(self, job_id: str):
+        user = self.config['accounts'][self.config['current_login']]
+        user['saved_jobs'].remove(job_id)
+        print(f'✅ Success! Posting {job_id} has been removed from saved.')
+        
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
         self.config['current_login'] = username
@@ -156,7 +190,6 @@ class InCollegeConfig:
             profile = user['profile']
             firstname = user['firstname']
             lastname = user['lastname']
-
             print('{} {}'.format(firstname, lastname))
             for k, v in profile.items(): #loops through all keys in profile
                 if k != 'experience' and k != 'education':
@@ -170,6 +203,102 @@ class InCollegeConfig:
                         
         else:
             print('User {} does not exist.'.format(username))
+
+    def display_all_jobs(self) -> None:
+        """Display job information based on requested job id."""
+        # The job is guaranteed to exist, since it's retrieved from config.
+        for job in self.config['jobs']:
+            self.display_job(job['id'])
+            print('\n')
+
+
+    def display_job(self, job_id: str) -> None:
+        """Display job information based on requested job id."""
+        # The job is guaranteed to exist, since it's retrieved from config.
+        for job in self.config['jobs']:
+            if job['id'] == job_id:
+                if job_id in self.config['accounts'][self.config['current_login']]['applications']:
+                    print('YOU HAVE APPLIED FOR THIS JOB')
+                print('Job information is displayed below:')
+                print(f'✍️  Posted by: {job["author"]}')
+                print(f'🧑 Role: {job["title"]}')
+                print(f'📝 Description: {job["description"]}')
+                print(f'🕴️  Employer: {job["employer"]}')
+                print(f'🏙️  Location: {job["location"]}')
+                print(f'💰 Salary: {job["salary"]}')
+
+                
+    def submit_application(self, user: str, job_id: str, grad_date: str, start_date: str, brief: str) -> None:
+        """Apply for a job by adding the id into user's application list."""
+        print(f'✅ Success! You have applied to the job {job_id}! 🎉')
+        if job_id in self.config['accounts'][user]['applications']:
+            print('You have applied this job.\n')
+            return
+        # application = {job_id : [grad_date, start_date, brief]}
+        # self.config['accounts'][user]['applications'].append(application)
+        self.config['accounts'][user]['applications'].append(job_id)
+        self.config['accounts'][user]['applications'].append([grad_date, start_date, brief])
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+    
+    def withdraw_application(self, user: str, job_id: str) -> None:
+        """Withdraw application by removing it from user's application list."""
+        print(f'✅ Success. The application {job_id} was withdrawn.')
+        index = self.config['accounts'][user]['applications'].index(job_id)
+        self.config['accounts'][user]['applications'].pop(index + 1)
+        self.config['accounts'][user]['applications'].pop(index)
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def save_application(self, user: str, job_id: str) -> None:
+        print(f'✅ Success. The application {job_id} was saved.')
+        if job_id not in self.config['accounts'][user]['saved_jobs']:
+            self.config['accounts'][user]['saved_jobs'].append(job_id)
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, ensure_ascii=False, indent=2)
+
+    def get_list_jobs(
+            self, user: dict, my_apps=False, my_posts=False, saved=False
+    ) -> list:
+        """Return a list of jobs to be displayed in the menu based on user."""
+        jobs = list()
+        if my_apps:
+            for app in user['applications']:
+                for job in self.config['jobs']:
+                    if job['id'] in app:
+                        jobs.append(' '.join([
+                            str(job['id']),
+                            job['title'],
+                            job['location']
+                        ]))
+        elif saved:
+            for job in self.config['jobs']:
+                if job['id'] in user['saved_jobs']:
+                    jobs.append(' '.join([
+                        job['id'],
+                        job['title'],
+                        job['location']
+                    ]))
+        elif my_posts:
+            for job in self.config['jobs']:
+                if job['author'] == user['firstname'] + ' ' + user['lastname']:
+                    jobs.append(' '.join([
+                        job['id'],
+                        job['title'],
+                        job['location']
+                    ]))
+        else: # TODO: merge these four branches together (@alisnichenko).
+            for job in self.config['jobs']:
+                # Filter list based on author and existing user applications.
+                if job['author'] != user['firstname'] + ' ' + user['lastname'] and \
+                        job['id'] not in user['applications']:
+                    # Display in the format id_title_location.
+                    jobs.append(' '.join([
+                        str(job['id']), 
+                        job['title'], 
+                        job['location']
+                    ]))
+        return jobs
 
     def search_student(self, key: str, value: str):
         '''Returns an array of all the account usernames found based on a key and value.\n\nvalid keys = {"lastname", "major", "university"}\n\nreturns -1 if the key is invalid'''

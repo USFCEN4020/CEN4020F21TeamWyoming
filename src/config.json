@@ -9,7 +9,8 @@
       "description": "Test Job Description",
       "employer": "Some Company",
       "location": "San Jose, CA",
-      "salary": "$7000 a month"
+      "salary": "$7000 a month",
+      "id": "1"
     },
     {
       "author": "Second Admin",
@@ -17,7 +18,8 @@
       "description": "this is the job you don't want to take",
       "employer": "company everyone hates",
       "location": "virtual",
-      "salary": "unpaid"
+      "salary": "unpaid",
+      "id": "2"
     },
     {
       "author": "admin",
@@ -25,7 +27,8 @@
       "description": "sample description",
       "employer": "sample employer",
       "location": "sample location",
-      "salary": "sample salary"
+      "salary": "sample salary",
+      "id": "3"
     },
     {
       "author": "admin",
@@ -33,7 +36,26 @@
       "description": "sample2",
       "employer": "sample2",
       "location": "sample2",
-      "salary": "sample2"
+      "salary": "sample2",
+      "id": "4"
+    },
+    {
+      "author": "test",
+      "title": "software engineer",
+      "description": "testing postings",
+      "employer": "usf",
+      "location": "tampa, fl",
+      "salary": "3000",
+      "id": "5"
+    },
+    {
+      "author": "admin",
+      "title": "admin",
+      "description": "admin",
+      "employer": "admin",
+      "location": "admin",
+      "salary": "admin",
+      "id": "6"
     }
   ],
   "stories": [
@@ -75,11 +97,33 @@
             "name": "University of Souther Florida",
             "degree": "Administration",
             "years": "4"
+          },
+          {
+            "name": "University of South Florida",
+            "degree": "Business, duh",
+            "years": "3"
           }
         ]
       },
       "friends": [],
-      "friend_requests": []
+      "friend_requests": [],
+      "saved_jobs": [
+        "1"
+      ],
+      "applications": [
+        "1",
+        [
+          "12312",
+          "qweqwe",
+          "qweqwe"
+        ],
+        "2",
+        [
+          "123123",
+          "qwe",
+          "qwer"
+        ]
+      ]
     },
     "test": {
       "password": "tesT123!",
@@ -97,7 +141,8 @@
       "friends": [
         "new"
       ],
-      "friend_requests": []
+      "friend_requests": [],
+      "applications": []
     },
     "new": {
       "password": "new2New!new",
@@ -115,7 +160,9 @@
       "friends": [
         "test"
       ],
-      "friend_requests": []
+      "friend_requests": [],
+      "saved_jobs": [],
+      "applications": []
     },
     "admin2": {
       "password": "admin2DF$Ds",
@@ -131,10 +178,12 @@
         "education": []
       },
       "friends": [],
-      "friend_requests": []
+      "friend_requests": [],
+      "saved_jobs": [],
+      "applications": []
     }
   },
-  "current_login": "test",
+  "current_login": "admin",
   "guest_control": {
     "admin": [
       "InCollege Email",
