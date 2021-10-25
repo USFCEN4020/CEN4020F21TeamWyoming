@@ -14,7 +14,9 @@
         "education": []
       },
       "friends": [],
-      "friend_requests": []
+      "friend_requests": [],
+      "applications": [],
+      "saved_jobs": []
     },
     "test": {
       "password": "tesT123!",
@@ -33,10 +35,22 @@
         "new",
         "admin"
       ],
-      "friend_requests": []
+      "friend_requests": [],
+      "applications": [],
+      "saved_jobs": []
     }
   },
-  "jobs": [],
+  "jobs": [
+    {
+      "author": "admin admin",
+      "title": "sample",
+      "description": "sample",
+      "employer": "sample",
+      "location": "sample",
+      "salary": "unpaid",
+      "id": "98"
+    }
+  ],
   "current_login": "admin",
   "guest_control": {
     "admin": [
