@@ -33,7 +33,9 @@ def init_testing():
                         'education': []
                     },
                     "friends": [],
-                    "friend_requests": []
+                    "friend_requests": [],
+                    "applications": [],
+                    "saved_jobs": []
                 },
                 "test": {
                     "password": "tesT123!",
@@ -52,7 +54,9 @@ def init_testing():
                         "new",
                         "admin"
                     ],
-                    "friend_requests": []
+                    "friend_requests": [],
+                    "applications": [],
+                    "saved_jobs": []
                 }
             },
             "jobs": list(),
@@ -91,7 +95,7 @@ def test_create_user_week1():
 
 def test_create_posting_week2():
     config = init_testing()
-    author, title, desc = 'sample', 'sample', 'sample'
+    author, title, desc = 'admin', 'sample', 'sample'
     employer, location, salary = 'sample', 'sample', 'unpaid'
     config.create_posting(author, title, desc, employer, location, salary)
     assert len(config.config['jobs']) == 1
@@ -197,4 +201,34 @@ def test_decline_friend_request_week5():
     declined_username = 'test'
     config.decline_friend_request(user, declined_username)
     assert declined_username not in config.config['accounts'][user]['friend_requests']
+
+def test_submit_application_week6():
+    config = init_testing() # TODO: add sample jobs.
+    author, title, desc = 'admin', 'sample', 'sample'
+    employer, location, salary = 'sample', 'sample', 'unpaid'
+    config.create_posting(author, title, desc, employer, location, salary)
+    job_id = config.config['jobs'][0]['id']
+    config.submit_application('test', job_id, 'grad date', 'start date', 'txt')
+    assert job_id in config.config['accounts']['test']['applications']
+
+def test_withdraw_application_week6():
+    config = init_testing() # TODO: add sample jobs.
+    author, title, desc = 'admin', 'sample', 'sample'
+    employer, location, salary = 'sample', 'sample', 'unpaid'
+    config.create_posting(author, title, desc, employer, location, salary)
+    job_id = config.config['jobs'][0]['id']
+    config.submit_application('test', job_id, 'grad date', 'start date', 'txt')
+    config.withdraw_application('test', job_id)
+    assert job_id not in config.config['accounts']['test']['applications']
+
+def test_get_list_jobs_week6():
+    config = init_testing() # TODO: add sample jobs.
+    author, title, desc = 'admin', 'sample', 'sample'
+    employer, location, salary = 'sample', 'sample', 'unpaid'
+    config.create_posting(author, title, desc, employer, location, salary)
+    job_id = config.config['jobs'][0]['id']
+    user = config.config['accounts']['test']
+    jobs = config.get_list_jobs(user)
+    assert jobs == [f'{job_id} {title} {location}']
+
 
