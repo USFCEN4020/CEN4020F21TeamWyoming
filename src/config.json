@@ -55,7 +55,7 @@
       "employer": "admin",
       "location": "admin",
       "salary": "admin",
-      "id": "66"
+      "id": "6"
     }
   ],
   "stories": [
@@ -108,10 +108,21 @@
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [
-        "4"
+        "1"
       ],
       "applications": [
-        "3"
+        "1",
+        [
+          "12312",
+          "qweqwe",
+          "qweqwe"
+        ],
+        "2",
+        [
+          "123123",
+          "qwe",
+          "qwer"
+        ]
       ]
     },
     "test": {

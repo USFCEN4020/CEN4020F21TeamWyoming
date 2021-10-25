@@ -204,11 +204,21 @@ class InCollegeConfig:
         else:
             print('User {} does not exist.'.format(username))
 
+    def display_all_jobs(self) -> None:
+        """Display job information based on requested job id."""
+        # The job is guaranteed to exist, since it's retrieved from config.
+        for job in self.config['jobs']:
+            self.display_job(job['id'])
+            print('\n')
+
+
     def display_job(self, job_id: str) -> None:
         """Display job information based on requested job id."""
         # The job is guaranteed to exist, since it's retrieved from config.
         for job in self.config['jobs']:
             if job['id'] == job_id:
+                if job_id in self.config['accounts'][self.config['current_login']]['applications']:
+                    print('YOU HAVE APPLIED FOR THIS JOB')
                 print('Job information is displayed below:')
                 print(f'✍️  Posted by: {job["author"]}')
                 print(f'🧑 Role: {job["title"]}')
@@ -216,24 +226,34 @@ class InCollegeConfig:
                 print(f'🕴️  Employer: {job["employer"]}')
                 print(f'🏙️  Location: {job["location"]}')
                 print(f'💰 Salary: {job["salary"]}')
+
                 
-    def submit_application(self, user: str, job_id: str) -> None:
+    def submit_application(self, user: str, job_id: str, grad_date: str, start_date: str, brief: str) -> None:
         """Apply for a job by adding the id into user's application list."""
         print(f'✅ Success! You have applied to the job {job_id}! 🎉')
+        if job_id in self.config['accounts'][user]['applications']:
+            print('You have applied this job.\n')
+            return
+        # application = {job_id : [grad_date, start_date, brief]}
+        # self.config['accounts'][user]['applications'].append(application)
         self.config['accounts'][user]['applications'].append(job_id)
+        self.config['accounts'][user]['applications'].append([grad_date, start_date, brief])
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
     
     def withdraw_application(self, user: str, job_id: str) -> None:
         """Withdraw application by removing it from user's application list."""
         print(f'✅ Success. The application {job_id} was withdrawn.')
-        self.config['accounts'][user]['applications'].remove(job_id)
+        index = self.config['accounts'][user]['applications'].index(job_id)
+        self.config['accounts'][user]['applications'].pop(index + 1)
+        self.config['accounts'][user]['applications'].pop(index)
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
     def save_application(self, user: str, job_id: str) -> None:
         print(f'✅ Success. The application {job_id} was saved.')
-        self.config['accounts'][user]['saved_jobs'].append(job_id)
+        if job_id not in self.config['accounts'][user]['saved_jobs']:
+            self.config['accounts'][user]['saved_jobs'].append(job_id)
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
@@ -245,7 +265,7 @@ class InCollegeConfig:
         if my_apps:
             for app in user['applications']:
                 for job in self.config['jobs']:
-                    if job['id'] == app:
+                    if job['id'] in app:
                         jobs.append(' '.join([
                             str(job['id']),
                             job['title'],

@@ -52,10 +52,11 @@ def print_login_screen() -> dict:
         choices=[
             'Sign in',
             'Sign up',
-            'Go back',
+            'Search for a job',
             'Watch a video',
             'Useful Links',
-            'InCollege Important Links'
+            'InCollege Important Links',
+            'Go back'
         ]
     )])
 
@@ -165,6 +166,7 @@ def print_internship_screen() -> dict:
         'internship_target',
         message='[INTERNSHIPS] What would you like?',
         choices=[
+            'Browse all jobs',
             'Post a job', 
             'Apply for a job',
             'Show my applications',
@@ -450,7 +452,10 @@ def user_loop() -> None:
                 job_id = inputs['application_target'].split()[-1]
                 # Apply for a job by adding it to the list of user apps.
                 if inputs['application_target'].split()[0] == 'Apply':
-                    config.submit_application(user, job_id)
+                    grad_date = input('Please enter your graduation date: \n')
+                    start_date = input('Please enter the date you can begin to work: \n')
+                    brief = input('Please give a short paragraph explaining why you fit the position: \n')
+                    config.submit_application(user, job_id, grad_date, start_date, brief)
                 else:
                     config.save_application(user, job_id)
             # Go back in any case.
@@ -496,6 +501,9 @@ def user_loop() -> None:
                 if list(info)[-1].lower() == 'unpaid': # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
                 inputs = print_internship_screen()
+            elif inputs['internship_target'] == 'Browse all jobs':
+                config.display_all_jobs()
+                inputs = print_application_list_screen()
             elif inputs['internship_target'] == 'Apply for a job':
                 inputs = print_job_list_screen()
             elif inputs['internship_target'] == 'Show my applications':
@@ -572,7 +580,13 @@ def user_loop() -> None:
                 inputs = print_ulinks_screen()
             elif inputs['login_target'] == 'InCollege Important Links':
                 inputs = print_ilinks_screen()
-        
+            elif inputs['login_target'] == 'Search for a job':
+                if config.config['current_login'] != '':
+                    inputs = print_job_screen()
+                else:
+                    print('Please log in first\n')
+                    inputs = print_login_screen()
+
         if 'ulinks_target' in inputs:
             if inputs['ulinks_target'] == 'General':
                 inputs = print_general_screen()
