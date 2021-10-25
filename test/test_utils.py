@@ -55,7 +55,7 @@ def init_testing():
                         "admin"
                     ],
                     "friend_requests": [],
-                    "applications": [],
+                    "applications": {},
                     "saved_jobs": []
                 }
             },
@@ -98,15 +98,15 @@ def test_create_posting_week2():
     author, title, desc = 'admin', 'sample', 'sample'
     employer, location, salary = 'sample', 'sample', 'unpaid'
     config.create_posting(author, title, desc, employer, location, salary)
-    assert len(config.config['jobs']) == 1
-    assert config.config['jobs'][0]['salary'] == 'unpaid'
+    assert len(config['jobs']) == 1
+    assert config['jobs'][0]['salary'] == 'unpaid'
 
 def test_save_lang_week3():
     config = init_testing()
     username1, lang1 = 'admin', 'Spanish'
     config.save_lang(username1, lang1)
     # Check whether the structure was saved into json.
-    assert config.config['accounts'][username1]['language'] == lang1
+    assert config['accounts'][username1]['language'] == lang1
 
 def test_show_lang_week3(capsys):
     config = init_testing()
@@ -229,6 +229,6 @@ def test_get_list_jobs_week6():
     job_id = config.config['jobs'][0]['id']
     user = config.config['accounts']['test']
     jobs = config.get_list_jobs(user)
-    assert jobs == [f'{job_id} {title} {location}']
+    assert jobs == [f'{job_id} | {title} | {location}']
 
 

@@ -36,7 +36,7 @@
         "admin"
       ],
       "friend_requests": [],
-      "applications": [],
+      "applications": {},
       "saved_jobs": []
     }
   },
@@ -48,7 +48,7 @@
       "employer": "sample",
       "location": "sample",
       "salary": "unpaid",
-      "id": "98"
+      "id": "47"
     }
   ],
   "current_login": "admin",

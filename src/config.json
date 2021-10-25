@@ -108,22 +108,9 @@
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [
-        "1"
+        "5"
       ],
-      "applications": [
-        "1",
-        [
-          "12312",
-          "qweqwe",
-          "qweqwe"
-        ],
-        "2",
-        [
-          "123123",
-          "qwe",
-          "qwer"
-        ]
-      ]
+      "applications": {}
     },
     "test": {
       "password": "tesT123!",
@@ -142,7 +129,7 @@
         "new"
       ],
       "friend_requests": [],
-      "applications": []
+      "applications": {}
     },
     "new": {
       "password": "new2New!new",
@@ -162,7 +149,7 @@
       ],
       "friend_requests": [],
       "saved_jobs": [],
-      "applications": []
+      "applications": {}
     },
     "admin2": {
       "password": "admin2DF$Ds",
@@ -180,7 +167,7 @@
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [],
-      "applications": []
+      "applications": {}
     }
   },
   "current_login": "admin",
