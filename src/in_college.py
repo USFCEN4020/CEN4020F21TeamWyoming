@@ -4,6 +4,7 @@ import inquirer as menu
 import utils
 
 logged_in_user = "" # global variable for current login.
+logged_in_user_membership = ""
 config = utils.InCollegeConfig() # global config.
 
 def print_welcome_screen() -> dict:
@@ -322,7 +323,8 @@ def ask_for_signup():
         menu.Text('signup_username', 'Enter your new username'),
         menu.Text('signup_password', 'Enter your new password (strong)'),
         menu.Text('signup_firstname', 'Enter your first name'),
-        menu.Text('signup_lastname', 'Enter your last name')
+        menu.Text('signup_lastname', 'Enter your last name'),
+        menu.Text('signup_membership', 'Enter pro to subscribe our membership for only $10 per month')
     ])
 
 def ask_for_fullname() -> dict:
@@ -397,7 +399,7 @@ def edit_friends_list(
 def user_loop() -> None:
     """Main driver for the user interaction."""
     print('-#- 🎓 WELCOME TO THE IN COLLEGE CLI! 🎓 -#-\n')
-    inputs, logged_in_user = None, config.config['current_login']
+    inputs, logged_in_user, logged_in_user_membership = None, config.config['current_login'], config.config['current_login_membership']
     while True: # endless user loop.
         # If inputs are empty, it's the welcome screen.
         if inputs is None:
@@ -432,8 +434,8 @@ def user_loop() -> None:
                     else:
                         inputs = print_connect_screen()
             elif inputs['connect_target'] == 'Sign up to join friends':
-                login, passwd, first, last = ask_for_signup().values(); print();
-                if config.create_user(login, passwd, first, last):
+                login, passwd, first, last, membership = ask_for_signup().values(); print();
+                if config.create_user(login, passwd, first, last, membership):
                     print(f'✅ User with login {login} has been added')
                     inputs = print_main_screen()
                 else: # Error was detected.
@@ -567,8 +569,8 @@ def user_loop() -> None:
                         print('❌ Invalid credentials. Try again later.')
                         inputs = print_login_screen()
             elif inputs['login_target'] == 'Sign up':
-                login, passwd, first, last = ask_for_signup().values(); print();
-                if config.create_user(login, passwd, first, last):
+                login, passwd, first, last, membership = ask_for_signup().values(); print();
+                if config.create_user(login, passwd, first, last, membership):
                     print(f'✅ User with login {login} has been added')
                     config.save_login(login)
                     inputs = print_main_screen()

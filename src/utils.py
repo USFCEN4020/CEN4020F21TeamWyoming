@@ -59,7 +59,7 @@ class InCollegeConfig:
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
     def create_user(
-        self, username: str, password: str, firstname: str, lastname: str
+        self, username: str, password: str, firstname: str, lastname: str, membership: str
     ) -> bool:
         """Validate user information and create new entry in the config."""
         num_users_flag = len(self['accounts']) >= 10
@@ -76,6 +76,7 @@ class InCollegeConfig:
                 'password': password,
                 'firstname': firstname,
                 'lastname': lastname,
+                'membership': '',
                 'language': 'English',
                 'profile': {
                     'title': '',
@@ -90,6 +91,9 @@ class InCollegeConfig:
                 'applications': [],
                 'saved_jobs': []
             }
+
+            if membership.strip().lower() == 'pro':
+                self['accounts'][username]['membership'] = 'pro'
             # Write new config to json file.
             with open(self.filename, 'w', encoding='utf-8') as f:
                 json.dump(self.config, f, ensure_ascii=False, indent=2)
@@ -154,6 +158,10 @@ class InCollegeConfig:
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
         self['current_login'] = username
+        if username != '':
+            self['current_login_membership'] = self['accounts'][username]['membership']
+        else:
+            self['current_login_membership'] = ''
         self.save_config()
 
     def save_guest_control(self, username: str, control_setting_list: dict) -> None:

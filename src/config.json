@@ -68,6 +68,7 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
+      "membership": "pro",
       "language": "Spanish",
       "profile": {
         "title": "Admin profile title",
@@ -116,6 +117,7 @@
       "password": "tesT123!",
       "firstname": "first",
       "lastname": "LaSt",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "I a\b\b\bThis a test profile",
@@ -135,6 +137,7 @@
       "password": "new2New!new",
       "firstname": "New",
       "lastname": "New",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "",
@@ -155,6 +158,7 @@
       "password": "admin2DF$Ds",
       "firstname": "admin2",
       "lastname": "admin2",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "",
@@ -168,9 +172,29 @@
       "friend_requests": [],
       "saved_jobs": [],
       "applications": {}
+    },
+    "wenca\bhao": {
+      "password": "Qwerq1233@!#",
+      "firstname": "wenchao",
+      "lastname": "sd",
+      "membership": "pro",
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": [],
+      "saved_jobs": []
     }
   },
   "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": [
       "InCollege Email",
