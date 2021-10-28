@@ -23,6 +23,7 @@ def init_testing():
                     "password": "admin",
                     "firstname": "admin",
                     "lastname": "admin",
+                    "membership": "pro",
                     "language": "English",
                     'profile': {
                         'title': '',
@@ -41,6 +42,7 @@ def init_testing():
                     "password": "tesT123!",
                     "firstname": "first",
                     "lastname": "LaSt",
+                    "membership": "",
                     "language": "English",
                     "profile": {
                         "title": "I a\b\b\bThis a test profile",
@@ -61,6 +63,7 @@ def init_testing():
             },
             "jobs": list(),
             "current_login": "admin",
+            "current_login_membership": "pro",
             "guest_control": {
                 "admin": ["InCollege Email"]
             }
@@ -88,10 +91,10 @@ def test_password_valid_week1():
 
 def test_create_user_week1():
     config = init_testing()
-    username, firstname, lastname = 'sample', 'sample', 'sample'
+    username, firstname, lastname, membership = 'sample', 'sample', 'sample', 'sample'
     password1, password2 = 'invalidpassword', 'validpa5S$!'
-    assert config.create_user(username, password2, firstname, lastname) == True
-    assert config.create_user(username, password1, firstname, lastname) == False
+    assert config.create_user(username, password2, firstname, lastname, membership) == True
+    assert config.create_user(username, password1, firstname, lastname, membership) == False
 
 def test_create_posting_week2():
     config = init_testing()

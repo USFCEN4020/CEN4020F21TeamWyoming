@@ -4,6 +4,7 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
+      "membership": "pro",
       "language": "English",
       "profile": {
         "title": "",
@@ -22,6 +23,7 @@
       "password": "tesT123!",
       "firstname": "first",
       "lastname": "LaSt",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "I a\b\b\bThis a test profile",
@@ -48,10 +50,11 @@
       "employer": "sample",
       "location": "sample",
       "salary": "unpaid",
-      "id": "47"
+      "id": "48"
     }
   ],
   "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": [
       "InCollege Email"
