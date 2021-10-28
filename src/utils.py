@@ -88,8 +88,9 @@ class InCollegeConfig:
                 },
                 'friends': [],
                 'friend_requests': [],
-                'applications': [],
-                'saved_jobs': []
+                'applications': [], # is this a dict or list the config.json shows dict yet here it's a list
+                'saved_jobs': [],
+                'inbox': {}
             }
 
             if membership.strip().lower() == 'pro':
@@ -334,4 +335,25 @@ class InCollegeConfig:
         self['accounts'][user]['friend_requests'].remove(declined_username)
         self.save_config()
 
-    
+    def send_message(self, recipient: str, message: str) -> None:
+        email = {self['current_login']: [message]}
+        if recipient == '':
+            print('\nPlease not to leave the recipient and the message blank.\n')
+        elif recipient == self['current_login']:
+            print('\nYou need a friend.\n')
+        elif recipient in self['accounts']:
+            if self['current_login_membership'] != 'pro' and recipient.strip() not in self['accounts'][self['current_login']]['friends']:
+                print('\nStandard user can not send message to whom are not your friend.\n')
+            else:
+                if self['current_login'] not in self['accounts'][recipient]['inbox']:
+                    self['accounts'][recipient]['inbox'].update(email)
+                else:
+                    self['accounts'][recipient]['inbox'][self['current_login']].append(message)
+            print('\nYour message has been sent.\n')
+        else:
+            print('\nThe recipient does not exist.\n')
+
+        self.save_config()
+        return
+
+

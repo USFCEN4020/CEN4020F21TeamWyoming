@@ -30,6 +30,7 @@ def print_main_screen() -> dict:
         message='[HOME] Where would you like to go next?',
         choices=[
             'Search for a job',
+            'Message center',
             'Find someone',
             'Learn a new skill',
             'Friends',
@@ -37,6 +38,19 @@ def print_main_screen() -> dict:
             'Useful Links',
             'InCollege Important Links',
             'Log out'
+        ]
+    )])
+
+def print_message_screen() -> dict:
+    """Print message selections for the user."""
+    return menu.prompt([menu.List(
+        'message_target',
+        message='Welcome! Where would you like to go?',
+        choices=[
+            'Send',
+            'Inbox',
+            'Available recipients',
+            'Go back'
         ]
     )])
 
@@ -333,6 +347,12 @@ def ask_for_fullname() -> dict:
         menu.Text('friend_last', 'Enter your friend\'s last name')
     ])
 
+def ask_for_email() -> dict:
+    return menu.prompt([
+        menu.Text('email_recipient', 'Enter the recipient\'s username'),
+        menu.Text('email_message', 'Enter the message')
+    ])
+
 def ask_job_application() -> dict:
     return menu.prompt([
         menu.Text('grad_date', 'Enter your graduation date (MM/DD/YYYY)'),
@@ -533,6 +553,8 @@ def user_loop() -> None:
         if 'main_target' in inputs:
             if inputs['main_target'] == 'Search for a job':
                 inputs = print_job_screen()
+            elif inputs['main_target'] == 'Message center':
+                inputs = print_message_screen()
             elif inputs['main_target'] == 'Find someone':
                 first, last = ask_for_fullname().values(); print()
                 if config.full_name_exists(first, last):
@@ -763,6 +785,19 @@ def user_loop() -> None:
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'] == 'Go Back':
                 inputs = print_friend_screen()
-                
+
+        if 'message_target' in inputs:
+            if inputs['message_target'] == 'Send':
+                email = ask_for_email()
+                config.send_message(*email.values())
+                inputs = print_message_screen()
+            elif inputs['message_target'] == 'Inbox':
+                pass
+            elif inputs['message_target'] == 'Available recipients':
+                pass
+            elif inputs['message_target'] == 'Go back':
+                inputs = print_main_screen()
+
+
 if __name__ == '__main__':
     user_loop()
