@@ -118,6 +118,9 @@
       "inbox": [
         {
           "test": "How are you"
+        },
+        {
+          "new": "Yep, I did"
         }
       ]
     },
@@ -146,6 +149,12 @@
         },
         {
           "admin": "I'm good!"
+        },
+        {
+          "admin": "hey"
+        },
+        {
+          "admin": "good!@"
         }
       ]
     },
@@ -169,7 +178,11 @@
       "friend_requests": [],
       "saved_jobs": [],
       "applications": {},
-      "inbox": []
+      "inbox": [
+        {
+          "admin": "Hey new, you've done the work?"
+        }
+      ]
     },
     "admin2": {
       "password": "admin2",
@@ -192,8 +205,8 @@
       "inbox": []
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": []
   }

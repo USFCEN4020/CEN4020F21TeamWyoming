@@ -353,15 +353,14 @@ class InCollegeConfig:
                 print('\nYour message has been sent.\n')
         else:
             print('\nThe recipient does not exist.\n')
-
         self.save_config()
 
     def reply_message(self, email: dict) -> None:
-        matcher = re.search("(.*): (.*)", email)
+        matcher = re.search("(.*):", email)
         sender = matcher.group(1)
-        message = matcher.group(2)
-        reply = input('Reply: \n')
-        self.send_message(sender, reply)
+        reply_message = input('Reply: \n')
+        reply = {self['current_login']: reply_message}
+        self['accounts'][sender]['inbox'].append(reply)
         self.save_config()
 
     def delete_message(self, email: dict) -> None:

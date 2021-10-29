@@ -1,6 +1,7 @@
 from random import randrange as rand
 from typing import List
 import inquirer as menu
+import re
 import utils
 
 logged_in_user = ""  # global variable for current login.
@@ -81,7 +82,7 @@ def print_recipient_screen():
     if membership == 'pro':
         choices = [*(config.config['accounts'].keys())]
     else:
-        choices = [*(config.config['accounts'][user]['friends'].keys())]
+        choices = [*(config.config['accounts'][user]['friends'])]
     choices.append('Go back')
     return menu.prompt([menu.List(
         'recipient_target',
@@ -103,13 +104,13 @@ def print_inbox_operation_screen(email: str) -> dict:
     )])
 
 
-def print_recipient_operation_screen(name: str) -> dict:
+def print_recipient_operation_screen(recipient: str) -> dict:
     """Print message selections for the user."""
     return menu.prompt([menu.List(
         'recipient_operation_target',
-        message='Welcome! Where would you like to go?',
+        message='Who do you want to reach?',
         choices=[
-            'Send a message',
+            f'Send a message to {recipient}',
             'Go back'
         ]
     )])
@@ -923,8 +924,14 @@ def user_loop() -> None:
                 inputs = print_message_screen()
 
         if 'recipient_operation_target' in inputs:
-            pass
-
+            if inputs['recipient_operation_target'] != 'Go back':
+                message = input('Message to send:\n')
+                matcher = re.search("Send a message to (.*)", inputs['recipient_operation_target'])
+                recipient = matcher.group(1)
+                config.send_message(recipient, message)
+                inputs = print_message_screen()
+            else:
+                inputs = print_message_screen()
 
 if __name__ == '__main__':
     user_loop()
