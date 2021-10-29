@@ -14,7 +14,10 @@
         "experience": [],
         "education": []
       },
-      "friends": [],
+      "friends": [
+        "new",
+        "test"
+      ],
       "friend_requests": [],
       "applications": [],
       "saved_jobs": []

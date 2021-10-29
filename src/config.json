@@ -106,18 +106,25 @@
           }
         ]
       },
-      "friends": [],
+      "friends": [
+        "new",
+        "admin"
+      ],
       "friend_requests": [],
       "saved_jobs": [
         "5"
       ],
       "applications": {},
-      "inbox": {}
+      "inbox": [
+        {
+          "test": "How are you"
+        }
+      ]
     },
     "test": {
-      "password": "tesT123!",
-      "firstname": "first",
-      "lastname": "LaSt",
+      "password": "test",
+      "firstname": "test",
+      "lastname": "test",
       "membership": "",
       "language": "English",
       "profile": {
@@ -129,22 +136,23 @@
         "education": []
       },
       "friends": [
-        "new"
+        "admin"
       ],
       "friend_requests": [],
       "applications": {},
-      "inbox": {
-        "admin": [
-          "fsdf",
-          "dfsgdfgdfgf",
-          "gdfgdf"
-        ]
-      }
+      "inbox": [
+        {
+          "admin": "How are you"
+        },
+        {
+          "admin": "I'm good!"
+        }
+      ]
     },
     "new": {
-      "password": "new2New!new",
-      "firstname": "New",
-      "lastname": "New",
+      "password": "new",
+      "firstname": "new",
+      "lastname": "new",
       "membership": "",
       "language": "English",
       "profile": {
@@ -161,10 +169,10 @@
       "friend_requests": [],
       "saved_jobs": [],
       "applications": {},
-      "inbox": {}
+      "inbox": []
     },
     "admin2": {
-      "password": "admin2DF$Ds",
+      "password": "admin2",
       "firstname": "admin2",
       "lastname": "admin2",
       "membership": "",
@@ -181,15 +189,12 @@
       "friend_requests": [],
       "saved_jobs": [],
       "applications": {},
-      "inbox": {}
+      "inbox": []
     }
   },
   "current_login": "admin",
   "current_login_membership": "pro",
   "guest_control": {
-    "admin": [
-      "InCollege Email",
-      "SMS"
-    ]
+    "admin": []
   }
 }
