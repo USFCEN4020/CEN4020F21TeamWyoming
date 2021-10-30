@@ -1,10 +1,14 @@
 from random import randrange as rand
 from typing import List
 import inquirer as menu
+import re
 import utils
 
-logged_in_user = "" # global variable for current login.
-config = utils.InCollegeConfig() # global config.
+logged_in_user = ""  # global variable for current login.
+logged_in_user_membership = ""
+current_email = ""
+config = utils.InCollegeConfig()  # global config.
+
 
 def print_welcome_screen() -> dict:
     """Print welcome selections for the user."""
@@ -14,6 +18,7 @@ def print_welcome_screen() -> dict:
         choices=['Connect to friends', 'Skip', 'Quit']
     )])
 
+
 def print_connect_screen() -> dict:
     """Print connect screen selections for the user."""
     return menu.prompt([menu.List(
@@ -22,6 +27,7 @@ def print_connect_screen() -> dict:
         choices=['Log in', 'Sign up to join friends', 'Go back']
     )])
 
+
 def print_main_screen() -> dict:
     """Print main screen selections to the user."""
     return menu.prompt([menu.List(
@@ -29,6 +35,7 @@ def print_main_screen() -> dict:
         message='[HOME] Where would you like to go next?',
         choices=[
             'Search for a job',
+            'Message center',
             'Find someone',
             'Learn a new skill',
             'Friends',
@@ -39,12 +46,82 @@ def print_main_screen() -> dict:
         ]
     )])
 
+
+def print_message_screen() -> dict:
+    """Print message selections for the user."""
+    return menu.prompt([menu.List(
+        'message_target',
+        message='Welcome! Where would you like to go?',
+        choices=[
+            'Send',
+            'Inbox',
+            'Available recipients',
+            'Go back'
+        ]
+    )])
+
+
+def print_inbox_screen():
+    user = config.config['current_login']
+    choices = []
+    inbox = config.config['accounts'][user]['inbox']
+    for email in inbox:
+        choices += list(str(key) + ': ' + str(value) for key, value in email.items())
+    choices.reverse()
+    choices.append('Go back')
+    return menu.prompt([menu.List(
+        'inbox_target',
+        message='Which message do you want to view?',
+        choices=choices
+    )])
+
+
+def print_recipient_screen():
+    user = config.config['current_login']
+    membership = config.config['current_login_membership']
+    if membership == 'pro':
+        choices = [*(config.config['accounts'].keys())]
+    else:
+        choices = [*(config.config['accounts'][user]['friends'])]
+    choices.append('Go back')
+    return menu.prompt([menu.List(
+        'recipient_target',
+        message='Which recipient do you want to choose?',
+        choices=choices
+    )])
+
+
+def print_inbox_operation_screen(email: str) -> dict:
+    """Print message selections for the user."""
+    return menu.prompt([menu.List(
+        'inbox_operation_target',
+        message=email,
+        choices=[
+            'Reply',
+            'Delete',
+            'Go back'
+        ]
+    )])
+
+
+def print_recipient_operation_screen(recipient: str) -> dict:
+    """Print message selections for the user."""
+    return menu.prompt([menu.List(
+        'recipient_operation_target',
+        message='Who do you want to reach?',
+        choices=[
+            f'Send a message to {recipient}',
+            'Go back'
+        ]
+    )])
+
+
 def print_login_screen() -> dict:
     """Print login screen selections to the user."""
     if logged_in_user == '':
         print('-----\n🎓 Here is one of the success stories by one of the users 🎓')
         story = config.config['stories'][rand(len(config.config['stories']))]
-        print('"{}"'.format(story))
+        print(f'"{story}"')
         print('🎓 Join us to get a job, find some friends, and some more! 🎓\n-----\n')
     return menu.prompt([menu.List(
         'login_target',
@@ -60,6 +137,7 @@ def print_login_screen() -> dict:
         ]
     )])
 
+
 def print_ulinks_screen() -> dict:
     return menu.prompt([menu.List(
         'ulinks_target',
@@ -72,6 +150,7 @@ def print_ulinks_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_general_screen() -> dict:
     return menu.prompt([menu.List(
@@ -88,6 +167,7 @@ def print_general_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_ilinks_screen() -> dict:
     return menu.prompt([menu.List(
@@ -108,6 +188,7 @@ def print_ilinks_screen() -> dict:
         ]
     )])
 
+
 def print_privacy_screen() -> dict:
     return menu.prompt([menu.List(
         'privacy_target',
@@ -117,6 +198,7 @@ def print_privacy_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_guest_screen() -> dict:
     return menu.prompt([menu.Checkbox(
@@ -129,6 +211,7 @@ def print_guest_screen() -> dict:
         ]
     )])
 
+
 def print_language_screen() -> dict:
     return menu.prompt([menu.List(
         'language_target',
@@ -138,6 +221,7 @@ def print_language_screen() -> dict:
             'Spanish'
         ]
     )])
+
 
 def print_skill_screen() -> dict:
     return menu.prompt([menu.List(
@@ -154,6 +238,7 @@ def print_skill_screen() -> dict:
         ]
     )])
 
+
 def print_job_screen() -> dict:
     return menu.prompt([menu.List(
         'job_target',
@@ -161,13 +246,13 @@ def print_job_screen() -> dict:
         choices=['Internships', 'Go back']
     )])
 
+
 def print_internship_screen() -> dict:
     return menu.prompt([menu.List(
         'internship_target',
         message='[INTERNSHIPS] What would you like?',
         choices=[
-            'Browse all jobs',
-            'Post a job', 
+            'Post a job',
             'Apply for a job',
             'Show my applications',
             'Show my postings',
@@ -175,6 +260,7 @@ def print_internship_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_profile_screen() -> dict:
     return menu.prompt([menu.List(
@@ -192,17 +278,19 @@ def print_profile_screen() -> dict:
         ]
     )])
 
+
 def print_friend_screen() -> dict:
     return menu.prompt([menu.List(
         'friend_target',
         message='Friend screen',
-        choices = [
+        choices=[
             'Show my Network',
             'Search for Someone',
             'View Friend Requests',
             'Go Back'
         ]
     )])
+
 
 def print_job_list_screen():
     # Get current login to not display already applied jobs.
@@ -214,6 +302,7 @@ def print_job_list_screen():
         choices=config.get_list_jobs(user) + ['Go Back']
     )])
 
+
 def print_postings_list_screen():
     user = config.config['accounts'][config.config['current_login']]
     return menu.prompt([menu.List(
@@ -221,7 +310,8 @@ def print_postings_list_screen():
         message='Choose your posting for more information',
         choices=config.get_list_jobs(user, my_posts=True) + ['Go Back']
     )])
-    
+
+
 def print_application_list_screen():
     user = config.config['accounts'][config.config['current_login']]
     return menu.prompt([menu.List(
@@ -229,6 +319,7 @@ def print_application_list_screen():
         message='Choose your application',
         choices=config.get_list_jobs(user, my_apps=True) + ['Go Back']
     )])
+
 
 def print_saved_list_screen():
     user = config.config['accounts'][config.config['current_login']]
@@ -238,12 +329,14 @@ def print_saved_list_screen():
         choices=config.get_list_jobs(user, saved=True) + ['Go Back']
     )])
 
+
 def print_unsave_posting_screen(job_id: str):
     return menu.prompt([menu.List(
         'unsave_posting_target',
         message='What would you like to do with your posting',
         choices=['Delete this saved posting: ' + job_id, 'Go Back']
     )])
+
 
 def print_delete_posting_screen(job_id: str):
     return menu.prompt([menu.List(
@@ -252,16 +345,18 @@ def print_delete_posting_screen(job_id: str):
         choices=['Delete this posting: ' + job_id, 'Go Back']
     )])
 
+
 def print_application_screen(job_id: str):
     return menu.prompt([menu.List(
         'application_target',
         message='What would you like to do',
         choices=[
-            'Apply for this job: ' + job_id, 
-            'Save this job: ' + job_id, 
+            'Apply for this job: ' + job_id,
+            'Save this job: ' + job_id,
             'Go Back'
         ]
     )])
+
 
 def print_withdrawal_screen(job_id: str):
     return menu.prompt([menu.List(
@@ -270,70 +365,88 @@ def print_withdrawal_screen(job_id: str):
         choices=['Withdraw from this job: ' + job_id, 'Go Back']
     )])
 
+
 def print_friend_list_screen(key) -> dict:
     user = config.config['accounts'][config.config['current_login']]
-    listOfChoices = []
-    if key == 'friends':           #Handles friend list
-        listOfAccounts = user[key]
-        
-        if len(listOfAccounts) == 0:
-            listOfChoices.append('No Connections')
-        else:    
-            for account in listOfAccounts:
-                listOfChoices.append(f'View profile of {account}')
-                listOfChoices.append(f'Disconnect from {account}')
-    elif key == 'friend_requests':  #This secition handles pending friend requests
-        listOfRequests = user[key]
-        if len(listOfRequests) == 0:
-            listOfChoices.append('No Requests')
+    choices = []
+    # Friend list handling.
+    if key == 'friends':
+        accounts = user[key]
+        if len(accounts) == 0:
+            choices.append('No Connections')
         else:
-            for account in listOfRequests:
-                listOfChoices.append(f'Accept friend request of {account}')
-                listOfChoices.append(f'Decline friend request of {account}')
-
-    else:                            #Handles searching for someone to add to friend list
+            for account in accounts:
+                choices.append(f'View profile of {account}')
+                choices.append(f'Disconnect from {account}')
+    # Pending requests handling.
+    elif key == 'friend_requests':
+        requests = user[key]
+        if len(requests) == 0:
+            choices.append('No Requests')
+        else:
+            for account in requests:
+                choices.append(f'Accept friend request of {account}')
+                choices.append(f'Decline friend request of {account}')
+    # Friend search handling
+    else:
         inputs = menu.prompt([
             menu.Text('key', 'Search by: lastname, university, or major'),
             menu.Text('value', 'Enter search parameter')
         ])
-
-        key = inputs['key']
-        value = inputs['value']
+        key, value = inputs['key'], inputs['value']
         print(f'{key}   {value}')
-
-        results = config.search_student(inputs['key'], inputs['value'])
+        results = config.search_student(key, value)
         if len(results) == 0:
-            listOfChoices.append('No results')
+            choices.append('No results')
         else:
             for account in results:
-                listOfChoices.append(f'Request to connect with {account}')
-    listOfChoices.append('Go Back')
-
+                choices.append(f'Request to connect with {account}')
+    choices.append('Go Back')
     return menu.prompt([menu.List(
         'friend_list_target',
         message='to be changed',
-        choices = listOfChoices
+        choices=choices
     )])
+
 
 def ask_for_login() -> dict:
     return menu.prompt([
         menu.Text('login_username', 'Enter your username'),
-        menu.Text('login_password',  'Enter your password')
+        menu.Text('login_password', 'Enter your password')
     ])
+
 
 def ask_for_signup():
     return menu.prompt([
         menu.Text('signup_username', 'Enter your new username'),
         menu.Text('signup_password', 'Enter your new password (strong)'),
         menu.Text('signup_firstname', 'Enter your first name'),
-        menu.Text('signup_lastname', 'Enter your last name')
+        menu.Text('signup_lastname', 'Enter your last name'),
+        menu.Text('signup_membership', 'Enter pro to subscribe our membership for only $10 per month')
     ])
+
 
 def ask_for_fullname() -> dict:
     return menu.prompt([
         menu.Text('friend_first', 'Enter your friend\'s first name'),
         menu.Text('friend_last', 'Enter your friend\'s last name')
     ])
+
+
+def ask_for_email() -> dict:
+    return menu.prompt([
+        menu.Text('email_recipient', 'Enter the recipient\'s username'),
+        menu.Text('email_message', 'Enter the message')
+    ])
+
+
+def ask_job_application() -> dict:
+    return menu.prompt([
+        menu.Text('grad_date', 'Enter your graduation date (MM/DD/YYYY)'),
+        menu.Text('start_date', 'Enter your expected start date (MM/DD/YYYY)'),
+        menu.Text('app_text', 'Why you are a good fit')
+    ])
+
 
 def ask_job_posting() -> dict:
     return menu.prompt([
@@ -344,21 +457,21 @@ def ask_job_posting() -> dict:
         menu.Text('job_salary', 'Enter salary (format: $/month)')
     ])
 
-def edit_profile(editSelection) -> None:
-    ''' Edit selection is the part of the profile to be edited that was selected in print_profile_screen() '''
-    profile = config.config['accounts'][config.config['current_login']]['profile']
-    if editSelection != 'education' and editSelection != 'experience':
-        input = menu.prompt([
-            menu.Text('edit', 'Enter a new {}'.format(editSelection))
-        ])
-        edit = input['edit']
-        if editSelection == 'major' or editSelection == 'university':
+
+def edit_profile(selection) -> None:
+    """Edit selection of the profile that was chosen by the user."""
+    login = config.config['current_login']
+    profile = config.config['accounts'][login]['profile']
+    if selection != 'education' and selection != 'experience':
+        inp = menu.prompt([menu.Text('edit', f'Enter a new {selection}')])
+        edit = inp['edit']
+        if selection == 'major' or selection == 'university':
             edit = edit.title()
-        profile[editSelection] = edit
-        config.save_profile(config.config['current_login'], profile)
-    elif editSelection == 'experience':
-        if len(profile[editSelection]) < 3:
-            input = menu.prompt([
+        profile[selection] = edit
+        config.save_profile(login, profile)
+    elif selection == 'experience':
+        if len(profile[selection]) < 3:
+            inp = menu.prompt([
                 menu.Text('title', 'Enter title for experience'),
                 menu.Text('employer', 'Enter employer'),
                 menu.Text('date_started', 'Enter date started'),
@@ -366,31 +479,39 @@ def edit_profile(editSelection) -> None:
                 menu.Text('location', 'Enter the location'),
                 menu.Text('description', 'Enter a description')
             ])
-            profile[editSelection].append(input)
-            config.save_profile(config.config['current_login'], profile)
+            profile[selection].append(inp)
+            config.save_profile(login, profile)
         else:
             print('Maximum Experiences')
-    elif editSelection == 'education':
-        input = menu.prompt([
+    elif selection == 'education':
+        inp = menu.prompt([
             menu.Text('name', 'Enter the school name'),
             menu.Text('degree', 'Enter your degree'),
             menu.Text('years', 'Enter your years attended')
         ])
-        profile[editSelection].append(input)
-        config.save_profile(config.config['current_login'], profile)
+        profile[selection].append(inp)
+        config.save_profile(login, profile)
 
-def edit_friends_list(currentUser, currentFriendList, friendUsername, friendFriendList) -> None:
-    currentFriendList.remove(friendUsername)
-    config.save_friends(currentUser, currentFriendList)
 
-    friendFriendList.remove(currentUser)
-    config.save_friends(friendUsername, friendFriendList)
+def edit_friends_list(
+        current_user: str,
+        current_friends: list,
+        friend_username: str,
+        friend_friends: list
+) -> None:
+    """Saves appropriate lists of friends of respective usernames."""
+    current_friends.remove(friend_username)
+    config.save_friends(current_user, current_friends)
+    # Perform the same for friend.
+    friend_friends.remove(current_user)
+    config.save_friends(friend_username, friend_friends)
+
 
 def user_loop() -> None:
     """Main driver for the user interaction."""
     print('-#- 🎓 WELCOME TO THE IN COLLEGE CLI! 🎓 -#-\n')
-    inputs, logged_in_user = None, config.config['current_login']
-    while True: # endless user loop.
+    inputs, logged_in_user, logged_in_user_membership, current_email = None, config.config['current_login'], config.config['current_login_membership'], None
+    while True:  # endless user loop.
         # If inputs are empty, it's the welcome screen.
         if inputs is None:
             inputs = print_welcome_screen()
@@ -398,9 +519,10 @@ def user_loop() -> None:
         if 'welcome_target' in inputs:
             if inputs['welcome_target'] == 'Connect to friends':
                 # Find their friend by prompting for full name.
-                first, last = ask_for_fullname().values(); print()
+                first, last = ask_for_fullname().values();
+                print()
                 if config.full_name_exists(first, last):
-                    print('🎉 {0} is InCollege! Hooray!'.format(first))
+                    print(f'🎉 {first} is InCollege! Hooray!')
                     inputs = print_connect_screen()
                 else:
                     print('🎓 They are not part of our system. Invite them!')
@@ -416,19 +538,21 @@ def user_loop() -> None:
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
-                    login, password = ask_for_login().values(); print()
+                    login, password = ask_for_login().values();
+                    print()
                     if config.login_valid(login, password):
-                        print('🔑 You are logged in. Welcome {}'.format(login))
+                        print(f'🔑 You are logged in. Welcome {login}')
                         config.save_login(login)
                         inputs = print_main_screen()
                     else:
                         inputs = print_connect_screen()
             elif inputs['connect_target'] == 'Sign up to join friends':
-                login, passwd, first, last = ask_for_signup().values(); print();
-                if config.create_user(login, passwd, first, last):
-                    print('✅ User with login {} has been added'.format(login))
+                login, passwd, first, last, membership = ask_for_signup().values();
+                print();
+                if config.create_user(login, passwd, first, last, membership):
+                    print(f'✅ User with login {login} has been added')
                     inputs = print_main_screen()
-                else: # Error was detected.
+                else:  # Error was detected.
                     inputs = print_connect_screen()
             else:
                 inputs = print_welcome_screen()
@@ -452,10 +576,9 @@ def user_loop() -> None:
                 job_id = inputs['application_target'].split()[-1]
                 # Apply for a job by adding it to the list of user apps.
                 if inputs['application_target'].split()[0] == 'Apply':
-                    grad_date = input('Please enter your graduation date: \n')
-                    start_date = input('Please enter the date you can begin to work: \n')
-                    brief = input('Please give a short paragraph explaining why you fit the position: \n')
-                    config.submit_application(user, job_id, grad_date, start_date, brief)
+                    info = ask_job_application().values();
+                    print()
+                    config.submit_application(user, job_id, *info)
                 else:
                     config.save_application(user, job_id)
             # Go back in any case.
@@ -495,15 +618,13 @@ def user_loop() -> None:
                 inputs = print_unsave_posting_screen(job_id)
         if 'internship_target' in inputs:
             if inputs['internship_target'] == 'Post a job':
-                info = ask_job_posting().values(); print()
+                info = ask_job_posting().values();
+                print()
                 if config.create_posting(logged_in_user, *info):
-                    print('✅ New posting for {} has been created!'.format(list(info)[0]))
-                if list(info)[-1].lower() == 'unpaid': # Easter egg.
+                    print(f'✅ New posting for {list(info)[0]} has been created!')
+                if list(info)[-1].lower() == 'unpaid':  # Easter egg.
                     print('🤨 Unpaid position? We aren\'t into charity business here.')
                 inputs = print_internship_screen()
-            elif inputs['internship_target'] == 'Browse all jobs':
-                config.display_all_jobs()
-                inputs = print_application_list_screen()
             elif inputs['internship_target'] == 'Apply for a job':
                 inputs = print_job_list_screen()
             elif inputs['internship_target'] == 'Show my applications':
@@ -517,7 +638,7 @@ def user_loop() -> None:
         if 'job_target' in inputs:
             if inputs['job_target'] == 'Internships':
                 inputs = print_internship_screen()
-            else: # Go back was selected.
+            else:  # Go back was selected.
                 inputs = print_main_screen()
         if 'skill_target' in inputs:
             if inputs['skill_target'] == 'Go back':
@@ -528,10 +649,13 @@ def user_loop() -> None:
         if 'main_target' in inputs:
             if inputs['main_target'] == 'Search for a job':
                 inputs = print_job_screen()
+            elif inputs['main_target'] == 'Message center':
+                inputs = print_message_screen()
             elif inputs['main_target'] == 'Find someone':
-                first, last = ask_for_fullname().values(); print()
+                first, last = ask_for_fullname().values();
+                print()
                 if config.full_name_exists(first, last):
-                    print('🎉 {0} is InCollege! Hooray!'.format(first))
+                    print(f'🎉 {first} is InCollege! Hooray!')
                 else:
                     print('🎓 They are not part of our system. Invite them!')
                 inputs = print_main_screen()
@@ -555,23 +679,25 @@ def user_loop() -> None:
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
-                    login, password = ask_for_login().values(); print()
+                    login, password = ask_for_login().values();
+                    print()
                     if config.login_valid(login, password):
-                        print('🔑 You are logged in. Welcome {}'.format(login))
+                        print(f'🔑 You are logged in. Welcome {login}')
                         config.save_login(login)
                         inputs = print_main_screen()
                     else:
                         print('❌ Invalid credentials. Try again later.')
                         inputs = print_login_screen()
             elif inputs['login_target'] == 'Sign up':
-                login, passwd, first, last = ask_for_signup().values(); print();
-                if config.create_user(login, passwd, first, last):
-                    print('✅ User with login {} has been added'.format(login))
+                login, passwd, first, last, membership = ask_for_signup().values();
+                print();
+                if config.create_user(login, passwd, first, last, membership):
+                    print(f'✅ User with login {login} has been added')
                     config.save_login(login)
                     inputs = print_main_screen()
-                else: # Error was detected.
+                else:  # Error was detected.
                     inputs = print_login_screen()
-            elif inputs['login_target'] == 'Go back': # Reuse code.
+            elif inputs['login_target'] == 'Go back':  # Reuse code.
                 inputs = print_welcome_screen()
             elif inputs['login_target'] == 'Watch a video':
                 print('⚠️🚨 Playing video 🎥. Under construction. 🚨⚠️')
@@ -608,19 +734,6 @@ def user_loop() -> None:
         if 'general_target' in inputs:
             if inputs['general_target'] == 'Sign up':
                 inputs = print_login_screen()
-                # if config.config['current_login'] != '':
-                #     print('🔑 You were already logged in.')
-                #     inputs = print_main_screen()
-                # else:
-                #     login, password = ask_for_login().values();
-                #     print()
-                #     if config.login_valid(login, password):
-                #         print('🔑 You are logged in. Welcome {}'.format(login))
-                #         config.save_login(login)
-                #         inputs = print_main_screen()
-                #     else:
-                #         print('❌ Invalid credentials. Try again later.')
-                #         inputs = print_general_screen()
             elif inputs['general_target'] == 'Help Center':
                 print('🎓 We\'re here to help')
                 inputs = print_general_screen()
@@ -735,10 +848,10 @@ def user_loop() -> None:
                 inputs = print_main_screen()
 
         if 'friend_target' in inputs:
-            if inputs ['friend_target'] == 'Show my Network':
+            if inputs['friend_target'] == 'Show my Network':
                 inputs = print_friend_list_screen('friends')
-            elif inputs ['friend_target'] == 'Search for Someone':
-                
+            elif inputs['friend_target'] == 'Search for Someone':
+
                 inputs = print_friend_list_screen('search')
             elif inputs['friend_target'] == 'View Friend Requests':
                 inputs = print_friend_list_screen('friend_requests')
@@ -751,7 +864,7 @@ def user_loop() -> None:
             elif inputs['friend_list_target'][0] == 'V':
                 config.display_profile(inputs['friend_list_target'][16:])
                 inputs = print_friend_list_screen('friends')
-            elif inputs['friend_list_target'][0:2] == 'Di': #Remove from friend list
+            elif inputs['friend_list_target'][0:2] == 'Di':  # Remove from friend list
                 currentUser = config.config['current_login']
                 currentUserFriendList = config.config['accounts'][currentUser]['friends']
                 friendUsername = inputs['friend_list_target'][16:]
@@ -771,6 +884,54 @@ def user_loop() -> None:
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'] == 'Go Back':
                 inputs = print_friend_screen()
-                
+
+        if 'message_target' in inputs:
+            if inputs['message_target'] == 'Send':
+                email = ask_for_email()
+                config.send_message(*email.values())
+                inputs = print_message_screen()
+            elif inputs['message_target'] == 'Inbox':
+                inputs = print_inbox_screen()
+            elif inputs['message_target'] == 'Available recipients':
+                inputs = print_recipient_screen()
+            elif inputs['message_target'] == 'Go back':
+                inputs = print_main_screen()
+
+        if 'inbox_target' in inputs:
+            if inputs['inbox_target'] == 'Go back':
+                current_email = ""
+                inputs = print_message_screen()
+            else:
+                current_email = inputs['inbox_target']
+                inputs = print_inbox_operation_screen(current_email)
+
+        if 'recipient_target' in inputs:
+            if inputs['recipient_target'] == 'Go back':
+                inputs = print_message_screen()
+            else:
+                inputs = print_recipient_operation_screen(inputs['recipient_target'])
+
+        if 'inbox_operation_target' in inputs:
+            if inputs['inbox_operation_target'] == 'Reply':
+                config.reply_message(current_email)
+                current_email = ""
+                inputs = print_inbox_screen()
+            elif inputs['inbox_operation_target'] == 'Delete':
+                config.delete_message(current_email)
+                current_email = ""
+                inputs = print_inbox_screen()
+            elif inputs['inbox_operation_target'] == 'Go back':
+                inputs = print_message_screen()
+
+        if 'recipient_operation_target' in inputs:
+            if inputs['recipient_operation_target'] != 'Go back':
+                message = input('Message to send:\n')
+                matcher = re.search("Send a message to (.*)", inputs['recipient_operation_target'])
+                recipient = matcher.group(1)
+                config.send_message(recipient, message)
+                inputs = print_message_screen()
+            else:
+                inputs = print_message_screen()
+
 if __name__ == '__main__':
     user_loop()

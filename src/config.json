@@ -68,6 +68,7 @@
       "password": "admin",
       "firstname": "admin",
       "lastname": "admin",
+      "membership": "pro",
       "language": "Spanish",
       "profile": {
         "title": "Admin profile title",
@@ -105,30 +106,29 @@
           }
         ]
       },
-      "friends": [],
+      "friends": [
+        "new",
+        "admin"
+      ],
       "friend_requests": [],
       "saved_jobs": [
-        "1"
+        "5"
       ],
-      "applications": [
-        "1",
-        [
-          "12312",
-          "qweqwe",
-          "qweqwe"
-        ],
-        "2",
-        [
-          "123123",
-          "qwe",
-          "qwer"
-        ]
+      "applications": {},
+      "inbox": [
+        {
+          "test": "How are you"
+        },
+        {
+          "new": "Yep, I did"
+        }
       ]
     },
     "test": {
-      "password": "tesT123!",
-      "firstname": "first",
-      "lastname": "LaSt",
+      "password": "test",
+      "firstname": "test",
+      "lastname": "test",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "I a\b\b\bThis a test profile",
@@ -139,15 +139,30 @@
         "education": []
       },
       "friends": [
-        "new"
+        "admin"
       ],
       "friend_requests": [],
-      "applications": []
+      "applications": {},
+      "inbox": [
+        {
+          "admin": "How are you"
+        },
+        {
+          "admin": "I'm good!"
+        },
+        {
+          "admin": "hey"
+        },
+        {
+          "admin": "good!@"
+        }
+      ]
     },
     "new": {
-      "password": "new2New!new",
-      "firstname": "New",
-      "lastname": "New",
+      "password": "new",
+      "firstname": "new",
+      "lastname": "new",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "",
@@ -162,12 +177,18 @@
       ],
       "friend_requests": [],
       "saved_jobs": [],
-      "applications": []
+      "applications": {},
+      "inbox": [
+        {
+          "admin": "Hey new, you've done the work?"
+        }
+      ]
     },
     "admin2": {
-      "password": "admin2DF$Ds",
+      "password": "admin2",
       "firstname": "admin2",
       "lastname": "admin2",
+      "membership": "",
       "language": "English",
       "profile": {
         "title": "",
@@ -180,14 +201,13 @@
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [],
-      "applications": []
+      "applications": {},
+      "inbox": []
     }
   },
-  "current_login": "admin",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
-    "admin": [
-      "InCollege Email",
-      "SMS"
-    ]
+    "admin": []
   }
 }
