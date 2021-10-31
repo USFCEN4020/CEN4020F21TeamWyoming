@@ -1,0 +1,101 @@
+import json
+
+def create_config(file_path: str) -> None:
+    config = {
+        "messages": {
+            "welcome": "Welcome"
+        },
+        "jobs": [
+            {
+                "author": "Some Author",
+                "title": "Software Engineer",
+                "description": "Needs to test CLI applications",
+                "employer": "Sunny Side Up LLC",
+                "location": "San Jose, CA",
+                "salary": "$7000 a month",
+                "id": "2"
+            },
+            {
+                "author": "Other Author",
+                "title": "QA Engineer",
+                "description": "Needs to QA robotics applications",
+                "employer": "Pick Me Corp",
+                "location": "Mountainview, CA",
+                "salary": "$5500 a month",
+                "id": "4"
+            }
+        ],
+        "stories": [
+            "Some story of a successful guy",
+            "Another story of a very successful guy"
+        ],
+        "accounts": {
+            "admin": {
+                "password": "admin",
+                "firstname": "admin",
+                "lastname": "admin",
+                "membership": "pro",
+                "language": "English",
+                "profile": {
+                    "title": "admin",
+                    "major": "admin",
+                    "university": "admin",
+                    "about": "admin",
+                    "experience": [
+                        {
+                            "title": "admin",
+                            "employer": "admin",
+                            "date_started": "admin",
+                            "date_ended": "admin",
+                            "location": "admin",
+                            "description": "admin"
+                        }
+                    ],
+                },
+                "education": [],
+                "friends": [],
+                "friend_requests": [],
+                "saved_jobs": [],
+                "applications": {},
+                "inbox": []
+            },
+            "test": {
+                "password": "test",
+                "firstname": "test",
+                "lastname": "test",
+                "membership": "",
+                "language": "Spanish",
+                "profile": {
+                    "title": "test",
+                    "major": "test",
+                    "university": "test",
+                    "about": "test",
+                    "experience": [
+                        {
+                            "title": "test",
+                            "employer": "test",
+                            "date_started": "test",
+                            "date_ended": "test",
+                            "location": "test",
+                            "description": "test"
+                        }
+                    ],
+                },
+                "education": [],
+                "friends": [],
+                "friend_requests": [],
+                "saved_jobs": [],
+                "applications": {},
+                "inbox": []
+            }
+        },
+        "current_login": "",
+        "current_login_membership": "",
+        "guest_control": {
+                "admin": ['InCollege Email']
+        },
+    }
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(config, f, ensure_ascii=False, indent=2)
+        f.write('\n')
+

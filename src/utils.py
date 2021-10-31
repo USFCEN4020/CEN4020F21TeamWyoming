@@ -32,14 +32,25 @@ class InCollegeConfig:
 
     def full_name_exists(self, first: str, last: str) -> bool:
         """Check whether given first and last names exist."""
-        return any([self['accounts'][account]['firstname'] == first and \
+        exists = any([self['accounts'][account]['firstname'] == first and \
                     self['accounts'][account]['lastname'] == last for \
                     account in self['accounts']])
+        if exists:
+            print(f'🎉 {first} is InCollege! Hooray!')
+        else:
+            print('🎓 They are not part of our system. Invite them!')
+        return exists
 
     def login_valid(self, username: str, password: str) -> bool:
         """Check whether login/password combination is valid."""
-        return username in self['accounts'] and \
+        valid = username in self['accounts'] and \
                self['accounts'][username]['password'] == password
+        if valid:
+            print(f'🔑 You are logged in. Welcome {username}')
+            self.save_login(username)
+        else:
+            print('❌ Credentials invalid. Please try again')
+        return valid
 
     def username_exists(self, username: str) -> bool:
         """Check whether given username exists."""
@@ -62,7 +73,12 @@ class InCollegeConfig:
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
     def create_user(
-            self, username: str, password: str, firstname: str, lastname: str, membership: str
+            self, 
+            username: str, 
+            password: str, 
+            firstname: str, 
+            lastname: str, 
+            membership: str
     ) -> bool:
         """Validate user information and create new entry in the config."""
         num_users_flag = len(self['accounts']) >= 10
@@ -99,8 +115,9 @@ class InCollegeConfig:
             if membership.strip().lower() == 'pro':
                 self['accounts'][username]['membership'] = 'pro'
             # Write new config to json file.
-            with open(self.filename, 'w', encoding='utf-8') as f:
-                json.dump(self.config, f, ensure_ascii=False, indent=2)
+            self.save_config()
+            print(f'✅ User with login {username} has been added')
+            self.save_login(username)
             return True
 
     def create_posting(
@@ -122,7 +139,7 @@ class InCollegeConfig:
         while new_id in ids:
             new_id = randint(1, 100)
         fullname = self['accounts'][author]['firstname'] + ' ' + \
-                   self['accounts'][author]['firstname']
+                self['accounts'][author]['firstname']
         self['jobs'].append({
             'author': fullname,
             'title': title,
@@ -138,6 +155,9 @@ class InCollegeConfig:
             return False
         else:
             self.save_config()
+            print(f'✅ New posting for {title} has been created!')
+            if salary.lower() == 'unpaid': # Easter egg.
+                print('🤨 Unpaid position? We aren\'t into charity business.')
             return True
 
     def delete_posting(self, job_id: str):
@@ -373,4 +393,3 @@ class InCollegeConfig:
                 self['accounts'][self['current_login']]['inbox'].pop(counter)
             counter += 1
         self.save_config()
-

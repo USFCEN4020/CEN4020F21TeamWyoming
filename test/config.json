@@ -89,6 +89,8 @@
   "current_login": "",
   "current_login_membership": "",
   "guest_control": {
-    "admin": []
+    "admin": [
+      "InCollege Email"
+    ]
   }
 }
