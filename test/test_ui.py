@@ -12,9 +12,6 @@ from inquirer import events
 
 from io import StringIO
 
-# Initiate config at the beginning.
-config = helper.create_config('config.json')
-
 # Setup path assignment.
 if _platform.startswith('win'):
     config_path = '..\\test\\config.json'
@@ -22,6 +19,7 @@ if _platform.startswith('win'):
 else:
     config_path = '../test/config.json'
     path = '../src'
+helper.create_config(config_path)
 sys.path.append(path)
 os.chdir(path)
 
