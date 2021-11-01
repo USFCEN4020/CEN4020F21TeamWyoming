@@ -193,3 +193,28 @@ def test_get_list_jobs_week6():
     jobs = config.get_list_jobs(user)
     assert len(jobs) == 2
 
+def test_send_message_week7():
+    config = init_testing()
+    config['current_login'] = 'admin'
+    config['current_login_membership'] = 'pro'
+    recipient = config['accounts']['test']
+    message = 'test message'
+    config.send_message('test', message)
+    assert {'admin': message} in recipient['inbox']
+    config.send_message('admin', message)
+    assert {'admin': message} not in config['accounts']['admin']['inbox']
+    config['current_login_membership'] = ''
+    recipient['inbox'].pop(0)
+    config.send_message('test', message)
+    assert {'admin': message} not in recipient['inbox']
+
+def test_delete_message_week7():
+    config = init_testing()
+    config['current_login'] = 'admin'
+    config['current_login_membership'] = 'pro'
+    message = 'test: test message'
+    config['accounts']['admin']['inbox'].append({'test': 'test message'})
+    config.delete_message(message)
+    assert {'test': 'test message'} not in config['accounts']['admin']['inbox']
+
+

@@ -375,7 +375,7 @@ class InCollegeConfig:
             print('\nThe recipient does not exist.\n')
         self.save_config()
 
-    def reply_message(self, email: dict) -> None:
+    def reply_message(self, email: string) -> None:
         matcher = re.search("(.*):", email)
         sender = matcher.group(1)
         reply_message = input('Reply: \n')
@@ -383,7 +383,7 @@ class InCollegeConfig:
         self['accounts'][sender]['inbox'].append(reply)
         self.save_config()
 
-    def delete_message(self, email: dict) -> None:
+    def delete_message(self, email: string) -> None:
         matcher = re.search("(.*): (.*)", email)
         sender = matcher.group(1)
         message = matcher.group(2)

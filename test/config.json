@@ -86,8 +86,8 @@
       "inbox": []
     }
   },
-  "current_login": "",
-  "current_login_membership": "",
+  "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": [
       "InCollege Email"
