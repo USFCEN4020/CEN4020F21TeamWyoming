@@ -4,7 +4,7 @@
   },
   "time_stamps": {
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
-    "job_posted": "\"2021-11-02 13:51:16.669015\"",
+    "job_posted": "\"2021-11-02 14:58:46.740907\"",
     "user_registered": "\"2021-11-02 11:41:06.349519\""
   },
   "jobs": [
@@ -43,6 +43,33 @@
       "location": "Best",
       "salary": "BEST",
       "id": "99"
+    },
+    {
+      "author": "admin admin",
+      "title": "a",
+      "description": "a",
+      "employer": "a",
+      "location": "a",
+      "salary": "a",
+      "id": "14"
+    },
+    {
+      "author": "admin admin",
+      "title": "dsfsd",
+      "description": "fds",
+      "employer": "fds",
+      "location": "fds",
+      "salary": "fds",
+      "id": "20"
+    },
+    {
+      "author": "admin admin",
+      "title": "",
+      "description": "",
+      "employer": "",
+      "location": "",
+      "salary": "",
+      "id": "88"
     }
   ],
   "stories": [
@@ -104,6 +131,11 @@
           "grad_date": "w",
           "start_date": "w",
           "app_text": "w"
+        },
+        "35": {
+          "grad_date": "",
+          "start_date": "",
+          "app_text": ""
         }
       },
       "inbox": [
@@ -113,7 +145,7 @@
       ],
       "time_stamps": {
         "log_out": "\"2021-11-02 14:06:40.444268\"",
-        "job_applied": "\"2021-11-02 12:51:53.839389\"",
+        "job_applied": "\"2021-11-02 15:07:55.862033\"",
         "user_registered": "\"2020-11-02 11:41:06.350453\""
       }
     },
@@ -226,8 +258,8 @@
       }
     }
   },
-  "current_login": "",
-  "current_login_membership": "",
+  "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": []
   }

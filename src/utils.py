@@ -277,6 +277,13 @@ class InCollegeConfig:
             brief: str
     ) -> None:
         """Apply for a job by adding the id into user's application list."""
+        jobs = self['jobs']
+        current_user = self['accounts'][self['current_login']]
+        fullname = current_user['firstname'] + ' ' + current_user['lastname']
+        for job in jobs:
+            if job_id in job['id'] and job['author'] == fullname:
+                print('❌ Error. You cannot apply a job posted by yourself.')
+                return
         print(f'✅ Success! You have applied to the job {job_id}! 🎉')
         self.time_stamp_update('job_applied', self['current_login'])
         if job_id in self['accounts'][user]['applications']:
