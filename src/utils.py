@@ -1,7 +1,13 @@
 import json
+import datetime
 import string
 import re
 from random import randint
+
+
+class TextColor:
+    RESET = '\033[0m'
+    NOTIFICATION = '\033[92m'
 
 
 class InCollegeConfig:
@@ -33,8 +39,8 @@ class InCollegeConfig:
     def full_name_exists(self, first: str, last: str) -> bool:
         """Check whether given first and last names exist."""
         exists = any([self['accounts'][account]['firstname'] == first and \
-                    self['accounts'][account]['lastname'] == last for \
-                    account in self['accounts']])
+                      self['accounts'][account]['lastname'] == last for \
+                      account in self['accounts']])
         if exists:
             print(f'🎉 {first} is InCollege! Hooray!')
         else:
@@ -44,10 +50,11 @@ class InCollegeConfig:
     def login_valid(self, username: str, password: str) -> bool:
         """Check whether login/password combination is valid."""
         valid = username in self['accounts'] and \
-               self['accounts'][username]['password'] == password
+                self['accounts'][username]['password'] == password
         if valid:
             print(f'🔑 You are logged in. Welcome {username}')
             self.save_login(username)
+            self.notification_center(username)
         else:
             print('❌ Credentials invalid. Please try again')
         return valid
@@ -73,11 +80,11 @@ class InCollegeConfig:
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
     def create_user(
-            self, 
-            username: str, 
-            password: str, 
-            firstname: str, 
-            lastname: str, 
+            self,
+            username: str,
+            password: str,
+            firstname: str,
+            lastname: str,
             membership: str
     ) -> bool:
         """Validate user information and create new entry in the config."""
@@ -107,14 +114,19 @@ class InCollegeConfig:
                 },
                 'friends': [],
                 'friend_requests': [],
-                'applications': [],  # is this a dict or list the config.json shows dict yet here it's a list
+                'applications': {},  # is this a dict or list the config.json shows dict yet here it's a list
                 'saved_jobs': [],
-                'inbox': []
+                'inbox': [],
+                'time_stamps': {
+                    'job_applied': ''
+                }
             }
 
             if membership.strip().lower() == 'pro':
                 self['accounts'][username]['membership'] = 'pro'
             # Write new config to json file.
+            self.time_stamp_update('user_registered')
+            self.time_stamp_update('user_registered', username)
             self.save_config()
             print(f'✅ User with login {username} has been added')
             self.save_login(username)
@@ -139,7 +151,7 @@ class InCollegeConfig:
         while new_id in ids:
             new_id = randint(1, 100)
         fullname = self['accounts'][author]['firstname'] + ' ' + \
-                self['accounts'][author]['firstname']
+                   self['accounts'][author]['lastname']
         self['jobs'].append({
             'author': fullname,
             'title': title,
@@ -154,9 +166,10 @@ class InCollegeConfig:
             print('ERROR: Too many jobs in the system. Try again later.')
             return False
         else:
+            self.time_stamp_update('job_posted')
             self.save_config()
             print(f'✅ New posting for {title} has been created!')
-            if salary.lower() == 'unpaid': # Easter egg.
+            if salary.lower() == 'unpaid':  # Easter egg.
                 print('🤨 Unpaid position? We aren\'t into charity business.')
             return True
 
@@ -170,6 +183,7 @@ class InCollegeConfig:
             if job_id in self['accounts'][user]['applications']:
                 del self['accounts'][user]['applications'][job_id]
         # Save updated config.
+        self.time_stamp_update('job_deleted')
         self.save_config()
         # Print success message.
         print(f'✅ Success! Posting {job_id} and associated apps were removed.')
@@ -186,6 +200,7 @@ class InCollegeConfig:
             self['current_login_membership'] = self['accounts'][username]['membership']
         else:
             self['current_login_membership'] = ''
+            self.time_stamp_update('log_out', self['current_login'])
         self.save_config()
 
     def save_guest_control(self, username: str, control_setting_list: dict) -> None:
@@ -263,6 +278,7 @@ class InCollegeConfig:
     ) -> None:
         """Apply for a job by adding the id into user's application list."""
         print(f'✅ Success! You have applied to the job {job_id}! 🎉')
+        self.time_stamp_update('job_applied', self['current_login'])
         if job_id in self['accounts'][user]['applications']:
             print('❌ Error. You have applied this job.')
             return
@@ -276,7 +292,10 @@ class InCollegeConfig:
     def withdraw_application(self, user: str, job_id: str) -> None:
         """Withdraw application by removing it from user's application list."""
         print(f'✅ Success. The application {job_id} was withdrawn.')
-        del self['accounts'][user]['applications'][job_id]
+        # del may throw an error when the job_id is non-existed
+        # del self['accounts'][user]['applications'][job_id]
+        # try to delete a non-existed key. This will return None.
+        self['accounts'][user]['applications'].pop(job_id, None)
         self.save_config()
 
     def save_application(self, user: str, job_id: str) -> None:
@@ -358,8 +377,22 @@ class InCollegeConfig:
         self['accounts'][user]['friend_requests'].remove(declined_username)
         self.save_config()
 
+    def mark_message_read(self, email: str) -> None:
+        inbox = self['accounts'][self['current_login']]['inbox']
+        matcher = re.search("(.*): (.*)", email)
+        sender = matcher.group(1)
+        message = matcher.group(2)
+        if '[unread]' in email:
+            marked_message = message.replace('[unread]', '', 1)
+            counter = 0
+            for element in inbox:
+                if sender in element and (element[sender] == message):
+                    inbox[counter][sender] = marked_message
+                counter += 1
+        self.save_config()
+
     def send_message(self, recipient: str, message: str) -> None:
-        email = {self['current_login']: message}
+        email = {self['current_login']: '[unread]' + message}
         if recipient == '':
             print('\nPlease not to leave the recipient and the message blank.\n')
         elif recipient == self['current_login']:
@@ -379,6 +412,7 @@ class InCollegeConfig:
         matcher = re.search("(.*):", email)
         sender = matcher.group(1)
         reply_message = input('Reply: \n')
+        reply_message = '[unread]' + reply_message
         reply = {self['current_login']: reply_message}
         self['accounts'][sender]['inbox'].append(reply)
         self.save_config()
@@ -387,9 +421,141 @@ class InCollegeConfig:
         matcher = re.search("(.*): (.*)", email)
         sender = matcher.group(1)
         message = matcher.group(2)
+        marked_message = message.replace('[unread]', '', 1)
         counter = 0
         for element in self['accounts'][self['current_login']]['inbox']:
-            if sender in element and element[sender] == message:
+            if sender in element and (element[sender] == message or element[sender] == marked_message):
                 self['accounts'][self['current_login']]['inbox'].pop(counter)
             counter += 1
         self.save_config()
+
+    def notification_center(self, username: str,
+                            job_notify=True,
+                            profile_alert=True,
+                            unread_msg=True,
+                            job_posted=True,
+                            job_deleted=True,
+                            new_user=True,
+                            job_num=False
+                            ) -> None:
+        print(TextColor.NOTIFICATION + 'Notification Center: ')
+        if job_notify:
+            self.if_job_notification(username)
+        if profile_alert:
+            self.no_profile_notificaton(username)
+        if unread_msg:
+            self.unread_message_notification(username)
+        if job_posted:
+            self.job_posted_notification()
+        if job_deleted:
+            self.applied_job_deleted_notification()
+        if new_user:
+            self.new_user_notification()
+        if job_num:
+            self.num_job_notification(username)
+        print(TextColor.RESET)
+
+    @staticmethod
+    def send_notification(message: str) -> None:
+        print(message)
+
+    @staticmethod
+    def datetime_convert(data: datetime) -> str:
+        if isinstance(data, datetime.datetime):
+            return data.__str__()
+
+    def json_time_convert(self, event: str, username: str = '') -> datetime:
+        if username != '':
+            json_time = self['accounts'][username]['time_stamps'][event]
+        else:
+            json_time = self['time_stamps'][event]
+        time = datetime.datetime.strptime(json_time, '\"%Y-%m-%d %H:%M:%S.%f\"') # "\"2021-11-02 02:09:10.286317\""
+        return time
+
+    def time_stamp_update(self, event: str, username: str = '') -> None:
+        time = json.dumps(datetime.datetime.now(), default=self.datetime_convert)
+        time_stamp = {event: time}
+        if username != '':
+            self['accounts'][username]['time_stamps'].update(time_stamp)
+            self.save_config()
+            return
+        self['time_stamps'].update(time_stamp)
+        self.save_config()
+
+    def if_job_notification(self, username: str) -> None:
+        # Happens once every time you logs in
+        # Resuming will not trigger this function
+        time_stamps = self['accounts'][username]['time_stamps']
+        message = 'Remember – you\'re going to want to have a job when you graduate.\n' \
+                  'Make sure that you start to apply for jobs today!'
+        # new create user function now initialize the time stamp of job_applied
+        # though not all old users have that
+        if 'job_applied' not in time_stamps:
+            self.send_notification(message)
+            return
+        time_diff = datetime.datetime.now() - self.json_time_convert('job_applied', username)
+        if time_diff.days >= 7:
+            self.send_notification(message)
+        self.save_config()
+
+    def no_profile_notificaton(self, username: str) -> None:
+        profile = self['accounts'][username]['profile']
+        message = 'Don\'t forget to create a profile'
+        if profile['title'].strip() == '' and profile['major'].strip() == '' and profile['university'].strip() == '' and \
+                profile['about'].strip() == '' and len(profile['experience']) == 0 and len(profile['education']) == 0:
+            self.send_notification(message)
+        self.save_config()
+
+    def unread_message_notification(self, username: str) -> None:
+        inbox = self['accounts'][username]['inbox']
+        message = 'You have messages waiting for you'
+        for d in inbox:
+            for k, v in list(d.items()):
+                if '[unread]' in v:
+                    self.send_notification(message)
+                    return
+
+    def num_job_notification(self, username: str) -> None:
+        applications = self['accounts'][username]['applications']
+        jobs_applied = len(applications)
+        message = f'You have currently applied for {jobs_applied} jobs'
+        self.send_notification(message)
+
+    def job_posted_notification(self) -> None:
+        if len(self['jobs']) != 0:
+            title = self['jobs'][-1]['title']
+            job_posted_time = self.json_time_convert('job_posted')
+            log_out_time = self.json_time_convert('log_out', self['current_login'])
+            message = f'new job {title} has been posted.'
+            if job_posted_time > log_out_time:
+                self.send_notification(message)
+
+    def applied_job_deleted_notification(self) -> None:
+
+        applications = self['accounts'][self['current_login']]['applications']
+        jobs = self['jobs']
+        saved_jobs = self['accounts'][self['current_login']]['saved_jobs']
+        count = 0
+        job_ids_in_applications = list(key for key in applications.keys())
+        job_ids_updated = list(job['id'] for job in jobs)
+        diff = list(filter(lambda x: x not in job_ids_updated, job_ids_in_applications))
+        for job_id in diff:
+            applications.pop(job_id, None)
+            count += 1
+        for job_id in saved_jobs:
+            if job_id not in job_ids_updated:
+                saved_jobs.remove(job_id)
+        message = f'{count} job(s) that you applied for has been deleted'
+        if count != 0:
+            self.send_notification(message)
+        self.save_config()
+
+    def new_user_notification(self) -> None:
+        log_out_time = self.json_time_convert('log_out', self['current_login'])
+        for key, value in self['accounts'].items():
+            registered_time = self.json_time_convert('user_registered', key)
+            if registered_time > log_out_time:
+                first_name = value['firstname']
+                last_name = value['lastname']
+                message = f'{first_name} {last_name} has joined InCollege'
+                self.send_notification(message)
