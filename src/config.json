@@ -4,8 +4,9 @@
   },
   "time_stamps": {
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
-    "job_posted": "\"2021-11-02 14:58:46.740907\"",
-    "user_registered": "\"2021-11-02 11:41:06.349519\""
+    "job_posted": "\"2021-11-02 20:36:18.695288\"",
+    "user_registered": "\"2021-11-02 20:35:30.127729\"",
+    "log_out": "\"2021-11-02 20:38:49.921064\""
   },
   "jobs": [
     {
@@ -70,6 +71,24 @@
       "location": "",
       "salary": "",
       "id": "88"
+    },
+    {
+      "author": "admin admin",
+      "title": "",
+      "description": "",
+      "employer": "",
+      "location": "",
+      "salary": "",
+      "id": "26"
+    },
+    {
+      "author": "admin admin",
+      "title": "qwe",
+      "description": "qwe",
+      "employer": "qwe",
+      "location": "qwe",
+      "salary": "qwe",
+      "id": "80"
     }
   ],
   "stories": [
@@ -140,7 +159,7 @@
       },
       "inbox": [
         {
-          "test": "[unread]OK, I'll do it today..."
+          "test": "OK, I'll do it today..."
         }
       ],
       "time_stamps": {
@@ -172,6 +191,12 @@
       "inbox": [
         {
           "admin": "Hey Test, did you do the testing?"
+        },
+        {
+          "admin": "[unread]test"
+        },
+        {
+          "admin": "[unread]test"
         }
       ],
       "time_stamps": {
@@ -256,10 +281,35 @@
         "user_registered": "\"2021-11-02 11:41:06.350453\"",
         "log_out": "\"2021-11-02 11:41:40.076997\""
       }
+    },
+    "Heeyyyy": {
+      "password": "werFDcx4234#",
+      "firstname": "wefa",
+      "lastname": "dfgdfs",
+      "membership": "",
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": {},
+      "saved_jobs": [],
+      "inbox": [],
+      "time_stamps": {
+        "log_out": "\"0000-00-00 00:00:00.000000\"",
+        "job_applied": "\"0000-00-00 00:00:00.000000\"",
+        "user_registered": "\"2021-11-02 20:35:30.128575\""
+      }
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": []
   }

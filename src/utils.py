@@ -118,7 +118,9 @@ class InCollegeConfig:
                 'saved_jobs': [],
                 'inbox': [],
                 'time_stamps': {
-                    'job_applied': ''
+                    'log_out': '\"2000-01-01 00:00:00.000000\"',
+                    'job_applied': '\"2000-01-01 00:00:00.000000\"',
+                    'user_registered': '\"2000-01-01 00:00:00.000000\"'
                 }
             }
 

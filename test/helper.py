@@ -5,6 +5,11 @@ def create_config(file_path: str) -> None:
         "messages": {
             "welcome": "Welcome"
         },
+        "time_stamps": {
+            "job_deleted": "\"2000-01-01 00:00:00.000000\"",
+            "job_posted": "\"2000-01-01 00:00:00.000000\"",
+            "user_registered": "\"2000-01-01 00:00:00.000000\""
+          },
         "jobs": [
             {
                 "author": "Some Author",
@@ -57,7 +62,12 @@ def create_config(file_path: str) -> None:
                 "friend_requests": [],
                 "saved_jobs": [],
                 "applications": {},
-                "inbox": []
+                "inbox": [],
+                "time_stamps": {
+                    "log_out": "\"2000-01-01 00:00:00.000000\"",
+                    "job_applied": "\"2000-01-01 00:00:00.000000\"",
+                    "user_registered": "\"2000-01-01 00:00:00.000000\""
+                    }
             },
             "test": {
                 "password": "test",
@@ -86,7 +96,12 @@ def create_config(file_path: str) -> None:
                 "friend_requests": [],
                 "saved_jobs": [],
                 "applications": {},
-                "inbox": []
+                "inbox": [],
+                "time_stamps": {
+                    "log_out": "\"2000-01-01 00:00:00.000000\"",
+                    "job_applied": "\"2000-01-01 00:00:00.000000\"",
+                    "user_registered": "\"2000-01-01 00:00:00.000000\""
+                    }
             }
         },
         "current_login": "",
