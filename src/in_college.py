@@ -5,10 +5,11 @@ import re
 import utils
 
 # TODO: remove global vars.
-config = None 
+config = None
 logged_in_user = ""  # global variable for current login.
 logged_in_user_membership = ""
 current_email = ""
+
 
 def print_welcome_screen() -> dict:
     """Print welcome selections for the user."""
@@ -18,6 +19,7 @@ def print_welcome_screen() -> dict:
         choices=['Connect to friends', 'Skip', 'Quit']
     )])
 
+
 def print_connect_screen() -> dict:
     """Print connect screen selections for the user."""
     return menu.prompt([menu.List(
@@ -25,6 +27,7 @@ def print_connect_screen() -> dict:
         message='[CONNECT] Where would you like to go from here?',
         choices=['Log in', 'Sign up to join friends', 'Go back']
     )])
+
 
 def print_main_screen() -> dict:
     """Print main screen selections to the user."""
@@ -44,6 +47,7 @@ def print_main_screen() -> dict:
         ]
     )])
 
+
 def print_message_screen() -> dict:
     """Print message selections for the user."""
     return menu.prompt([menu.List(
@@ -56,6 +60,7 @@ def print_message_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_inbox_screen():
     user = config['current_login']
@@ -71,6 +76,7 @@ def print_inbox_screen():
         choices=choices
     )])
 
+
 def print_recipient_screen():
     user = config['current_login']
     membership = config['current_login_membership']
@@ -85,6 +91,7 @@ def print_recipient_screen():
         choices=choices
     )])
 
+
 def print_inbox_operation_screen(email: str) -> dict:
     """Print message selections for the user."""
     return menu.prompt([menu.List(
@@ -97,6 +104,7 @@ def print_inbox_operation_screen(email: str) -> dict:
         ]
     )])
 
+
 def print_recipient_operation_screen(recipient: str) -> dict:
     """Print message selections for the user."""
     return menu.prompt([menu.List(
@@ -107,6 +115,7 @@ def print_recipient_operation_screen(recipient: str) -> dict:
             'Go back'
         ]
     )])
+
 
 def print_login_screen() -> dict:
     """Print login screen selections to the user."""
@@ -129,6 +138,7 @@ def print_login_screen() -> dict:
         ]
     )])
 
+
 def print_ulinks_screen() -> dict:
     return menu.prompt([menu.List(
         'ulinks_target',
@@ -141,6 +151,7 @@ def print_ulinks_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_general_screen() -> dict:
     return menu.prompt([menu.List(
@@ -157,6 +168,7 @@ def print_general_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_ilinks_screen() -> dict:
     return menu.prompt([menu.List(
@@ -177,6 +189,7 @@ def print_ilinks_screen() -> dict:
         ]
     )])
 
+
 def print_privacy_screen() -> dict:
     return menu.prompt([menu.List(
         'privacy_target',
@@ -186,6 +199,7 @@ def print_privacy_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_guest_screen() -> dict:
     return menu.prompt([menu.Checkbox(
@@ -198,6 +212,7 @@ def print_guest_screen() -> dict:
         ]
     )])
 
+
 def print_language_screen() -> dict:
     return menu.prompt([menu.List(
         'language_target',
@@ -207,6 +222,7 @@ def print_language_screen() -> dict:
             'Spanish'
         ]
     )])
+
 
 def print_skill_screen() -> dict:
     return menu.prompt([menu.List(
@@ -223,12 +239,23 @@ def print_skill_screen() -> dict:
         ]
     )])
 
+
 def print_job_screen() -> dict:
+    config.notification_center(config['current_login'],
+                               job_notify=False,
+                               profile_alert=False,
+                               unread_msg=False,
+                               job_posted=False,
+                               job_deleted=False,
+                               new_user=False,
+                               job_num=True
+                               )
     return menu.prompt([menu.List(
         'job_target',
         message='[JOBS] What would you like to do?',
         choices=['Internships', 'Go back']
     )])
+
 
 def print_internship_screen() -> dict:
     return menu.prompt([menu.List(
@@ -243,6 +270,7 @@ def print_internship_screen() -> dict:
             'Go back'
         ]
     )])
+
 
 def print_profile_screen() -> dict:
     return menu.prompt([menu.List(
@@ -260,6 +288,7 @@ def print_profile_screen() -> dict:
         ]
     )])
 
+
 def print_friend_screen() -> dict:
     return menu.prompt([menu.List(
         'friend_target',
@@ -272,6 +301,7 @@ def print_friend_screen() -> dict:
         ]
     )])
 
+
 def print_job_list_screen():
     # Get current login to not display already applied jobs.
     user = config['accounts'][config['current_login']]
@@ -282,6 +312,7 @@ def print_job_list_screen():
         choices=config.get_list_jobs(user) + ['Go Back']
     )])
 
+
 def print_postings_list_screen():
     user = config['accounts'][config['current_login']]
     return menu.prompt([menu.List(
@@ -289,6 +320,7 @@ def print_postings_list_screen():
         message='Choose your posting for more information',
         choices=config.get_list_jobs(user, my_posts=True) + ['Go Back']
     )])
+
 
 def print_application_list_screen():
     user = config['accounts'][config['current_login']]
@@ -298,6 +330,7 @@ def print_application_list_screen():
         choices=config.get_list_jobs(user, my_apps=True) + ['Go Back']
     )])
 
+
 def print_saved_list_screen():
     user = config['accounts'][config['current_login']]
     return menu.prompt([menu.List(
@@ -306,6 +339,7 @@ def print_saved_list_screen():
         choices=config.get_list_jobs(user, saved=True) + ['Go Back']
     )])
 
+
 def print_unsave_posting_screen(job_id: str):
     return menu.prompt([menu.List(
         'unsave_posting_target',
@@ -313,12 +347,14 @@ def print_unsave_posting_screen(job_id: str):
         choices=['Delete this saved posting: ' + job_id, 'Go Back']
     )])
 
+
 def print_delete_posting_screen(job_id: str):
     return menu.prompt([menu.List(
         'delete_posting_target',
         message='What would you like to do with your posting',
         choices=['Delete this posting: ' + job_id, 'Go Back']
     )])
+
 
 def print_application_screen(job_id: str):
     return menu.prompt([menu.List(
@@ -331,12 +367,14 @@ def print_application_screen(job_id: str):
         ]
     )])
 
+
 def print_withdrawal_screen(job_id: str):
     return menu.prompt([menu.List(
         'withdraw_target',
         message='What would you like to do',
         choices=['Withdraw from this job: ' + job_id, 'Go Back']
     )])
+
 
 def print_friend_list_screen(key) -> dict:
     user = config['accounts'][config['current_login']]
@@ -380,11 +418,13 @@ def print_friend_list_screen(key) -> dict:
         choices=choices
     )])
 
+
 def ask_for_login() -> dict:
     return menu.prompt([
         menu.Text('login_username', 'Enter your username'),
         menu.Text('login_password', 'Enter your password')
     ])
+
 
 def ask_for_signup():
     return menu.prompt([
@@ -395,11 +435,13 @@ def ask_for_signup():
         menu.Text('signup_membership', 'Enter pro to subscribe to $10/mo plan')
     ])
 
+
 def ask_for_fullname() -> dict:
     return menu.prompt([
         menu.Text('friend_first', 'Enter your friend\'s first name'),
         menu.Text('friend_last', 'Enter your friend\'s last name')
     ])
+
 
 def ask_for_email() -> dict:
     return menu.prompt([
@@ -407,12 +449,14 @@ def ask_for_email() -> dict:
         menu.Text('email_message', 'Enter the message')
     ])
 
+
 def ask_job_application() -> dict:
     return menu.prompt([
         menu.Text('grad_date', 'Enter your graduation date (MM/DD/YYYY)'),
         menu.Text('start_date', 'Enter your expected start date (MM/DD/YYYY)'),
         menu.Text('app_text', 'Why you are a good fit')
     ])
+
 
 def ask_job_posting() -> dict:
     return menu.prompt([
@@ -422,6 +466,7 @@ def ask_job_posting() -> dict:
         menu.Text('job_location', 'Enter location (city, state)'),
         menu.Text('job_salary', 'Enter salary (format: $/month)')
     ])
+
 
 def edit_profile(selection) -> None:
     """Edit selection of the profile that was chosen by the user."""
@@ -457,6 +502,7 @@ def edit_profile(selection) -> None:
         profile[selection].append(inp)
         config.save_profile(login, profile)
 
+
 def edit_friends_list(
         current_user: str,
         current_friends: list,
@@ -474,23 +520,24 @@ def edit_friends_list(
 def user_loop(new_config: utils.InCollegeConfig) -> None:
     """Main driver for the user interaction."""
     print('-#- 🎓 WELCOME TO THE IN COLLEGE CLI! 🎓 -#-\n')
-    global config # TODO: needs a fix, remove globals.
+    global config  # TODO: needs a fix, remove globals.
     config = new_config
     # TODO: Remove these initial assignments.
     inputs = None
     logged_in_user = config['current_login']
-    logged_in_user_membership = config['current_login_membership'] 
+    logged_in_user_membership = config['current_login_membership']
     current_email = None
 
     while True:
-        # Welcome screen when inputs are empty. 
+        # Welcome screen when inputs are empty.
         if inputs is None:
             # Print out first menu options.
             inputs = print_welcome_screen()
         # Selection from welcome screen.
         if 'welcome_target' in inputs:
             if inputs['welcome_target'] == 'Connect to friends':
-                info = ask_for_fullname().values(); print()
+                info = ask_for_fullname().values();
+                print()
                 if config.full_name_exists(*info):
                     # Print connect screen if user exists.
                     inputs = print_connect_screen()
@@ -510,7 +557,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
-                    info = ask_for_login().values(); print()
+                    info = ask_for_login().values();
+                    print()
                     if config.login_valid(*info):
                         # Save login and print main screen if login correct.
                         inputs = print_main_screen()
@@ -518,7 +566,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                         # Print connect screen if login is not correct.
                         inputs = print_connect_screen()
             elif inputs['connect_target'] == 'Sign up to join friends':
-                info = ask_for_signup().values(); print()
+                info = ask_for_signup().values();
+                print()
                 if config.create_user(*info):
                     inputs = print_main_screen()
                 else:  # Error was detected.
@@ -545,7 +594,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 job_id = inputs['application_target'].split()[-1]
                 # Apply for a job by adding it to the list of user apps.
                 if inputs['application_target'].split()[0] == 'Apply':
-                    info = ask_job_application().values(); print()
+                    info = ask_job_application().values();
+                    print()
                     config.submit_application(user, job_id, *info)
                 else:
                     config.save_application(user, job_id)
@@ -586,8 +636,9 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 inputs = print_unsave_posting_screen(job_id)
         if 'internship_target' in inputs:
             if inputs['internship_target'] == 'Post a job':
-                info = ask_job_posting().values(); print()
-                config.create_posting(logged_in_user, *info)
+                info = ask_job_posting().values();
+                print()
+                config.create_posting(config['current_login'], *info)
                 inputs = print_internship_screen()
             elif inputs['internship_target'] == 'Apply for a job':
                 inputs = print_job_list_screen()
@@ -616,7 +667,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
             elif inputs['main_target'] == 'Message center':
                 inputs = print_message_screen()
             elif inputs['main_target'] == 'Find someone':
-                info = ask_for_fullname().values(); print()
+                info = ask_for_fullname().values();
+                print()
                 config.full_name_exists(*info)
                 inputs = print_main_screen()
             elif inputs['main_target'] == 'Learn a new skill':
@@ -639,13 +691,15 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
-                    info = ask_for_login().values(); print()
+                    info = ask_for_login().values();
+                    print()
                     if config.login_valid(*info):
                         inputs = print_main_screen()
                     else:
                         inputs = print_login_screen()
             elif inputs['login_target'] == 'Sign up':
-                info = ask_for_signup().values(); print()
+                info = ask_for_signup().values();
+                print()
                 if config.create_user(*info):
                     inputs = print_main_screen()
                 else:  # Error was detected.
@@ -724,16 +778,16 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
         # Selection from guest screen.
         if 'guest_target' in inputs:
             config.save_guest_control(
-                    config['current_login'], 
-                    inputs['guest_target']
+                config['current_login'],
+                inputs['guest_target']
             )
             config.show_guest_control(config['current_login'])
             inputs = print_ilinks_screen()
         # Selection from language screen.
         if 'language_target' in inputs:
             config.save_lang(
-                    config['current_login'], 
-                    inputs['language_target']
+                config['current_login'],
+                inputs['language_target']
             )
             config.show_lang(config['current_login'])
             inputs = print_ilinks_screen()
@@ -785,29 +839,29 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 friend_username = inputs['friend_list_target'][16:]
                 friend_friends = config['accounts'][friend_username]['friends']
                 edit_friends_list(
-                        current_user, 
-                        current_user_friends, 
-                        friend_username, 
-                        friend_friends
+                    current_user,
+                    current_user_friends,
+                    friend_username,
+                    friend_friends
                 )
                 inputs = print_friend_list_screen('friends')
             elif inputs['friend_list_target'][0] == 'A':
                 config.accept_friend_request(
-                        config['current_login'], 
-                        inputs['friend_list_target'][25:]
+                    config['current_login'],
+                    inputs['friend_list_target'][25:]
                 )
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'][0:2] == 'De':
                 config.decline_friend_request(
-                        config['current_login'], 
-                        inputs['friend_list_target'][26:]
+                    config['current_login'],
+                    inputs['friend_list_target'][26:]
                 )
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'][0] == 'R':
                 user = config['current_login']
                 config.send_friend_request(
-                        inputs['friend_list_target'][24:], 
-                        user
+                    inputs['friend_list_target'][24:],
+                    user
                 )
                 inputs = print_friend_screen()
             elif inputs['friend_list_target'] == 'Go Back':
@@ -832,13 +886,14 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
             else:
                 current_email = inputs['inbox_target']
                 inputs = print_inbox_operation_screen(current_email)
+                config.mark_message_read(current_email)
         # Selection from inbox recipient.
         if 'recipient_target' in inputs:
             if inputs['recipient_target'] == 'Go back':
                 inputs = print_message_screen()
             else:
                 inputs = print_recipient_operation_screen(
-                        inputs['recipient_target']
+                    inputs['recipient_target']
                 )
         # Selection from message action screen.
         if 'inbox_operation_target' in inputs:
@@ -851,14 +906,14 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 current_email = ""
                 inputs = print_inbox_screen()
             elif inputs['inbox_operation_target'] == 'Go back':
-                inputs = print_message_screen()
+                inputs = print_inbox_screen()
         # Selection from recipient action screen.
         if 'recipient_operation_target' in inputs:
             if inputs['recipient_operation_target'] != 'Go back':
                 message = input('Message to send:\n')
                 matcher = re.search(
-                        "Send a message to (.*)", 
-                        inputs['recipient_operation_target']
+                    "Send a message to (.*)",
+                    inputs['recipient_operation_target']
                 )
                 recipient = matcher.group(1)
                 config.send_message(recipient, message)
@@ -867,6 +922,7 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 inputs = print_message_screen()
     # Prints out when the loop breaks.
     print('-#- 🎓 THANKS FOR USING IN COLLEGE CLI!  -#-')
+
 
 if __name__ == '__main__':
     config = utils.InCollegeConfig()

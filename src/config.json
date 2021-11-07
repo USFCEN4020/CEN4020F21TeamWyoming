@@ -2,6 +2,12 @@
   "messages": {
     "welcome": "---------------------------------------\n- THANKS FOR USING THE IN COLLEGE CLI -\n---------------------------------------"
   },
+  "time_stamps": {
+    "job_deleted": "\"2021-11-02 02:07:51.259619\"",
+    "job_posted": "\"2021-11-02 20:36:18.695288\"",
+    "user_registered": "\"2021-11-02 20:35:30.127729\"",
+    "log_out": "\"2021-11-02 20:38:49.921064\""
+  },
   "jobs": [
     {
       "author": "Admin Admin",
@@ -13,49 +19,76 @@
       "id": "1"
     },
     {
-      "author": "Second Admin",
-      "title": "Admin title",
-      "description": "this is the job you don't want to take",
-      "employer": "company everyone hates",
-      "location": "virtual",
-      "salary": "unpaid",
-      "id": "2"
+      "author": "test test",
+      "title": "Team Leader",
+      "description": "NA",
+      "employer": "Google",
+      "location": "Sans, CA",
+      "salary": "20,000",
+      "id": "35"
     },
     {
-      "author": "admin",
-      "title": "sample title",
-      "description": "sample description",
-      "employer": "sample employer",
-      "location": "sample location",
-      "salary": "sample salary",
-      "id": "3"
+      "author": "test test",
+      "title": "aaa",
+      "description": "aaa",
+      "employer": "aaa",
+      "location": "aaa",
+      "salary": "aaa",
+      "id": "14"
     },
     {
-      "author": "admin",
-      "title": "sample2",
-      "description": "sample2",
-      "employer": "sample2",
-      "location": "sample2",
-      "salary": "sample2",
-      "id": "4"
+      "author": "admin admin",
+      "title": "Best",
+      "description": "Best",
+      "employer": "Best",
+      "location": "Best",
+      "salary": "BEST",
+      "id": "99"
     },
     {
-      "author": "test",
-      "title": "software engineer",
-      "description": "testing postings",
-      "employer": "usf",
-      "location": "tampa, fl",
-      "salary": "3000",
-      "id": "5"
+      "author": "admin admin",
+      "title": "a",
+      "description": "a",
+      "employer": "a",
+      "location": "a",
+      "salary": "a",
+      "id": "14"
     },
     {
-      "author": "admin",
-      "title": "admin",
-      "description": "admin",
-      "employer": "admin",
-      "location": "admin",
-      "salary": "admin",
-      "id": "6"
+      "author": "admin admin",
+      "title": "dsfsd",
+      "description": "fds",
+      "employer": "fds",
+      "location": "fds",
+      "salary": "fds",
+      "id": "20"
+    },
+    {
+      "author": "admin admin",
+      "title": "",
+      "description": "",
+      "employer": "",
+      "location": "",
+      "salary": "",
+      "id": "88"
+    },
+    {
+      "author": "admin admin",
+      "title": "",
+      "description": "",
+      "employer": "",
+      "location": "",
+      "salary": "",
+      "id": "26"
+    },
+    {
+      "author": "admin admin",
+      "title": "qwe",
+      "description": "qwe",
+      "employer": "qwe",
+      "location": "qwe",
+      "salary": "qwe",
+      "id": "80"
     }
   ],
   "stories": [
@@ -111,18 +144,29 @@
         "admin"
       ],
       "friend_requests": [],
-      "saved_jobs": [
-        "5"
-      ],
-      "applications": {},
+      "saved_jobs": [],
+      "applications": {
+        "1": {
+          "grad_date": "w",
+          "start_date": "w",
+          "app_text": "w"
+        },
+        "35": {
+          "grad_date": "",
+          "start_date": "",
+          "app_text": ""
+        }
+      },
       "inbox": [
         {
-          "test": "How are you"
-        },
-        {
-          "new": "Yep, I did"
+          "test": "OK, I'll do it today..."
         }
-      ]
+      ],
+      "time_stamps": {
+        "log_out": "\"2021-11-02 14:06:40.444268\"",
+        "job_applied": "\"2021-11-02 15:07:55.862033\"",
+        "user_registered": "\"2020-11-02 11:41:06.350453\""
+      }
     },
     "test": {
       "password": "test",
@@ -142,21 +186,23 @@
         "admin"
       ],
       "friend_requests": [],
+      "saved_jobs": [],
       "applications": {},
       "inbox": [
         {
-          "admin": "How are you"
+          "admin": "Hey Test, did you do the testing?"
         },
         {
-          "admin": "I'm good!"
+          "admin": "[unread]test"
         },
         {
-          "admin": "hey"
-        },
-        {
-          "admin": "good!@"
+          "admin": "[unread]test"
         }
-      ]
+      ],
+      "time_stamps": {
+        "log_out": "\"2021-11-02 13:51:31.958168\"",
+        "user_registered": "\"2020-11-02 11:41:06.350453\""
+      }
     },
     "new": {
       "password": "new",
@@ -182,7 +228,11 @@
         {
           "admin": "Hey new, you've done the work?"
         }
-      ]
+      ],
+      "time_stamps": {
+        "log_out": "\"2021-11-02 13:49:32.076654\"",
+        "user_registered": "\"2020-11-02 11:41:06.350453\""
+      }
     },
     "admin2": {
       "password": "admin2",
@@ -202,11 +252,64 @@
       "friend_requests": [],
       "saved_jobs": [],
       "applications": {},
-      "inbox": []
+      "inbox": [],
+      "time_stamps": {
+        "user_registered": "\"2020-11-02 11:41:06.350453\""
+      }
+    },
+    "pcewlkr": {
+      "password": "Qwe123!@#$%",
+      "firstname": "Wenchao",
+      "lastname": "Li",
+      "membership": "pro",
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": {},
+      "saved_jobs": [],
+      "inbox": [],
+      "time_stamps": {
+        "job_applied": "",
+        "user_registered": "\"2021-11-02 11:41:06.350453\"",
+        "log_out": "\"2021-11-02 11:41:40.076997\""
+      }
+    },
+    "Heeyyyy": {
+      "password": "werFDcx4234#",
+      "firstname": "wefa",
+      "lastname": "dfgdfs",
+      "membership": "",
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": {},
+      "saved_jobs": [],
+      "inbox": [],
+      "time_stamps": {
+        "log_out": "\"0000-00-00 00:00:00.000000\"",
+        "job_applied": "\"0000-00-00 00:00:00.000000\"",
+        "user_registered": "\"2021-11-02 20:35:30.128575\""
+      }
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": []
   }
