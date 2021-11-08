@@ -465,8 +465,9 @@ class InCollegeConfig:
         print(TextColor.RESET)
 
     @staticmethod
-    def send_notification(message: str) -> None:
+    def send_notification(message: str) -> str:
         print(message)
+        return message
 
     @staticmethod
     def datetime_convert(data: datetime) -> str:
@@ -524,13 +525,14 @@ class InCollegeConfig:
                     self.send_notification(message)
                     return
 
-    def num_job_notification(self, username: str) -> None:
+    def num_job_notification(self, username: str) -> str:
         applications = self['accounts'][username]['applications']
         jobs_applied = len(applications)
         message = f'You have currently applied for {jobs_applied} jobs'
         self.send_notification(message)
+        return message
 
-    def job_posted_notification(self) -> None:
+    def job_posted_notification(self) -> str:
         if len(self['jobs']) != 0:
             title = self['jobs'][-1]['title']
             job_posted_time = self.json_time_convert('job_posted')
@@ -538,8 +540,9 @@ class InCollegeConfig:
             message = f'new job {title} has been posted.'
             if job_posted_time > log_out_time:
                 self.send_notification(message)
+        return message
 
-    def applied_job_deleted_notification(self) -> None:
+    def applied_job_deleted_notification(self) -> str:
 
         applications = self['accounts'][self['current_login']]['applications']
         jobs = self['jobs']
@@ -558,8 +561,9 @@ class InCollegeConfig:
         if count != 0:
             self.send_notification(message)
         self.save_config()
+        return message
 
-    def new_user_notification(self) -> None:
+    def new_user_notification(self) -> str:
         log_out_time = self.json_time_convert('log_out', self['current_login'])
         for key, value in self['accounts'].items():
             registered_time = self.json_time_convert('user_registered', key)
@@ -568,3 +572,5 @@ class InCollegeConfig:
                 last_name = value['lastname']
                 message = f'{first_name} {last_name} has joined InCollege'
                 self.send_notification(message)
+                return message
+                

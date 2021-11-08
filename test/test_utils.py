@@ -239,3 +239,31 @@ def test_delete_message_week7():
     config['accounts']['admin']['inbox'].append({'test': 'test message'})
     config.delete_message(message)
     assert {'test': 'test message'} not in config['accounts']['admin']['inbox']
+
+# for this unit test to pass you need to change send_notification and new_user_notification to return the message
+def test_new_user_notification_week8():
+    config = init_testing()
+    config['current_login'] = 'admin'
+    config['current_login_membership'] = 'pro'
+    config.create_user('alexwl', 'Whocares07!', 'alex', 'logorz', 'pro')
+    notif = config.new_user_notification()
+    assert notif == 'alex logorz has joined InCollege'
+
+# for this unit test to pass you need to change the send_notifcation function to return the message
+def test_send_notification_week8():
+    config = init_testing()
+    config['current_login'] = 'admin'
+    config['current_login_membership'] = 'pro'
+    notif = 'test notif'
+    assert notif == config.send_notification(notif)
+
+# for this unit test to pass you need to change send_notification and job_posted_notification to return the message
+def test_job_posted_notification_week8():
+    config = init_testing()
+    config['current_login'] = 'admin'
+    config['current_login_membership'] = 'pro'
+    author, title, desc = 'admin', 'sample', 'sample'
+    employer, location, salary = 'sample', 'sample', 'unpaid'
+    config.create_posting(author, title, desc, employer, location, salary)
+    notif = config.job_posted_notification()
+    assert notif == 'new job sample has been posted.'
