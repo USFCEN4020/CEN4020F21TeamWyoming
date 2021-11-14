@@ -27,8 +27,9 @@ def print_connect_screen() -> dict:
         message='[CONNECT] Where would you like to go from here?',
         choices=['Log in', 'Sign up to join friends', 'Go back']
     )])
-
-
+#
+#Changes to be done
+#
 def print_main_screen() -> dict:
     """Print main screen selections to the user."""
     return menu.prompt([menu.List(
@@ -43,6 +44,7 @@ def print_main_screen() -> dict:
             'Profile',
             'Useful Links',
             'InCollege Important Links',
+            'InCollege Learning',
             'Log out'
         ]
     )])
@@ -116,7 +118,6 @@ def print_recipient_operation_screen(recipient: str) -> dict:
         ]
     )])
 
-
 def print_login_screen() -> dict:
     """Print login screen selections to the user."""
     if logged_in_user == '':
@@ -134,10 +135,10 @@ def print_login_screen() -> dict:
             'Watch a video',
             'Useful Links',
             'InCollege Important Links',
+            'Training',
             'Go back'
         ]
     )])
-
 
 def print_ulinks_screen() -> dict:
     return menu.prompt([menu.List(
@@ -516,7 +517,74 @@ def edit_friends_list(
     friend_friends.remove(current_user)
     config.save_friends(friend_username, friend_friends)
 
+def print_training_screen():
+ return menu.prompt([menu.List(
+        'training_target',
+        message='Training',
+        choices=[
+            'Training and Education',
+            'IT Help Desk',
+            'Business Analysis and Strategy',
+            'Security',
+            'Go Back'
+        ]
+    )])
+def print_training_education_screen():
+    return menu.prompt([menu.List(
+        'training_education_target',
+        message='Training and Education',
+        choices=[
+            '1 option - to be changed',
+            '2 option - to be changed',
+            '3 option - to be changed',
+            '4 option - to be changed',
+            'Go Back'
+        ]
+    )])
 
+def print_business_screen():
+    return menu.prompt([menu.List(
+        'business_target',
+        message='Trending Courses',
+        choices=[
+            'How to use In College Learning',
+            'Train the trainer',
+            'Gamification of Learning',
+            "Not seeing what you're looking for? Sign in to see all 7,609 results",
+            'Go Back'
+        ]
+    )])
+
+def print_courses_screen():
+    courses = [
+        'How to use InCollege learning',
+        'Train the trainer',
+        'Gamification of Learning',
+        'Understanding the Architectural Design Process',
+        'Project Management Simplified'
+    ]
+    choices2 = []
+    username = config.config['current_login']
+    for course in courses:
+        if course in config.config['accounts'][username]['courses']:
+            course = course + '- Completed'
+        choices2.append(course)
+
+    choices2.append('Go Back')
+    return menu.prompt([menu.List(
+        'course_target',
+        message='Choose a course',
+        choices = choices2
+    )])
+
+def print_taken_course_screen():
+    return menu.prompt([menu.List(
+        'taken_target',
+        message='You have already taken this course, do you want to take it again?',
+        choices=['Yes',
+                 'No'
+        ]
+    )])
 def user_loop(new_config: utils.InCollegeConfig) -> None:
     """Main driver for the user interaction."""
     print('-#- 🎓 WELCOME TO THE IN COLLEGE CLI! 🎓 -#-\n')
@@ -667,7 +735,7 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
             elif inputs['main_target'] == 'Message center':
                 inputs = print_message_screen()
             elif inputs['main_target'] == 'Find someone':
-                info = ask_for_fullname().values();
+                info = ask_for_fullname().values()
                 print()
                 config.full_name_exists(*info)
                 inputs = print_main_screen()
@@ -681,6 +749,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 inputs = print_ulinks_screen()
             elif inputs['main_target'] == 'InCollege Important Links':
                 inputs = print_ilinks_screen()
+            elif inputs['main_target'] == 'InCollege Learning':
+                inputs = print_courses_screen()
             elif inputs['main_target'] == 'Log out':
                 config.save_login('')  # reset login "cookie".
                 inputs = print_login_screen()
@@ -691,14 +761,14 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                     print('🔑 You were already logged in.')
                     inputs = print_main_screen()
                 else:
-                    info = ask_for_login().values();
+                    info = ask_for_login().values()
                     print()
                     if config.login_valid(*info):
                         inputs = print_main_screen()
                     else:
                         inputs = print_login_screen()
             elif inputs['login_target'] == 'Sign up':
-                info = ask_for_signup().values();
+                info = ask_for_signup().values()
                 print()
                 if config.create_user(*info):
                     inputs = print_main_screen()
@@ -719,6 +789,94 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                 else:
                     print('Please log in first\n')
                     inputs = print_login_screen()
+            elif inputs['login_target'] == 'Training': 
+                inputs = print_training_screen()
+        # Selection from training screen
+        if 'training_target' in inputs:
+            if inputs['training_target'] == 'Training and Education':
+                inputs = print_training_education_screen()
+            elif inputs['training_target'] == 'IT Help Desk':
+                print('Coming Soon!')
+                inputs = print_training_screen()
+            elif inputs['training_target'] == 'Business Analysis and Strategy':
+                inputs = print_business_screen()
+            elif inputs ['training_target'] == 'Security':
+                print("Coming Soon!")
+                inputs = print_training_screen()
+            elif inputs['training_target'] == 'Go Back':
+                inputs = print_login_screen()
+        #Selection from training and education screen
+        if 'training_education_target' in inputs:
+            if inputs ['training_education_target'][0] == '1':
+                print('Under construction')
+                inputs = print_training_education_screen()
+            elif inputs['training_education_target'][0] == '2':
+                print('Under Construction')
+                inputs = print_training_education_screen()
+            elif inputs['training_education_target'][0] == '3':
+                print('Under Construction')
+                inputs = print_training_education_screen()
+            elif inputs['training_education_target'][0] == '4':
+                print('Under Construction')
+                inputs = print_training_education_screen()
+            elif inputs['training_education_target'] == 'Go Back':
+                inputs = print_training_screen()
+        #Selection from business screen
+        if 'business_target' in inputs:
+            if inputs['business_target'] == 'Go Back':
+                inputs = print_training_screen()
+            else:
+                print('Login to learn more.')
+                inputs = print_login_screen()
+        #Selection from courses screen
+        if 'course_target' in inputs:
+            if inputs['course_target'][0] == 'H':
+                if inputs['course_target'][-9:] == 'Completed':
+                    inputs = print_taken_course_screen()
+                else:
+                    config.save_course(config.config['current_login'], inputs['course_target'])
+                    print('You have now completed this training.')
+                    inputs = print_courses_screen()
+            elif inputs['course_target'][0] == 'T':
+                if inputs['course_target'][-9:] == 'Completed':
+                    inputs = print_taken_course_screen()
+                else:
+                    config.save_course(config.config['current_login'], inputs['course_target'])
+                    print('You have now completed this training.')
+                    inputs = print_courses_screen()
+            elif inputs['course_target'][0:2] == 'Ga':
+                if inputs['course_target'][-9:] == 'Completed':
+                    inputs = print_taken_course_screen()
+                else:
+                    config.save_course(config.config['current_login'], inputs['course_target'])
+                    print('You have now completed this training.')
+                    inputs = print_courses_screen()
+            elif inputs['course_target'][0] == 'U':
+                if inputs['course_target'][-9:] == 'Completed':
+                    inputs = print_taken_course_screen()
+                else:
+                    config.save_course(config.config['current_login'], inputs['course_target'])
+                    print('You have now completed this training.')
+                    inputs = print_courses_screen()
+            elif inputs['course_target'][0] == 'P':
+                if inputs['course_target'][-9:] == 'Completed':
+                    inputs = print_taken_course_screen()
+                else:
+                    config.save_course(config.config['current_login'], inputs['course_target'])
+                    print('You have now completed this training.')
+                    inputs = print_courses_screen()
+            elif inputs['course_target'] == 'Go Back':
+                inputs = print_main_screen()
+        #selection from course_taken_screen
+        if 'taken_target' in inputs:
+            if inputs['taken_target'] == 'Yes':
+                print('You have now completed this training')
+                inputs = print_courses_screen()
+            elif inputs['taken_target'] == 'No':
+                print('Course Cancelled')
+                inputs = print_courses_screen()
+
+     
         # Selection from useful links section.
         if 'ulinks_target' in inputs:
             if inputs['ulinks_target'] == 'General':

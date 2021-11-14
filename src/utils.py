@@ -121,7 +121,8 @@ class InCollegeConfig:
                     'log_out': '\"2000-01-01 00:00:00.000000\"',
                     'job_applied': '\"2000-01-01 00:00:00.000000\"',
                     'user_registered': '\"2000-01-01 00:00:00.000000\"'
-                }
+                },
+                'courses': []
             }
 
             if membership.strip().lower() == 'pro':
@@ -574,3 +575,7 @@ class InCollegeConfig:
                 self.send_notification(message)
                 return message
                 
+    def save_course(self, username: str, course: str) -> None:
+        """ Saves the courses a user has completed"""
+        self['accounts'][username]['courses'].append(course)
+        self.save_config()
