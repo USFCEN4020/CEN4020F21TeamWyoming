@@ -79,6 +79,7 @@ class InCollegeConfig:
             print('❌ Password needs to be between 8 and 12 characters long')
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
+    #
     def create_user(
             self,
             username: str,
