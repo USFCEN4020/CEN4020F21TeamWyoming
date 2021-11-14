@@ -580,3 +580,4 @@ class InCollegeConfig:
         """ Saves the courses a user has completed"""
         self['accounts'][username]['courses'].append(course)
         self.save_config()
+
