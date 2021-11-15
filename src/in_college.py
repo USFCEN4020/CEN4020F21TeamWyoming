@@ -16,7 +16,8 @@ def print_welcome_screen() -> dict:
     return menu.prompt([menu.List(
         'welcome_target',
         message='Welcome! Where would you like to go?',
-        choices=['Connect to friends', 'Skip', 'Quit']
+        choices=['Connect to friends', 'Skip', 'Quit'],
+        carousel=True
     )])
 
 
@@ -25,7 +26,8 @@ def print_connect_screen() -> dict:
     return menu.prompt([menu.List(
         'connect_target',
         message='[CONNECT] Where would you like to go from here?',
-        choices=['Log in', 'Sign up to join friends', 'Go back']
+        choices=['Log in', 'Sign up to join friends', 'Go back'],
+        carousel=True
     )])
 #
 #Changes to be done
@@ -46,7 +48,8 @@ def print_main_screen() -> dict:
             'InCollege Important Links',
             'InCollege Learning',
             'Log out'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -60,7 +63,8 @@ def print_message_screen() -> dict:
             'Inbox',
             'Available recipients',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -75,7 +79,8 @@ def print_inbox_screen():
     return menu.prompt([menu.List(
         'inbox_target',
         message='Which message do you want to view?',
-        choices=choices
+        choices=choices,
+        carousel=True
     )])
 
 
@@ -90,7 +95,8 @@ def print_recipient_screen():
     return menu.prompt([menu.List(
         'recipient_target',
         message='Which recipient do you want to choose?',
-        choices=choices
+        choices=choices,
+        carousel=True
     )])
 
 
@@ -103,7 +109,8 @@ def print_inbox_operation_screen(email: str) -> dict:
             'Reply',
             'Delete',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -115,7 +122,8 @@ def print_recipient_operation_screen(recipient: str) -> dict:
         choices=[
             f'Send a message to {recipient}',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 def print_login_screen() -> dict:
@@ -137,7 +145,8 @@ def print_login_screen() -> dict:
             'InCollege Important Links',
             'Training',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 def print_ulinks_screen() -> dict:
@@ -150,7 +159,8 @@ def print_ulinks_screen() -> dict:
             'Business Solutions',
             'Directories',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -167,7 +177,8 @@ def print_general_screen() -> dict:
             'Careers',
             'Developers',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -187,7 +198,8 @@ def print_ilinks_screen() -> dict:
             'Guest Controls',
             'Languages',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -198,7 +210,8 @@ def print_privacy_screen() -> dict:
         choices=[
             'Guest Control',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -210,7 +223,8 @@ def print_guest_screen() -> dict:
             'InCollege Email',
             'SMS',
             'Targeted Advertising features'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -221,7 +235,8 @@ def print_language_screen() -> dict:
         choices=[
             'English',
             'Spanish'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -237,24 +252,27 @@ def print_skill_screen() -> dict:
             'Time management',
             'I am perfect enough',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
 def print_job_screen() -> dict:
-    config.notification_center(config['current_login'],
-                               job_notify=False,
-                               profile_alert=False,
-                               unread_msg=False,
-                               job_posted=False,
-                               job_deleted=False,
-                               new_user=False,
-                               job_num=True
-                               )
+    config.notification_center(
+            config['current_login'],
+            job_notify=False,
+            profile_alert=False,
+            unread_msg=False,
+            job_posted=False,
+            job_deleted=False,
+            new_user=False,
+            job_num=True
+    )
     return menu.prompt([menu.List(
         'job_target',
         message='[JOBS] What would you like to do?',
-        choices=['Internships', 'Go back']
+        choices=['Internships', 'Go back'],
+        carousel=True
     )])
 
 
@@ -269,7 +287,8 @@ def print_internship_screen() -> dict:
             'Show my postings',
             'Show my saved jobs',
             'Go back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -286,7 +305,8 @@ def print_profile_screen() -> dict:
             'Edit profile experience',
             'Edit profile education',
             'Go Back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -299,7 +319,8 @@ def print_friend_screen() -> dict:
             'Search for Someone',
             'View Friend Requests',
             'Go Back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -310,7 +331,8 @@ def print_job_list_screen():
         'posting_target',
         message='Choose a job that you want to learn more about',
         # Get list of proper jobs and make them menu choices.
-        choices=config.get_list_jobs(user) + ['Go Back']
+        choices=config.get_list_jobs(user) + ['Go Back'],
+        carousel=True
     )])
 
 
@@ -319,7 +341,8 @@ def print_postings_list_screen():
     return menu.prompt([menu.List(
         'my_posting_target',
         message='Choose your posting for more information',
-        choices=config.get_list_jobs(user, my_posts=True) + ['Go Back']
+        choices=config.get_list_jobs(user, my_posts=True) + ['Go Back'],
+        carousel=True
     )])
 
 
@@ -328,7 +351,8 @@ def print_application_list_screen():
     return menu.prompt([menu.List(
         'my_application_target',
         message='Choose your application',
-        choices=config.get_list_jobs(user, my_apps=True) + ['Go Back']
+        choices=config.get_list_jobs(user, my_apps=True) + ['Go Back'],
+        carousel=True
     )])
 
 
@@ -337,7 +361,8 @@ def print_saved_list_screen():
     return menu.prompt([menu.List(
         'saved_list_target',
         message='Choose from your saved posts',
-        choices=config.get_list_jobs(user, saved=True) + ['Go Back']
+        choices=config.get_list_jobs(user, saved=True) + ['Go Back'],
+        carousel=True
     )])
 
 
@@ -345,7 +370,8 @@ def print_unsave_posting_screen(job_id: str):
     return menu.prompt([menu.List(
         'unsave_posting_target',
         message='What would you like to do with your posting',
-        choices=['Delete this saved posting: ' + job_id, 'Go Back']
+        choices=['Delete this saved posting: ' + job_id, 'Go Back'],
+        carousel=True
     )])
 
 
@@ -353,7 +379,8 @@ def print_delete_posting_screen(job_id: str):
     return menu.prompt([menu.List(
         'delete_posting_target',
         message='What would you like to do with your posting',
-        choices=['Delete this posting: ' + job_id, 'Go Back']
+        choices=['Delete this posting: ' + job_id, 'Go Back'],
+        carousel=True
     )])
 
 
@@ -365,7 +392,8 @@ def print_application_screen(job_id: str):
             'Apply for this job: ' + job_id,
             'Save this job: ' + job_id,
             'Go Back'
-        ]
+        ],
+        carousel=True
     )])
 
 
@@ -373,7 +401,8 @@ def print_withdrawal_screen(job_id: str):
     return menu.prompt([menu.List(
         'withdraw_target',
         message='What would you like to do',
-        choices=['Withdraw from this job: ' + job_id, 'Go Back']
+        choices=['Withdraw from this job: ' + job_id, 'Go Back'],
+        carousel=True
     )])
 
 
@@ -416,7 +445,8 @@ def print_friend_list_screen(key) -> dict:
     return menu.prompt([menu.List(
         'friend_list_target',
         message='to be changed',
-        choices=choices
+        choices=choices,
+        carousel=True
     )])
 
 

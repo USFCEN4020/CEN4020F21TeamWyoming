@@ -267,3 +267,4 @@ def test_job_posted_notification_week8():
     config.create_posting(author, title, desc, employer, location, salary)
     notif = config.job_posted_notification()
     assert notif == 'new job sample has been posted.'
+
