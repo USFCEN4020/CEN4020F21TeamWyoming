@@ -67,8 +67,7 @@ def create_config(file_path: str) -> None:
                     "log_out": "\"2000-01-01 00:00:00.000000\"",
                     "job_applied": "\"2000-01-01 00:00:00.000000\"",
                     "user_registered": "\"2000-01-01 00:00:00.000000\""
-                    },
-                "courses": []
+                    }
             },
             "test": {
                 "password": "test",
@@ -102,8 +101,7 @@ def create_config(file_path: str) -> None:
                     "log_out": "\"2000-01-01 00:00:00.000000\"",
                     "job_applied": "\"2000-01-01 00:00:00.000000\"",
                     "user_registered": "\"2000-01-01 00:00:00.000000\""
-                    },
-                "courses": []
+                    }
             }
         },
         "current_login": "",
