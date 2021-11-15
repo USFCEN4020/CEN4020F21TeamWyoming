@@ -268,4 +268,8 @@ def test_job_posted_notification_week8():
     notif = config.job_posted_notification()
     assert notif == 'new job sample has been posted.'
 
+def test_save_course_week9():
+    config = init_testing()
+    config.save_course('admin', 'test course')
+    assert 'test course' in config['accounts']['admin']['courses']
 
