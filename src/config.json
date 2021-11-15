@@ -166,7 +166,13 @@
         "log_out": "\"2021-11-02 14:06:40.444268\"",
         "job_applied": "\"2021-11-02 15:07:55.862033\"",
         "user_registered": "\"2020-11-02 11:41:06.350453\""
-      }
+      },
+      "courses": [
+        "Train the trainer",
+        "Understanding the Architectural Design Process",
+        "How to use InCollege learning",
+        "Gamification of Learning"
+      ]
     },
     "test": {
       "password": "test",
@@ -202,7 +208,8 @@
       "time_stamps": {
         "log_out": "\"2021-11-02 13:51:31.958168\"",
         "user_registered": "\"2020-11-02 11:41:06.350453\""
-      }
+      },
+      "courses": []
     },
     "new": {
       "password": "new",
@@ -232,7 +239,8 @@
       "time_stamps": {
         "log_out": "\"2021-11-02 13:49:32.076654\"",
         "user_registered": "\"2020-11-02 11:41:06.350453\""
-      }
+      },
+      "courses": []
     },
     "admin2": {
       "password": "admin2",
@@ -255,7 +263,8 @@
       "inbox": [],
       "time_stamps": {
         "user_registered": "\"2020-11-02 11:41:06.350453\""
-      }
+      },
+      "courses": []
     },
     "pcewlkr": {
       "password": "Qwe123!@#$%",
@@ -280,7 +289,8 @@
         "job_applied": "",
         "user_registered": "\"2021-11-02 11:41:06.350453\"",
         "log_out": "\"2021-11-02 11:41:40.076997\""
-      }
+      },
+      "courses": []
     },
     "Heeyyyy": {
       "password": "werFDcx4234#",
@@ -305,7 +315,8 @@
         "log_out": "\"0000-00-00 00:00:00.000000\"",
         "job_applied": "\"0000-00-00 00:00:00.000000\"",
         "user_registered": "\"2021-11-02 20:35:30.128575\""
-      }
+      },
+      "courses": []
     }
   },
   "current_login": "admin",

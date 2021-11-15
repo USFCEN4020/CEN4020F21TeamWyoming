@@ -79,6 +79,7 @@ class InCollegeConfig:
             print('❌ Password needs to be between 8 and 12 characters long')
         return all([cap_flag, digit_flag, special_flag, len_flag])
 
+    #
     def create_user(
             self,
             username: str,
@@ -121,7 +122,8 @@ class InCollegeConfig:
                     'log_out': '\"2000-01-01 00:00:00.000000\"',
                     'job_applied': '\"2000-01-01 00:00:00.000000\"',
                     'user_registered': '\"2000-01-01 00:00:00.000000\"'
-                }
+                },
+                'courses': []
             }
 
             if membership.strip().lower() == 'pro':
@@ -576,5 +578,4 @@ class InCollegeConfig:
     def test_save_course_week9(self) -> None:
         self.save_course('admin', 'test course')
         assert 'test course' in self['accounts']['admin']['courses']
-
 
