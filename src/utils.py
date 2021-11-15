@@ -543,7 +543,6 @@ class InCollegeConfig:
         return message
 
     def applied_job_deleted_notification(self) -> str:
-
         applications = self['accounts'][self['current_login']]['applications']
         jobs = self['jobs']
         saved_jobs = self['accounts'][self['current_login']]['saved_jobs']
@@ -574,3 +573,8 @@ class InCollegeConfig:
                 self.send_notification(message)
                 return message
                 
+    def test_save_course_week9(self) -> None:
+        self.save_course('admin', 'test course')
+        assert 'test course' in self['accounts']['admin']['courses']
+
+
