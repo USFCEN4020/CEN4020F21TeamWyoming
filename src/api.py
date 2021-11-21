@@ -3,6 +3,7 @@ from flask import Flask, json, jsonify, request
 app = Flask(__name__)
 import utils
 
+
 @app.route("/")
 def index():
     return 'The InCollege APIs are Launched.'
