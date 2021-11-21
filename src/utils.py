@@ -575,7 +575,9 @@ class InCollegeConfig:
                 self.send_notification(message)
                 return message
                 
-    def test_save_course_week9(self) -> None:
-        self.save_course('admin', 'test course')
-        assert 'test course' in self['accounts']['admin']['courses']
+    def save_course(self, username: str, course: str) -> None:
+        """ Saves the courses a user has completed"""
+        self['accounts'][username]['courses'].append(course)
+        self.save_config()
+
 

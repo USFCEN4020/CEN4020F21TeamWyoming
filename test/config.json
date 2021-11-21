@@ -4,7 +4,7 @@
   },
   "time_stamps": {
     "job_deleted": "\"2000-01-01 00:00:00.000000\"",
-    "job_posted": "\"2021-11-14 19:39:54.220500\"",
+    "job_posted": "\"2000-01-01 00:00:00.000000\"",
     "user_registered": "\"2000-01-01 00:00:00.000000\""
   },
   "jobs": [
@@ -25,15 +25,6 @@
       "location": "Mountainview, CA",
       "salary": "$5500 a month",
       "id": "4"
-    },
-    {
-      "author": "admin admin",
-      "title": "sample",
-      "description": "sample",
-      "employer": "sample",
-      "location": "sample",
-      "salary": "unpaid",
-      "id": "31"
     }
   ],
   "stories": [
@@ -74,7 +65,9 @@
         "job_applied": "\"2000-01-01 00:00:00.000000\"",
         "user_registered": "\"2000-01-01 00:00:00.000000\""
       },
-      "courses": []
+      "courses": [
+        "test course"
+      ]
     },
     "test": {
       "password": "test",
@@ -112,8 +105,8 @@
       "courses": []
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": [
       "InCollege Email"
