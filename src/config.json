@@ -2,10 +2,19 @@
   "messages": {
     "welcome": "---------------------------------------\n- THANKS FOR USING THE IN COLLEGE CLI -\n---------------------------------------"
   },
+  "training": [
+    "How to use InCollege learning",
+    "Train the trainer",
+    "Gamification of Learning",
+    "Understanding the Architectural Design Process",
+    "Project Management Simplified",
+    "Course example",
+    "Course example"
+  ],
   "time_stamps": {
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
     "job_posted": "\"2021-11-02 20:36:18.695288\"",
-    "user_registered": "\"2021-11-02 20:35:30.127729\"",
+    "user_registered": "\"2021-11-21 01:35:44.489550\"",
     "log_out": "\"2021-11-02 20:38:49.921064\""
   },
   "jobs": [
@@ -120,7 +129,7 @@
           {
             "title": "Experience 2 Title",
             "employer": "NSA",
-            "date_started": "1\b15-sep-2017",
+            "date_started": "15-sep-2017",
             "date_ended": "15-sep-2018",
             "location": "Virginia",
             "description": "I worked for NSA"
@@ -181,7 +190,7 @@
       "membership": "",
       "language": "English",
       "profile": {
-        "title": "I a\b\b\bThis a test profile",
+        "title": "I This a test profile",
         "major": "Testing",
         "university": "University of Testing",
         "about": "Hello I am a test profile",
@@ -317,9 +326,35 @@
         "user_registered": "\"2021-11-02 20:35:30.128575\""
       },
       "courses": []
+    },
+    "dinoMan123": {
+      "password": "Idontcare07!",
+      "firstname": "alex",
+      "lastname": "logorz",
+      "membership": "pro",
+      "language": "English",
+      "profile": {
+        "title": "",
+        "major": "",
+        "university": "",
+        "about": "",
+        "experience": [],
+        "education": []
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": {},
+      "saved_jobs": [],
+      "inbox": [],
+      "time_stamps": {
+        "log_out": "\"2000-01-01 00:00:00.000000\"",
+        "job_applied": "\"2000-01-01 00:00:00.000000\"",
+        "user_registered": "\"2021-11-21 01:35:44.491548\""
+      },
+      "courses": []
     }
   },
-  "current_login": "admin",
+  "current_login": "dinoMan123",
   "current_login_membership": "pro",
   "guest_control": {
     "admin": []

@@ -177,6 +177,11 @@ class InCollegeConfig:
                 print('🤨 Unpaid position? We aren\'t into charity business.')
             return True
 
+    def create_course(self, title: str) -> bool:
+        self['training'].append(title)
+        self.save_config()
+        return True
+
     def delete_posting(self, job_id: str):
         # Remove job from available postings.
         for job in self['jobs']:
