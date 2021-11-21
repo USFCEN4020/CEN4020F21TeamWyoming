@@ -1,6 +1,7 @@
 import json
 import datetime
 import string
+import os
 import re
 from random import randint
 
@@ -133,7 +134,8 @@ class InCollegeConfig:
             self.time_stamp_update('user_registered', username)
             self.save_config()
             print(f'✅ User with login {username} has been added')
-            self.save_login(username)
+            if self['current_login'] == '':
+                self.save_login(username)
             return True
 
     def create_posting(
@@ -481,7 +483,7 @@ class InCollegeConfig:
             json_time = self['accounts'][username]['time_stamps'][event]
         else:
             json_time = self['time_stamps'][event]
-        time = datetime.datetime.strptime(json_time, '\"%Y-%m-%d %H:%M:%S.%f\"') # "\"2021-11-02 02:09:10.286317\""
+        time = datetime.datetime.strptime(json_time, '\"%Y-%m-%d %H:%M:%S.%f\"')  # "\"2021-11-02 02:09:10.286317\""
         return time
 
     def time_stamp_update(self, event: str, username: str = '') -> None:
@@ -574,18 +576,42 @@ class InCollegeConfig:
                 message = f'{first_name} {last_name} has joined InCollege'
                 self.send_notification(message)
                 return message
-                
+
     def save_course(self, username: str, course: str) -> None:
         """ Saves the courses a user has completed"""
         self['accounts'][username]['courses'].append(course)
-        self.save_config() 
-        
+        self.save_config()
 
-    def write_file(self, file_name: str, new_content:str) -> None:
+    def append_file(self, filename: str, new_content: str) -> None:
         """Write current config to file with utf-8 indentation."""
-        file_content = json.load(open(file_name, 'r'))
-        with open(file_name, 'w', encoding='utf-8') as f:
-            json.dump(file_content, f, ensure_ascii=False, indent=2)
-            json.dump(new_content, f, ensure_ascii=False, indent=2)
+        with open(filename, 'a+', encoding='utf-8') as f:
+            f.write(new_content)
             f.write('=====\n')  # linux convention.
+
+    def clear_file(self, filename) -> None:
+        with open(filename, 'w+', encoding='utf-8') as f:
+            pass
+
+
+    def update_all_queue(self) -> None:
+        self.process_users_queue()
+
+    def process_users_queue(self) -> None:
+        with open('studentAccounts.txt', 'a+', encoding='utf-8') as f:
+            lines = f.readlines()
+            for line1, line2, line3, line4, line5 in lines:
+                username = line1.split()
+                firstname, lastname = line2.strip().split(' ')
+                password = line3.split()
+                membership = line4.split()
+                _ = line5
+                if self.create_user(username, password, firstname, lastname, membership):
+                    content = username + '\n' + firstname + ' ' + lastname + '\n' + password + '\n' + membership + '\n'
+                    self.append_file('MyCollege_users.txt', content)
+        self.clear_file('studentAccounts.txt')
+
+
+
+
+
 

@@ -3,7 +3,6 @@ from flask import Flask, json, jsonify, request
 app = Flask(__name__)
 import utils
 
-
 @app.route("/")
 def index():
     return 'The InCollege APIs are Launched.'
@@ -15,13 +14,15 @@ def create_user_route():
     if request.method == 'POST':
         user_data = request.get_json()
         username = user_data["username"]
-        first_name = user_data["firstName"]
-        last_name = user_data["lastName"]
         password = user_data["password"]
+        firstname = user_data["firstName"]
+        lastname = user_data["lastName"]
         membership = user_data["membership"]
-        content = username + '\n' + first_name + ' ' + last_name + '\n' + password + '\n' + membership + '\n'
-        utils.write_file('./in/studentAccounts.txt', content)
-        return jsonify({"created": content})
+        content = username + '\n' + firstname + ' ' + lastname + '\n' + password + '\n' + membership + '\n'
+        config.append_file('studentAccounts.txt', content)
+        return username + ": In Queue\n"
+
+
 
 
 if __name__ == '__main__':

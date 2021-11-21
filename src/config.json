@@ -6,7 +6,7 @@
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
     "job_posted": "\"2021-11-02 20:36:18.695288\"",
     "user_registered": "\"2021-11-02 20:35:30.127729\"",
-    "log_out": "\"2021-11-02 20:38:49.921064\""
+    "log_out": "\"2021-11-21 17:47:15.159148\""
   },
   "jobs": [
     {
@@ -289,32 +289,6 @@
         "job_applied": "",
         "user_registered": "\"2021-11-02 11:41:06.350453\"",
         "log_out": "\"2021-11-02 11:41:40.076997\""
-      },
-      "courses": []
-    },
-    "Heeyyyy": {
-      "password": "werFDcx4234#",
-      "firstname": "wefa",
-      "lastname": "dfgdfs",
-      "membership": "",
-      "language": "English",
-      "profile": {
-        "title": "",
-        "major": "",
-        "university": "",
-        "about": "",
-        "experience": [],
-        "education": []
-      },
-      "friends": [],
-      "friend_requests": [],
-      "applications": {},
-      "saved_jobs": [],
-      "inbox": [],
-      "time_stamps": {
-        "log_out": "\"0000-00-00 00:00:00.000000\"",
-        "job_applied": "\"0000-00-00 00:00:00.000000\"",
-        "user_registered": "\"2021-11-02 20:35:30.128575\""
       },
       "courses": []
     }
