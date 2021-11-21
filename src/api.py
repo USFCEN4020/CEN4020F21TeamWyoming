@@ -19,8 +19,9 @@ def create_user_route():
         last_name = user_data["lastName"]
         password = user_data["password"]
         membership = user_data["membership"]
-        created = config.create_user(username, password, first_name, last_name, membership)
-        return jsonify({"created": created})
+        content = username + '\n' + first_name + ' ' + last_name + '\n' + password + '\n' + membership + '\n'
+        utils.write_file('./in/studentAccounts.txt', content)
+        return jsonify({"created": content})
 
 
 if __name__ == '__main__':

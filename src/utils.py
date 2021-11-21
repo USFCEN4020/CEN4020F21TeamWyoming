@@ -581,4 +581,11 @@ class InCollegeConfig:
         self.save_config() 
         
 
+    def write_file(self, file_name: str, new_content:str) -> None:
+        """Write current config to file with utf-8 indentation."""
+        file_content = json.load(open(file_name, 'r'))
+        with open(file_name, 'w', encoding='utf-8') as f:
+            json.dump(file_content, f, ensure_ascii=False, indent=2)
+            json.dump(new_content, f, ensure_ascii=False, indent=2)
+            f.write('=====\n')  # linux convention.
 
