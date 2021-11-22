@@ -6,7 +6,7 @@
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
     "job_posted": "\"2021-11-02 20:36:18.695288\"",
     "user_registered": "\"2021-11-22 01:03:11.764164\"",
-    "log_out": "\"2021-11-21 23:47:16.144805\""
+    "log_out": "\"2021-11-22 01:06:02.289430\""
   },
   "jobs": [
     {
@@ -334,8 +334,8 @@
       "courses": []
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": []
   }
