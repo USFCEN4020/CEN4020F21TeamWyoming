@@ -112,32 +112,32 @@
       "membership": "pro",
       "language": "Spanish",
       "profile": {
-        "title": "Dr. Admin",
+        "title": "Admin profile title",
         "major": "Administration",
         "university": "University Of Admins",
-        "about": "Hello I am your admin.",
+        "about": "Hello I am an admin.",
         "experience": [
           {
-            "title": "Software Engineer",
-            "employer": "NASA",
+            "title": "Experience Title",
+            "employer": "Nasa",
             "date_started": "15-sep-2019",
             "date_ended": "15-sep-2020",
-            "location": "TX",
-            "description": "I worked for NASA Again!"
+            "location": "Somewhere",
+            "description": "I worked for NASA"
           },
           {
-            "title": "Cleaner",
-            "employer": "NASA",
-            "date_started": "15-sep-2017",
+            "title": "Experience 2 Title",
+            "employer": "NSA",
+            "date_started": "1\b15-sep-2017",
             "date_ended": "15-sep-2018",
-            "location": "FL",
-            "description": "I worked for NASA"
+            "location": "Virginia",
+            "description": "I worked for NSA"
           }
         ],
         "education": [
           {
-            "name": "University of South Florida",
-            "degree": "BA",
+            "name": "University of Souther Florida",
+            "degree": "Administration",
             "years": "4"
           },
           {
@@ -294,7 +294,19 @@
         "about": "",
         "experience": [],
         "education": []
-      }
+      },
+      "friends": [],
+      "friend_requests": [],
+      "applications": {},
+      "saved_jobs": [],
+      "inbox": [],
+      "time_stamps": {
+        "job_applied": "",
+        "user_registered": "\"2021-11-02 11:41:06.350453\"",
+        "log_out": "\"2021-11-02 11:41:40.076997\""
+      },
+      "courses": []
+    }
   },
   "current_login": "admin",
   "current_login_membership": "pro",
