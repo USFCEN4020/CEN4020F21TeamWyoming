@@ -274,7 +274,7 @@ def test_save_course_week9() -> None:
     assert 'test course' in config['accounts']['admin']['courses']
 
 
-def process_applied_job_API() -> None:
+def process_applied_job_API_week10() -> None:
     config = init_testing()
     config.process_applied_job_API()
     with open('MyCollege_appliedJobs.txt', 'r+', encoding='utf-8') as f:
