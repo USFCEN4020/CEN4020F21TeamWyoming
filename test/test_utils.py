@@ -272,3 +272,12 @@ def test_save_course_week9() -> None:
     config = init_testing()
     config.save_course('admin', 'test course')
     assert 'test course' in config['accounts']['admin']['courses']
+
+
+def process_applied_job_API() -> None:
+    config = init_testing()
+    config.process_applied_job_API()
+    with open('MyCollege_appliedJobs.txt', 'r+', encoding='utf-8') as f:
+        lines = f.readlines()
+    assert 'Test Title\nadmin\nw' in lines
+

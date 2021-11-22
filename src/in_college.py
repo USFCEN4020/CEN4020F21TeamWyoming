@@ -223,8 +223,7 @@ def print_guest_screen() -> dict:
             'InCollege Email',
             'SMS',
             'Targeted Advertising features'
-        ],
-        carousel=True
+        ]
     )])
 
 

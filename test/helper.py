@@ -30,6 +30,14 @@ def create_config(file_path: str) -> None:
                 "id": "4"
             }
         ],
+        "courses": [
+            "Train the trainer",
+            "Understanding the Architectural Design Process",
+            "How to use InCollege learning",
+            "Gamification of Learning",
+            "Project Management Simplified",
+            "How to get your first job!"
+        ],
         "stories": [
             "Some story of a successful guy",
             "Another story of a very successful guy"
