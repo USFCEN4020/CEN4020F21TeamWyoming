@@ -1,4 +1,5 @@
-* 463e03b (HEAD -> main, origin/main) update
+* 9b393bf (HEAD -> main, origin/main, origin/HEAD) Update history.txt
+* 463e03b update
 * 86399e8 Update test_utils.py
 *   8c20a51 Merge pull request #45 from USFCEN4020/Week10_re
 |\  
@@ -15,19 +16,19 @@
 |/  
 * 5385772 fixed bug
 * f42b6c1 fixed bug
-| *   c1bf6ea (refs/stash) On week10: !!GitHub_Desktop<week10>
+| *   55a3eea (refs/stash) On week10: !!GitHub_Desktop<week10>
 | |\  
-| | * 7cd719e index on week10: 50f5168 Most features for week10 completed
+| | * 170cd5c index on week10: 50f5168 Most features for week10 completed
 | |/  
 | * 50f5168 (origin/week10, week10) Most features for week10 completed
-| | * 9806206 (origin/api_create_user_feature, api_create_user_feature) bug fixed
+| | * 9806206 (origin/api_create_user_feature) bug fixed
 | | * 5536f1f added api endpoint to create new user
 | |/  
 |/|   
 * | b2c2961 Update test_utils.py
 * |   55d8e4a Merge pull request #41 from USFCEN4020/week9
 |\ \  
-| * \   9a1b407 (origin/week9, week9) Merge branch 'main' into week9
+| * \   9a1b407 (origin/week9) Merge branch 'main' into week9
 | |\ \  
 | |/ /  
 |/| |   
@@ -50,20 +51,20 @@
 * bf5cae3 Pushed testing for week 8
 *   4c3770e Merge pull request #38 from USFCEN4020/week8
 |\  
-| * f64e80d (origin/week8) -adjusted test cases
+| * f64e80d (origin/week8, week8) -adjusted test cases
 | * 875e1fe -logic fix
 | * bf7019f -added features
 |/  
 * a425b82 added test cases
 *   f8defb7 Merge pull request #37 from USFCEN4020/refactor2
 |\  
-| * 2cdea69 (origin/refactor2, refactor2) Fix main config again
+| * 2cdea69 (origin/refactor2) Fix main config again
 | * ff34f89 Fixed main config for UI
 | * de6621b Added UI tests. Minor code refactor.
 |/  
 *   b8704ef Merge pull request #35 from USFCEN4020/refactor
 |\  
-| * b52e57b (origin/refactor, origin/Epic#7, refactor, Epic#7) added feature
+| * b52e57b (origin/refactor, origin/Epic#7) added feature
 | * e8c0df0 added features
 | * 306c8b0 edited testcase
 | * 4234881 added feature
@@ -82,15 +83,15 @@
 |/  
 *   8bbc364 Merge pull request #32 from USFCEN4020/challenge6
 |\  
-| * 0ab70bf (origin/challenge6, challenge6) Finished functions
+| * 0ab70bf (origin/challenge6) Finished functions
 | * be8f097 Implement challenge 7 requirements
-* |   5852464 (origin/Week6, Week6) Merge pull request #31 from USFCEN4020/week5
+* |   5852464 (origin/Week6) Merge pull request #31 from USFCEN4020/week5
 |\ \  
 | |/  
 |/|   
-| *   464ebf9 (origin/week5, week5) Merge pull request #30 from USFCEN4020/Week5_test
+| *   464ebf9 (origin/week5) Merge pull request #30 from USFCEN4020/Week5_test
 | |\  
-| | * f340140 (origin/Week5_test, Week5_test) Test cases added
+| | * f340140 (origin/Week5_test) Test cases added
 * | | 0f5aa24 Merge pull request #29 from USFCEN4020/week5
 |\| | 
 | * | 967f233 fixed bug when disconnecting from friend
@@ -107,9 +108,9 @@
 |/  
 *   fe92034 Merge pull request #20 from USFCEN4020/week4
 |\  
-| *   c22b720 (origin/week4, week4) Merge pull request #21 from USFCEN4020/week4_test
+| *   c22b720 (origin/week4) Merge pull request #21 from USFCEN4020/week4_test
 | |\  
-| | * 3325917 (origin/week4_test, week4_test) Added 2 test cases
+| | * 3325917 (origin/week4_test) Added 2 test cases
 | |/  
 | * b269115 Missing feature: profile major and university formating
 | * 29418d3 bug fix
@@ -124,7 +125,7 @@
 * 2c6677f Add week 3 tests to test/
 *   76d7507 Merge pull request #19 from USFCEN4020/Epic#3-_features
 |\  
-| * b165964 (origin/Epic#3-_features, Epic#3-_features) Bug fixed
+| * b165964 (origin/Epic#3-_features) Bug fixed
 * | 452f8da Merge pull request #13 from USFCEN4020/Epic#3-_features
 |\| 
 | *   1e14036 Merge branch 'main' into Epic#3-_features
@@ -135,7 +136,7 @@
 |\ \  
 * \ \   8ae890d Merge pull request #8 from USFCEN4020/json-pytest
 |\ \ \  
-| * | | 66ef5c1 (json-pytest) Remove prints. Modify errors. Return bool
+| * | | 66ef5c1 Remove prints. Modify errors. Return bool
 * | | |   7e01f43 Merge pull request #12 from USFCEN4020/redo-readme
 |\ \ \ \  
 | * | | | f76c81a Redo readme. Update running instructions.
@@ -145,7 +146,7 @@
 | | | * 87ce8ef Features Added
 | | | * efb8ba7 Feature added
 | | |/  
-| | * a4f0568 (driver-rewrite-main) Update .gitignore
+| | * a4f0568 Update .gitignore
 | | * 3975ca5 Feature added and bug fixed
 | | * 02c1c84 Fix add job posting error.
 | | * ef51b64 Adding driver changes. Delete extra driver files.
@@ -155,18 +156,18 @@
 |\ \  
 * \ \   5851337 Merge pull request #5 from USFCEN4020/file-hierarchy
 |\ \ \  
-| | | | * 72a2131 (origin/driver-rewrite, driver-rewrite) Rewrite driver. Refactor CLI running
+| | | | * 72a2131 (origin/driver-rewrite) Rewrite driver. Refactor CLI running
 | | | |/  
 | | | * b64938f Add test dir. Use pytest. Add test config
 | | |/  
-| | * 9b51470 (origin/json-config, json-config) Rewrite utility functions. Add json
+| | * 9b51470 (origin/json-config) Rewrite utility functions. Add json
 | |/  
 | * 6211e77 (origin/file-hierarchy) Add requirements.txt
 | * 52f92e0 Add gitignore. Change file hierarchy.
 |/  
 *   317b6ba Merge pull request #4 from USFCEN4020/Wenchao_Branch
 |\  
-| * 664e98d (origin/Wenchao_Branch, Wenchao_Branch) Added UI logic flow map
+| * 664e98d (origin/Wenchao_Branch) Added UI logic flow map
 | * 004c761 Some coding style fix
 * | 094c70a Merge pull request #1 from USFCEN4020/Wenchao_Branch
 |\| 
