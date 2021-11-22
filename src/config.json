@@ -6,7 +6,7 @@
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
     "job_posted": "\"2021-11-02 20:36:18.695288\"",
     "user_registered": "\"2021-11-21 20:07:04.009217\"",
-    "log_out": "\"2021-11-21 21:44:41.791160\""
+    "log_out": "\"2021-11-21 23:47:16.144805\""
   },
   "jobs": [
     {
@@ -112,32 +112,32 @@
       "membership": "pro",
       "language": "Spanish",
       "profile": {
-        "title": "Admin profile title",
+        "title": "Dr. Admin",
         "major": "Administration",
         "university": "University Of Admins",
-        "about": "Hello I am an admin.",
+        "about": "Hello I am your admin.",
         "experience": [
           {
-            "title": "Experience Title",
-            "employer": "Nasa",
+            "title": "Software Engineer",
+            "employer": "NASA",
             "date_started": "15-sep-2019",
             "date_ended": "15-sep-2020",
-            "location": "Somewhere",
-            "description": "I worked for NASA"
+            "location": "TX",
+            "description": "I worked for NASA Again!"
           },
           {
-            "title": "Experience 2 Title",
-            "employer": "NSA",
-            "date_started": "1\b15-sep-2017",
+            "title": "Cleaner",
+            "employer": "NASA",
+            "date_started": "15-sep-2017",
             "date_ended": "15-sep-2018",
-            "location": "Virginia",
-            "description": "I worked for NSA"
+            "location": "FL",
+            "description": "I worked for NASA"
           }
         ],
         "education": [
           {
-            "name": "University of Souther Florida",
-            "degree": "Administration",
+            "name": "University of South Florida",
+            "degree": "BA",
             "years": "4"
           },
           {
@@ -156,7 +156,8 @@
         "14",
         "20",
         "1",
-        "35"
+        "35",
+        "80"
       ],
       "applications": {
         "1": {
@@ -293,45 +294,7 @@
         "about": "",
         "experience": [],
         "education": []
-      },
-      "friends": [],
-      "friend_requests": [],
-      "applications": {},
-      "saved_jobs": [],
-      "inbox": [],
-      "time_stamps": {
-        "job_applied": "",
-        "user_registered": "\"2021-11-02 11:41:06.350453\"",
-        "log_out": "\"2021-11-02 11:41:40.076997\""
-      },
-      "courses": []
-    },
-    "pcewjfds": {
-      "password": "S3432tcre07!",
-      "firstname": "fdse",
-      "lastname": "fdv",
-      "membership": "pro",
-      "language": "English",
-      "profile": {
-        "title": "",
-        "major": "",
-        "university": "",
-        "about": "",
-        "experience": [],
-        "education": []
-      },
-      "friends": [],
-      "friend_requests": [],
-      "applications": {},
-      "saved_jobs": [],
-      "inbox": [],
-      "time_stamps": {
-        "log_out": "\"2000-01-01 00:00:00.000000\"",
-        "job_applied": "\"2000-01-01 00:00:00.000000\"",
-        "user_registered": "\"2021-11-21 20:07:04.010140\""
-      },
-      "courses": []
-    }
+      }
   },
   "current_login": "admin",
   "current_login_membership": "pro",
