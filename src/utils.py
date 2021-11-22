@@ -603,6 +603,8 @@ class InCollegeConfig:
         self.process_job_API()
         self.process_training_API()
         self.process_profile_API()
+        self.process_applied_job_API()
+        self.process_saved_job_API()
 
     def process_student_account_API(self) -> None:
         with open('studentAccounts.txt', 'r+', encoding='utf-8') as f:
@@ -694,3 +696,25 @@ class InCollegeConfig:
                 education += (edu['name'] + '\n' + edu['degree'] + '\n' + edu['years'] + '\n')
             content = username + '\n' + title + '\n' + major + '\n' + university + '\n' + about + '\n' + experience + education
             self.append_file('MyCollege_profiles.txt', content)
+
+    def process_applied_job_API(self) -> None:
+        self.clear_file('MyCollege_appliedJobs.txt')
+        for job in self['jobs']:
+            content = job['title'] + '\n'
+            for username in self['accounts'].keys():
+                application = self['accounts'][username]['applications']
+                if job['id'] in application.keys():
+                    content += (username + '\n' + application[job['id']]['app_text'] + '\n')
+            self.append_file('MyCollege_appliedJobs.txt', content)
+
+    def process_saved_job_API(self) -> None:
+        self.clear_file('MyCollege_savedJobs.txt')
+        for username in self['accounts'].keys():
+            saved_jobs = ''
+            for job_id in self['accounts'][username]['saved_jobs']:
+                for job in self['jobs']:
+                    if job_id == job['id']:
+                        saved_jobs += job['title'] + '\n'
+            content = username + '\n' + saved_jobs
+            self.append_file('MyCollege_savedJobs.txt', content)
+

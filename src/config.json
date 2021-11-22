@@ -152,7 +152,12 @@
         "admin"
       ],
       "friend_requests": [],
-      "saved_jobs": [],
+      "saved_jobs": [
+        "14",
+        "20",
+        "1",
+        "35"
+      ],
       "applications": {
         "1": {
           "grad_date": "w",
@@ -328,8 +333,8 @@
       "courses": []
     }
   },
-  "current_login": "",
-  "current_login_membership": "",
+  "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": []
   }
