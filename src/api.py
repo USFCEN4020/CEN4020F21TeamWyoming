@@ -40,7 +40,7 @@ def job_API():
     return title + ": In Queue\n"
 
 @app.route('/api/in/training', methods=['POST'])
-def create_training_route():
+def training_API():
     config = utils.InCollegeConfig()
     data = request.get_json()
 
