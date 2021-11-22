@@ -586,13 +586,7 @@ def print_business_screen():
     )])
 
 def print_courses_screen():
-    courses = [
-        'How to use InCollege learning',
-        'Train the trainer',
-        'Gamification of Learning',
-        'Understanding the Architectural Design Process',
-        'Project Management Simplified'
-    ]
+    courses = config['courses']
     choices2 = []
     username = config.config['current_login']
     for course in courses:
@@ -627,7 +621,6 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
     current_email = None
 
     while True:
-        config.update_all_queue()
         # Welcome screen when inputs are empty.
         if inputs is None:
             # Print out first menu options.
@@ -635,7 +628,7 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
         # Selection from welcome screen.
         if 'welcome_target' in inputs:
             if inputs['welcome_target'] == 'Connect to friends':
-                info = ask_for_fullname().values();
+                info = ask_for_fullname().values()
                 print()
                 if config.full_name_exists(*info):
                     # Print connect screen if user exists.
@@ -1115,4 +1108,5 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
 
 if __name__ == '__main__':
     config = utils.InCollegeConfig()
+    config.process_all_APIs()
     user_loop(config)

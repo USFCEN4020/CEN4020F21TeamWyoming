@@ -168,6 +168,11 @@ class InCollegeConfig:
             'id': str(new_id)
         })
 
+        for job in self['jobs']:
+            if title == job['title']:
+                print('ERROR: Job title existed. Try again later.')
+                return False
+
         if len(self['jobs']) >= 10:
             print('ERROR: Too many jobs in the system. Try again later.')
             return False
@@ -586,32 +591,106 @@ class InCollegeConfig:
         """Write current config to file with utf-8 indentation."""
         with open(filename, 'a+', encoding='utf-8') as f:
             f.write(new_content)
-            f.write('=====\n')  # linux convention.
+            f.write('\n=====\n')  # linux convention.
 
     def clear_file(self, filename) -> None:
         with open(filename, 'w+', encoding='utf-8') as f:
             pass
 
 
-    def update_all_queue(self) -> None:
-        self.process_users_queue()
+    def process_all_APIs(self) -> None:
+        self.process_student_account_API()
+        self.process_job_API()
+        self.process_training_API()
+        self.process_profile_API()
 
-    def process_users_queue(self) -> None:
-        with open('studentAccounts.txt', 'a+', encoding='utf-8') as f:
+    def process_student_account_API(self) -> None:
+        with open('studentAccounts.txt', 'r+', encoding='utf-8') as f:
             lines = f.readlines()
-            for line1, line2, line3, line4, line5 in lines:
-                username = line1.split()
-                firstname, lastname = line2.strip().split(' ')
-                password = line3.split()
-                membership = line4.split()
-                _ = line5
-                if self.create_user(username, password, firstname, lastname, membership):
-                    content = username + '\n' + firstname + ' ' + lastname + '\n' + password + '\n' + membership + '\n'
-                    self.append_file('MyCollege_users.txt', content)
+            for i in range(0, len(lines), 5):
+                username = lines[i].strip()
+                firstname, lastname = lines[i+1].split()
+                password = lines[i+2].strip()
+                membership = lines[i+3].strip()
+                self.create_user(username, password, firstname, lastname, membership)
+
         self.clear_file('studentAccounts.txt')
+        self.clear_file('MyCollege_users.txt')
+
+        for account_name in self['accounts'].keys():
+            username = account_name
+            account_type = ' standard'
+            if self['accounts'][username]['membership'] == 'pro':
+                account_type = ' plus'
+            self.append_file('MyCollege_users.txt', username + account_type)
+
+    def process_job_API(self) -> None:
+        with open('newJobs.txt', 'r+', encoding='utf-8') as f:
+            lines = f.readlines()
+            i = 0
+            while(i < len(lines)):
+                title = lines[i].strip()
+                description = ''
+                while(lines[i+1] != '&&&&&&&&&&&&&\n'):
+                    description += lines[i+1]
+                    i += 1
+                poster = lines[i+2].strip()
+                employer = lines[i+3].strip()
+                location = lines[i + 4].strip()
+                salary = lines[i + 5].strip()
+                i += 7
+
+                if poster in self['accounts'].keys():
+                    self.create_posting(poster, title, description, employer, location, salary)
+                # if len(poster.split()) == 2:
+                #     firstname, lastname = poster.split()
+                #     for username in self['accounts'].keys():
+                #         if firstname == self['accounts'][username]['firstname'] and lastname == self['accounts'][username]['lastname']:
+                #             self.create_posting(poster, title, description, employer, location, salary)
+
+        self.clear_file('newJobs.txt')
+        self.clear_file('MyCollege_jobs.txt')
+
+        for job in self['jobs']:
+            title = job['title']
+            description = job['description']
+            employer = job['employer']
+            location = job['location']
+            salary = job['salary']
+            content = title + '\n' + description + '\n' + employer + '\n' + location + '\n' + salary
+            self.append_file('MyCollege_jobs.txt', content)
 
 
+    def process_training_API(self) -> None:
+        with open('newtraining.txt', 'r+', encoding='utf-8') as f:
+            lines = f.readlines()
+            for course in lines:
+               if course.strip() not in self['courses'] and course != '' and course != '=====\n':
+                self['courses'].append(course.strip())
+                self.save_config()
 
+        self.clear_file('newtraining.txt')
+        self.clear_file('MyCollege_training.txt')
 
+        for username in self['accounts'].keys():
+            courses = ''
+            for course in self['accounts'][username]['courses']:
+                courses += '\n' + course
+            self.append_file('MyCollege_training.txt', username + courses)
 
-
+    def process_profile_API(self) -> None:
+        self.clear_file('MyCollege_profiles.txt')
+        for username in self['accounts'].keys():
+            profile = self['accounts'][username]['profile']
+            title = profile['title']
+            major = profile['major']
+            university = profile['university']
+            about = profile['about']
+            experience = ''
+            for exp in profile['experience']:
+                experience += (exp['title'] + '\n' + exp['employer'] + '\n' + exp['date_started'] + '\n' + exp['date_ended'] + '\n' + exp['location'] + '\n' + exp['description'] + '\n')
+            education = ''
+            for edu in profile['education']:
+                education += (edu['name'] + '\n' + edu['degree'] + '\n' + edu['years'] + '\n')
+            content = username + '\n' + title + '\n' + major + '\n' + university + '\n' + about + '\n' + experience + education
+            self.append_file('MyCollege_profiles.txt', content)
