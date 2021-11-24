@@ -204,6 +204,7 @@ class InCollegeConfig:
         user = self['accounts'][self['current_login']]
         user['saved_jobs'].remove(job_id)
         print(f'✅ Success! Posting {job_id} has been removed from saved.')
+        self.save_config()
 
     def save_login(self, username: str) -> None:
         """Update current logged in user and write changes to json file."""
