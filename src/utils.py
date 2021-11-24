@@ -149,6 +149,12 @@ class InCollegeConfig:
     ) -> bool:
         """Create a job posting and update the json config file."""
         # Inefficient, but creates a new id by storing all previous in a set.
+
+        for job in self['jobs']:
+            if title == job['title']:
+                print('ERROR: Job title existed. Try again later.')
+                return False
+
         ids = set()
         for job in self['jobs']:
             ids.add(job['id'])
@@ -167,11 +173,6 @@ class InCollegeConfig:
             'salary': salary,
             'id': str(new_id)
         })
-
-        for job in self['jobs']:
-            if title == job['title']:
-                print('ERROR: Job title existed. Try again later.')
-                return False
 
         if len(self['jobs']) >= 10:
             print('ERROR: Too many jobs in the system. Try again later.')

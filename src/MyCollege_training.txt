@@ -13,5 +13,3 @@ admin2
 =====
 pcewlkr
 =====
-TeamWyoming
-=====
