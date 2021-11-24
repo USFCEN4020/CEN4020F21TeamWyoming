@@ -620,6 +620,8 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
     current_email = None
 
     while True:
+        config = utils.InCollegeConfig()
+        config.process_all_APIs()
         # Welcome screen when inputs are empty.
         if inputs is None:
             # Print out first menu options.

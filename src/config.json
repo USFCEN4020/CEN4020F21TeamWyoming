@@ -5,8 +5,8 @@
   "time_stamps": {
     "job_deleted": "\"2021-11-02 02:07:51.259619\"",
     "job_posted": "\"2021-11-02 20:36:18.695288\"",
-    "user_registered": "\"2021-11-22 01:03:11.764164\"",
-    "log_out": "\"2021-11-22 01:06:02.289430\""
+    "user_registered": "\"2021-11-22 02:08:30.968987\"",
+    "log_out": "\"2021-11-23 20:23:19.144488\""
   },
   "jobs": [
     {
@@ -307,10 +307,10 @@
       },
       "courses": []
     },
-    "pcewjfds": {
-      "password": "S3432tcre07!",
-      "firstname": "Tony",
-      "lastname": "Stark",
+    "TeamWyoming": {
+      "password": "EldenRing1!",
+      "firstname": "Wenchao",
+      "lastname": "Li",
       "membership": "pro",
       "language": "English",
       "profile": {
@@ -329,13 +329,13 @@
       "time_stamps": {
         "log_out": "\"2000-01-01 00:00:00.000000\"",
         "job_applied": "\"2000-01-01 00:00:00.000000\"",
-        "user_registered": "\"2021-11-22 01:03:11.765025\""
+        "user_registered": "\"2021-11-22 02:08:30.969828\""
       },
       "courses": []
     }
   },
-  "current_login": "",
-  "current_login_membership": "",
+  "current_login": "admin",
+  "current_login_membership": "pro",
   "guest_control": {
     "admin": []
   }
