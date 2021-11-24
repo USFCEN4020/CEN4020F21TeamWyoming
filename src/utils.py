@@ -133,7 +133,7 @@ class InCollegeConfig:
             self.time_stamp_update('user_registered')
             self.time_stamp_update('user_registered', username)
             self.save_config()
-            print(f'✅ User with login {username} has been added')
+            print(f'✅ User {username} has been created')
             if self['current_login'] == '':
                 self.save_login(username)
             return True
