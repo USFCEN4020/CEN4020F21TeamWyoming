@@ -669,9 +669,10 @@ class InCollegeConfig:
             for course in lines:
                 if course.strip() not in self['courses'] and course != '' and course != '=====\n':
                     self['courses'].append(course.strip())
+                    print(f'✅ New course added.')
                     self.save_config()
                 else:
-                    print(f'❌ the course has already existed.')
+                    print(f'❌ The course has already existed.')
 
         self.clear_file('newtraining.txt')
         self.clear_file('MyCollege_training.txt')
