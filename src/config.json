@@ -254,8 +254,8 @@
       "courses": []
     }
   },
-  "current_login": "admin",
-  "current_login_membership": "pro",
+  "current_login": "",
+  "current_login_membership": "",
   "guest_control": {
     "admin": []
   }
