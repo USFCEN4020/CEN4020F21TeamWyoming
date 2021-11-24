@@ -64,8 +64,8 @@ def create_config(file_path: str) -> None:
                             "description": "admin"
                         }
                     ],
+                    "education": []
                 },
-                "education": [],
                 "friends": [],
                 "friend_requests": [],
                 "saved_jobs": [],
@@ -99,8 +99,8 @@ def create_config(file_path: str) -> None:
                             "description": "test"
                         }
                     ],
+                    "education": []
                 },
-                "education": [],
                 "friends": [],
                 "friend_requests": [],
                 "saved_jobs": [],

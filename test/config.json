@@ -60,9 +60,9 @@
             "location": "admin",
             "description": "admin"
           }
-        ]
+        ],
+        "education": []
       },
-      "education": [],
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [],
@@ -97,9 +97,9 @@
             "location": "test",
             "description": "test"
           }
-        ]
+        ],
+        "education": []
       },
-      "education": [],
       "friends": [],
       "friend_requests": [],
       "saved_jobs": [],

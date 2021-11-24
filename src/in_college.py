@@ -621,7 +621,7 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
 
     while True:
         # config = utils.InCollegeConfig()
-        # config.process_all_APIs()
+        config.process_all_APIs()
         # Welcome screen when inputs are empty.
         if inputs is None:
             # Print out first menu options.
@@ -659,7 +659,7 @@ def user_loop(new_config: utils.InCollegeConfig) -> None:
                         # Print connect screen if login is not correct.
                         inputs = print_connect_screen()
             elif inputs['connect_target'] == 'Sign up to join friends':
-                info = ask_for_signup().values();
+                info = ask_for_signup().values()
                 print()
                 if config.create_user(*info):
                     inputs = print_main_screen()

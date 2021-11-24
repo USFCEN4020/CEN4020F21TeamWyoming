@@ -152,7 +152,7 @@ class InCollegeConfig:
 
         for job in self['jobs']:
             if title == job['title']:
-                print('ERROR: Job title existed. Try again later.')
+                print('❌ Job title existed. Try again later.')
                 return False
 
         ids = set()
@@ -175,7 +175,7 @@ class InCollegeConfig:
         })
 
         if len(self['jobs']) >= 10:
-            print('ERROR: Too many jobs in the system. Try again later.')
+            print('❌ Too many jobs in the system. Try again later.')
             return False
         else:
             self.time_stamp_update('job_posted')
@@ -414,18 +414,18 @@ class InCollegeConfig:
     def send_message(self, recipient: str, message: str) -> None:
         email = {self['current_login']: '[unread]' + message}
         if recipient == '':
-            print('\nPlease not to leave the recipient and the message blank.\n')
+            print('\n❌ Please do not leave the recipient and the message blank.\n')
         elif recipient == self['current_login']:
-            print('\nYou need a friend.\n')
+            print('\n❌ You need a friend.\n')
         elif recipient in self['accounts']:
             if self['current_login_membership'] != 'pro' and recipient.strip() not in \
                     self['accounts'][self['current_login']]['friends']:
-                print('\nStandard user can not send message to whom are not your friend.\n')
+                print('\n❌ Standard user can not send message to whom are not your friend.\n')
             else:
                 self['accounts'][recipient]['inbox'].append(email)
-                print('\nYour message has been sent.\n')
+                print('\n✅ Your message has been sent.\n')
         else:
-            print('\nThe recipient does not exist.\n')
+            print('\n❌ The recipient does not exist.\n')
         self.save_config()
 
     def reply_message(self, email: string) -> None:
@@ -599,7 +599,6 @@ class InCollegeConfig:
         with open(filename, 'w+', encoding='utf-8') as f:
             pass
 
-
     def process_all_APIs(self) -> None:
         self.process_student_account_API()
         self.process_job_API()
@@ -613,9 +612,9 @@ class InCollegeConfig:
             lines = f.readlines()
             for i in range(0, len(lines), 5):
                 username = lines[i].strip()
-                firstname, lastname = lines[i+1].split()
-                password = lines[i+2].strip()
-                membership = lines[i+3].strip()
+                firstname, lastname = lines[i + 1].split()
+                password = lines[i + 2].strip()
+                membership = lines[i + 3].strip()
                 self.create_user(username, password, firstname, lastname, membership)
 
         self.clear_file('studentAccounts.txt')
@@ -632,14 +631,14 @@ class InCollegeConfig:
         with open('newJobs.txt', 'r+', encoding='utf-8') as f:
             lines = f.readlines()
             i = 0
-            while(i < len(lines)):
+            while (i < len(lines)):
                 title = lines[i].strip()
                 description = ''
-                while(lines[i+1] != '&&&&&&&&&&&&&\n'):
-                    description += lines[i+1]
+                while (lines[i + 1] != '&&&&&&&&&&&&&\n'):
+                    description += lines[i + 1]
                     i += 1
-                poster = lines[i+2].strip()
-                employer = lines[i+3].strip()
+                poster = lines[i + 2].strip()
+                employer = lines[i + 3].strip()
                 location = lines[i + 4].strip()
                 salary = lines[i + 5].strip()
                 i += 7
@@ -664,14 +663,15 @@ class InCollegeConfig:
             content = title + '\n' + description + '\n' + employer + '\n' + location + '\n' + salary
             self.append_file('MyCollege_jobs.txt', content)
 
-
     def process_training_API(self) -> None:
         with open('newtraining.txt', 'r+', encoding='utf-8') as f:
             lines = f.readlines()
             for course in lines:
-               if course.strip() not in self['courses'] and course != '' and course != '=====\n':
-                self['courses'].append(course.strip())
-                self.save_config()
+                if course.strip() not in self['courses'] and course != '' and course != '=====\n':
+                    self['courses'].append(course.strip())
+                    self.save_config()
+                else:
+                    print(f'❌ the course has already existed.')
 
         self.clear_file('newtraining.txt')
         self.clear_file('MyCollege_training.txt')
@@ -692,7 +692,8 @@ class InCollegeConfig:
             about = profile['about']
             experience = ''
             for exp in profile['experience']:
-                experience += (exp['title'] + '\n' + exp['employer'] + '\n' + exp['date_started'] + '\n' + exp['date_ended'] + '\n' + exp['location'] + '\n' + exp['description'] + '\n')
+                experience += (exp['title'] + '\n' + exp['employer'] + '\n' + exp['date_started'] + '\n' + exp[
+                    'date_ended'] + '\n' + exp['location'] + '\n' + exp['description'] + '\n')
             education = ''
             for edu in profile['education']:
                 education += (edu['name'] + '\n' + edu['degree'] + '\n' + edu['years'] + '\n')
@@ -719,4 +720,3 @@ class InCollegeConfig:
                         saved_jobs += job['title'] + '\n'
             content = username + '\n' + saved_jobs
             self.append_file('MyCollege_savedJobs.txt', content)
-
