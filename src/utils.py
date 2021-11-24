@@ -671,7 +671,7 @@ class InCollegeConfig:
                     self['courses'].append(course.strip())
                     print(f'✅ New course added.')
                     self.save_config()
-                else:
+                elif course.strip() in self['courses']:
                     print(f'❌ The course has already existed.')
 
         self.clear_file('newtraining.txt')
